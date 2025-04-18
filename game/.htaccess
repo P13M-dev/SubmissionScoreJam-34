@@ -14,7 +14,6 @@
     Require all denied
 </Files>
 
-# Allow main.php
 <Files main.php>
     Require all granted
 </Files>
