@@ -1,0 +1,658 @@
+AH00558: httpd.exe: Could not reliably determine the server's fully qualified domain name, using fe80::9dd6:971b:2e71:6b25. Set the 'ServerName' directive globally to suppress this message
+PHP Warning:  PHP Startup: sqlite3: Unable to initialize module\nModule compiled with module API=20220829\nPHP    compiled with module API=20230831\nThese options need to match\n in Unknown on line 0
+[Fri Apr 18 12:30:03.740677 2025] [mpm_winnt:notice] [pid 12304:tid 424] AH00455: Apache/2.4.63 (Win64) PHP/8.3.20 configured -- resuming normal operations
+[Fri Apr 18 12:30:03.740677 2025] [mpm_winnt:notice] [pid 12304:tid 424] AH00456: Apache Lounge VS17 Server built: Feb  3 2025 10:10:51
+[Fri Apr 18 12:30:03.740677 2025] [core:notice] [pid 12304:tid 424] AH00094: Command line: 'httpd.exe -d C:/Users/P_M_Labs/Desktop/game for the jam/apache2.4.63'
+[Fri Apr 18 12:30:03.740677 2025] [core:debug] [pid 12304:tid 424] log.c(1605): AH02639: Using SO_REUSEPORT: no (0)
+[Fri Apr 18 12:30:03.744677 2025] [mpm_winnt:notice] [pid 12304:tid 424] AH00418: Parent: Created child process 2892
+[Fri Apr 18 12:30:03.744677 2025] [mpm_winnt:debug] [pid 12304:tid 424] mpm_winnt.c(430): AH00402: Parent: Sent the scoreboard to the child
+AH00558: httpd.exe: Could not reliably determine the server's fully qualified domain name, using fe80::9dd6:971b:2e71:6b25. Set the 'ServerName' directive globally to suppress this message
+AH00558: httpd.exe: Could not reliably determine the server's fully qualified domain name, using fe80::9dd6:971b:2e71:6b25. Set the 'ServerName' directive globally to suppress this message
+PHP Warning:  PHP Startup: sqlite3: Unable to initialize module\nModule compiled with module API=20220829\nPHP    compiled with module API=20230831\nThese options need to match\n in Unknown on line 0
+[Fri Apr 18 12:30:05.876573 2025] [mpm_winnt:debug] [pid 2892:tid 428] mpm_winnt.c(1716): AH00453: Child process is running
+[Fri Apr 18 12:30:05.876573 2025] [mpm_winnt:debug] [pid 2892:tid 428] mpm_winnt.c(344): AH00391: Child: Retrieved our scoreboard from the parent.
+[Fri Apr 18 12:30:05.876573 2025] [mpm_winnt:debug] [pid 2892:tid 428] mpm_winnt.c(466): AH00403: Child: Waiting for data for listening socket 0.0.0.0:80
+[Fri Apr 18 12:30:05.876573 2025] [mpm_winnt:debug] [pid 12304:tid 424] mpm_winnt.c(513): AH00408: Parent: Duplicating socket 536 (0.0.0.0:80) and sending it to child process 2892
+[Fri Apr 18 12:30:05.878574 2025] [mpm_winnt:debug] [pid 12304:tid 424] mpm_winnt.c(513): AH00408: Parent: Duplicating socket 480 ([::]:80) and sending it to child process 2892
+[Fri Apr 18 12:30:05.878574 2025] [mpm_winnt:debug] [pid 12304:tid 424] mpm_winnt.c(532): AH00411: Parent: Sent 2 listeners to child 2892
+Apache server shutdown initiated...
+pm_winnt:debug] [pid 2892:tid 428] mpm_winnt.c(466): AH00403: Child: Waiting for data for listening socket [::]:80
+[Fri Apr 18 12:30:05.880576 2025] [mpm_winnt:debug] [pid 2892:tid 428] mpm_winnt.c(491): AH00407: Child: retrieved 2 listeners from parent
+[Fri Apr 18 12:30:05.880576 2025] [mpm_winnt:debug] [pid 2892:tid 428] child.c(986): AH00352: Child: Acquired the start mutex.
+[Fri Apr 18 12:30:05.880576 2025] [mpm_winnt:notice] [pid 2892:tid 428] AH00354: Child: Starting 64 worker threads.
+[Fri Apr 18 12:30:05.881575 2025] [mpm_winnt:debug] [pid 2892:tid 2248] child.c(430): AH00334: Child: Accept thread listening on [::]:80 using AcceptFilter connect
+[Fri Apr 18 12:30:05.882575 2025] [mpm_winnt:debug] [pid 2892:tid 1064] child.c(430): AH00334: Child: Accept thread listening on 0.0.0.0:80 using AcceptFilter connect
+[Fri Apr 18 12:30:32.221735 2025] [authz_core:debug] [pid 2892:tid 1072] mod_authz_core.c(815): [client 127.0.0.1:55152] AH01626: authorization result of Require all denied: denied
+[Fri Apr 18 12:30:32.221735 2025] [authz_core:debug] [pid 2892:tid 1072] mod_authz_core.c(815): [client 127.0.0.1:55152] AH01626: authorization result of <RequireAny>: denied
+[Fri Apr 18 12:30:32.221735 2025] [authz_core:error] [pid 2892:tid 1072] [client 127.0.0.1:55152] AH01630: client denied by server configuration: C:/Users/P_M_Labs/Desktop/game for the jam/apache2.4.63/htdocs/
+[Fri Apr 18 12:30:32.380732 2025] [authz_core:debug] [pid 2892:tid 1072] mod_authz_core.c(815): [client 127.0.0.1:55152] AH01626: authorization result of Require all denied: denied, referer: http://localhost/
+[Fri Apr 18 12:30:32.380732 2025] [authz_core:debug] [pid 2892:tid 1072] mod_authz_core.c(815): [client 127.0.0.1:55152] AH01626: authorization result of <RequireAny>: denied, referer: http://localhost/
+[Fri Apr 18 12:30:32.380732 2025] [authz_core:error] [pid 2892:tid 1072] [client 127.0.0.1:55152] AH01630: client denied by server configuration: C:/Users/P_M_Labs/Desktop/game for the jam/apache2.4.63/htdocs/favicon.ico, referer: http://localhost/
+[Fri Apr 18 12:30:43.132766 2025] [authz_core:debug] [pid 2892:tid 1072] mod_authz_core.c(815): [client 127.0.0.1:55154] AH01626: authorization result of Require all denied: denied
+[Fri Apr 18 12:30:43.132766 2025] [authz_core:debug] [pid 2892:tid 1072] mod_authz_core.c(815): [client 127.0.0.1:55154] AH01626: authorization result of <RequireAny>: denied
+[Fri Apr 18 12:30:43.132766 2025] [authz_core:error] [pid 2892:tid 1072] [client 127.0.0.1:55154] AH01630: client denied by server configuration: C:/Users/P_M_Labs/Desktop/game for the jam/apache2.4.63/htdocs/index.html
+[Fri Apr 18 12:30:43.217764 2025] [authz_core:debug] [pid 2892:tid 1072] mod_authz_core.c(815): [client 127.0.0.1:55154] AH01626: authorization result of Require all denied: denied, referer: http://localhost/index.html
+[Fri Apr 18 12:30:43.217764 2025] [authz_core:debug] [pid 2892:tid 1072] mod_authz_core.c(815): [client 127.0.0.1:55154] AH01626: authorization result of <RequireAny>: denied, referer: http://localhost/index.html
+[Fri Apr 18 12:30:43.217764 2025] [authz_core:error] [pid 2892:tid 1072] [client 127.0.0.1:55154] AH01630: client denied by server configuration: C:/Users/P_M_Labs/Desktop/game for the jam/apache2.4.63/htdocs/favicon.ico, referer: http://localhost/index.html
+[Fri Apr 18 12:31:58.956206 2025] [authz_core:debug] [pid 2892:tid 1072] mod_authz_core.c(815): [client 127.0.0.1:55166] AH01626: authorization result of Require all denied: denied
+[Fri Apr 18 12:31:58.956206 2025] [authz_core:debug] [pid 2892:tid 1072] mod_authz_core.c(815): [client 127.0.0.1:55166] AH01626: authorization result of <RequireAny>: denied
+[Fri Apr 18 12:31:58.956206 2025] [authz_core:error] [pid 2892:tid 1072] [client 127.0.0.1:55166] AH01630: client denied by server configuration: C:/Users/P_M_Labs/Desktop/game for the jam/apache2.4.63/htdocs/index.html
+[Fri Apr 18 12:31:59.052204 2025] [authz_core:debug] [pid 2892:tid 1072] mod_authz_core.c(815): [client 127.0.0.1:55166] AH01626: authorization result of Require all denied: denied, referer: http://localhost/index.html
+[Fri Apr 18 12:31:59.052204 2025] [authz_core:debug] [pid 2892:tid 1072] mod_authz_core.c(815): [client 127.0.0.1:55166] AH01626: authorization result of <RequireAny>: denied, referer: http://localhost/index.html
+[Fri Apr 18 12:31:59.052204 2025] [authz_core:error] [pid 2892:tid 1072] [client 127.0.0.1:55166] AH01630: client denied by server configuration: C:/Users/P_M_Labs/Desktop/game for the jam/apache2.4.63/htdocs/favicon.ico, referer: http://localhost/index.html
+[Fri Apr 18 12:31:59.517230 2025] [authz_core:debug] [pid 2892:tid 1072] mod_authz_core.c(815): [client 127.0.0.1:55167] AH01626: authorization result of Require all denied: denied
+[Fri Apr 18 12:31:59.517230 2025] [authz_core:debug] [pid 2892:tid 1072] mod_authz_core.c(815): [client 127.0.0.1:55167] AH01626: authorization result of <RequireAny>: denied
+[Fri Apr 18 12:31:59.517230 2025] [authz_core:error] [pid 2892:tid 1072] [client 127.0.0.1:55167] AH01630: client denied by server configuration: C:/Users/P_M_Labs/Desktop/game for the jam/apache2.4.63/htdocs/index.html
+[Fri Apr 18 12:32:02.537344 2025] [mpm_winnt:notice] [pid 12304:tid 424] AH00422: Parent: Received shutdown signal -- Shutting down the server.
+[Fri Apr 18 12:32:02.537344 2025] [mpm_winnt:debug] [pid 2892:tid 428] child.c(1123): AH00357: Child: Exit event signaled. Child process is ending.
+[Fri Apr 18 12:32:02.537344 2025] [mpm_winnt:debug] [pid 2892:tid 2248] child.c(727): AH00348: Child: Accept thread exiting.
+[Fri Apr 18 12:32:02.537344 2025] [mpm_winnt:debug] [pid 2892:tid 1064] child.c(727): AH00348: Child: Accept thread exiting.
+[Fri Apr 18 12:32:03.541000 2025] [mpm_winnt:debug] [pid 2892:tid 428] child.c(1180): AH00359: Child: Released the start mutex
+[Fri Apr 18 12:32:03.541000 2025] [mpm_winnt:debug] [pid 2892:tid 428] child.c(1192): AH00361: Child: 63 threads blocked on the completion port
+[Fri Apr 18 12:32:04.547635 2025] [mpm_winnt:notice] [pid 2892:tid 428] AH00364: Child: All worker threads have exited.
+[Fri Apr 18 12:32:04.548588 2025] [mpm_winnt:debug] [pid 2892:tid 428] mpm_winnt.c(1721): AH00454: Child process is exiting
+[Fri Apr 18 12:32:04.567721 2025] [mpm_winnt:notice] [pid 12304:tid 424] AH00430: Parent: Child process 2892 exited successfully.
+[Fri Apr 18 12:32:04.568699 2025] [core:info] [pid 12304:tid 424] AH00096: removed PID file C:/Users/P_M_Labs/Desktop/game for the jam/apache2.4.63/logs/httpd.pid (pid=12304)
+AH00558: httpd.exe: Could not reliably determine the server's fully qualified domain name, using fe80::9dd6:971b:2e71:6b25. Set the 'ServerName' directive globally to suppress this message
+PHP Warning:  PHP Startup: sqlite3: Unable to initialize module\nModule compiled with module API=20220829\nPHP    compiled with module API=20230831\nThese options need to match\n in Unknown on line 0
+[Fri Apr 18 12:34:45.991803 2025] [mpm_winnt:notice] [pid 22240:tid 432] AH00455: Apache/2.4.63 (Win64) PHP/8.3.20 configured -- resuming normal operations
+[Fri Apr 18 12:34:45.991803 2025] [mpm_winnt:notice] [pid 22240:tid 432] AH00456: Apache Lounge VS17 Server built: Feb  3 2025 10:10:51
+[Fri Apr 18 12:34:45.991803 2025] [core:notice] [pid 22240:tid 432] AH00094: Command line: 'C:\\Users\\P_M_Labs\\Desktop\\game for the jam\\apache2.4.63\\bin\\httpd.exe -d C:/Users/P_M_Labs/Desktop/game for the jam/apache2.4.63'
+[Fri Apr 18 12:34:45.991803 2025] [core:debug] [pid 22240:tid 432] log.c(1605): AH02639: Using SO_REUSEPORT: no (0)
+[Fri Apr 18 12:34:45.995800 2025] [mpm_winnt:notice] [pid 22240:tid 432] AH00418: Parent: Created child process 2488
+[Fri Apr 18 12:34:45.995800 2025] [mpm_winnt:debug] [pid 22240:tid 432] mpm_winnt.c(430): AH00402: Parent: Sent the scoreboard to the child
+AH00558: httpd.exe: Could not reliably determine the server's fully qualified domain name, using fe80::9dd6:971b:2e71:6b25. Set the 'ServerName' directive globally to suppress this message
+Apache server shutdown initiated...
+AH00558: httpd.exe: Could not reliably determine the server's fully qualified domain name, using fe80::9dd6:971b:2e71:6b25. Set the 'ServerName' directive globally to suppress this message
+PHP Warning:  PHP Startup: sqlite3: Unable to initialize module\nModule compiled with module API=20220829\nPHP    compiled with module API=20230831\nThese options need to match\n in Unknown on line 0
+[Fri Apr 18 12:34:48.102303 2025] [mpm_winnt:debug] [pid 2488:tid 432] mpm_winnt.c(1716): AH00453: Child process is running
+[Fri Apr 18 12:34:48.102303 2025] [mpm_winnt:debug] [pid 2488:tid 432] mpm_winnt.c(344): AH00391: Child: Retrieved our scoreboard from the parent.
+[Fri Apr 18 12:34:48.102303 2025] [mpm_winnt:debug] [pid 2488:tid 432] mpm_winnt.c(466): AH00403: Child: Waiting for data for listening socket 0.0.0.0:80
+[Fri Apr 18 12:34:48.102303 2025] [mpm_winnt:debug] [pid 22240:tid 432] mpm_winnt.c(513): AH00408: Parent: Duplicating socket 536 (0.0.0.0:80) and sending it to child process 2488
+[Fri Apr 18 12:34:48.104336 2025] [mpm_winnt:debug] [pid 22240:tid 432] mpm_winnt.c(513): AH00408: Parent: Duplicating socket 504 ([::]:80) and sending it to child process 2488
+[Fri Apr 18 12:34:48.104336 2025] [mpm_winnt:debug] [pid 22240:tid 432] mpm_winnt.c(532): AH00411: Parent: Sent 2 listeners to child 2488
+[Fri Apr 18 12:34:48.104336 2025] [mpm_winnt:notice] [pid 22240:tid 432] AH00422: Parent: Received shutdown signal -- Shutting down the server.
+[Fri Apr 18 12:34:48.106336 2025] [mpm_winnt:debug] [pid 2488:tid 432] mpm_winnt.c(466): AH00403: Child: Waiting for data for listening socket [::]:80
+[Fri Apr 18 12:34:48.106336 2025] [mpm_winnt:debug] [pid 2488:tid 432] mpm_winnt.c(491): AH00407: Child: retrieved 2 listeners from parent
+[Fri Apr 18 12:34:48.106336 2025] [mpm_winnt:debug] [pid 2488:tid 432] child.c(986): AH00352: Child: Acquired the start mutex.
+[Fri Apr 18 12:34:48.106336 2025] [mpm_winnt:notice] [pid 2488:tid 432] AH00354: Child: Starting 64 worker threads.
+[Fri Apr 18 12:34:48.107303 2025] [mpm_winnt:debug] [pid 2488:tid 432] child.c(1123): AH00357: Child: Exit event signaled. Child process is ending.
+[Fri Apr 18 12:34:48.108303 2025] [mpm_winnt:error] [pid 2488:tid 1280] (OS 10038)Próbowano przeprowadziæ próbê na obiekcie, który nie jest gniazdem.  : AH00332: winnt_accept: getsockname error on listening socket, is IPv6 available?
+[Fri Apr 18 12:34:48.108303 2025] [mpm_winnt:error] [pid 2488:tid 1288] (OS 10038)Próbowano przeprowadziæ próbê na obiekcie, który nie jest gniazdem.  : AH00332: winnt_accept: getsockname error on listening socket, is IPv6 available?
+[Fri Apr 18 12:34:49.111482 2025] [mpm_winnt:debug] [pid 2488:tid 432] child.c(1180): AH00359: Child: Released the start mutex
+[Fri Apr 18 12:34:49.111482 2025] [mpm_winnt:debug] [pid 2488:tid 432] child.c(1192): AH00361: Child: 64 threads blocked on the completion port
+[Fri Apr 18 12:34:50.122829 2025] [mpm_winnt:notice] [pid 2488:tid 432] AH00364: Child: All worker threads have exited.
+[Fri Apr 18 12:34:50.123833 2025] [mpm_winnt:debug] [pid 2488:tid 432] mpm_winnt.c(1721): AH00454: Child process is exiting
+[Fri Apr 18 12:34:50.143110 2025] [mpm_winnt:notice] [pid 22240:tid 432] AH00430: Parent: Child process 2488 exited successfully.
+[Fri Apr 18 12:34:50.144110 2025] [core:info] [pid 22240:tid 432] AH00096: removed PID file C:/Users/P_M_Labs/Desktop/game for the jam/apache2.4.63/logs/httpd.pid (pid=22240)
+AH00558: httpd.exe: Could not reliably determine the server's fully qualified domain name, using fe80::9dd6:971b:2e71:6b25. Set the 'ServerName' directive globally to suppress this message
+PHP Warning:  PHP Startup: sqlite3: Unable to initialize module\nModule compiled with module API=20220829\nPHP    compiled with module API=20230831\nThese options need to match\n in Unknown on line 0
+[Fri Apr 18 12:44:53.304011 2025] [mpm_winnt:notice] [pid 11212:tid 424] AH00455: Apache/2.4.63 (Win64) PHP/8.3.20 configured -- resuming normal operations
+[Fri Apr 18 12:44:53.304011 2025] [mpm_winnt:notice] [pid 11212:tid 424] AH00456: Apache Lounge VS17 Server built: Feb  3 2025 10:10:51
+[Fri Apr 18 12:44:53.304011 2025] [core:notice] [pid 11212:tid 424] AH00094: Command line: 'bin\\httpd.exe -d C:/Users/P_M_Labs/Desktop/game for the jam/apache2.4.63'
+[Fri Apr 18 12:44:53.304011 2025] [core:debug] [pid 11212:tid 424] log.c(1605): AH02639: Using SO_REUSEPORT: no (0)
+[Fri Apr 18 12:44:53.307013 2025] [mpm_winnt:notice] [pid 11212:tid 424] AH00418: Parent: Created child process 25712
+[Fri Apr 18 12:44:53.307013 2025] [mpm_winnt:debug] [pid 11212:tid 424] mpm_winnt.c(430): AH00402: Parent: Sent the scoreboard to the child
+AH00558: httpd.exe: Could not reliably determine the server's fully qualified domain name, using fe80::9dd6:971b:2e71:6b25. Set the 'ServerName' directive globally to suppress this message
+AH00558: httpd.exe: Could not reliably determine the server's fully qualified domain name, using fe80::9dd6:971b:2e71:6b25. Set the 'ServerName' directive globally to suppress this message
+PHP Warning:  PHP Startup: sqlite3: Unable to initialize module\nModule compiled with module API=20220829\nPHP    compiled with module API=20230831\nThese options need to match\n in Unknown on line 0
+[Fri Apr 18 12:44:55.416787 2025] [mpm_winnt:debug] [pid 25712:tid 448] mpm_winnt.c(1716): AH00453: Child process is running
+[Fri Apr 18 12:44:55.416787 2025] [mpm_winnt:debug] [pid 25712:tid 448] mpm_winnt.c(344): AH00391: Child: Retrieved our scoreboard from the parent.
+[Fri Apr 18 12:44:55.416787 2025] [mpm_winnt:debug] [pid 25712:tid 448] mpm_winnt.c(466): AH00403: Child: Waiting for data for listening socket 0.0.0.0:80
+[Fri Apr 18 12:44:55.416787 2025] [mpm_winnt:debug] [pid 11212:tid 424] mpm_winnt.c(513): AH00408: Parent: Duplicating socket 536 (0.0.0.0:80) and sending it to child process 25712
+[Fri Apr 18 12:44:55.418786 2025] [mpm_winnt:debug] [pid 11212:tid 424] mpm_winnt.c(513): AH00408: Parent: Duplicating socket 480 ([::]:80) and sending it to child process 25712
+[Fri Apr 18 12:44:55.418786 2025] [mpm_winnt:debug] [pid 11212:tid 424] mpm_winnt.c(532): AH00411: Parent: Sent 2 listeners to child 25712
+Apache server shutdown initiated...
+pm_winnt:debug] [pid 25712:tid 448] mpm_winnt.c(466): AH00403: Child: Waiting for data for listening socket [::]:80
+[Fri Apr 18 12:44:55.419787 2025] [mpm_winnt:debug] [pid 25712:tid 448] mpm_winnt.c(491): AH00407: Child: retrieved 2 listeners from parent
+[Fri Apr 18 12:44:55.419787 2025] [mpm_winnt:debug] [pid 25712:tid 448] child.c(986): AH00352: Child: Acquired the start mutex.
+[Fri Apr 18 12:44:55.419787 2025] [mpm_winnt:notice] [pid 25712:tid 448] AH00354: Child: Starting 64 worker threads.
+[Fri Apr 18 12:44:55.421786 2025] [mpm_winnt:debug] [pid 25712:tid 1312] child.c(430): AH00334: Child: Accept thread listening on 0.0.0.0:80 using AcceptFilter connect
+[Fri Apr 18 12:44:55.421786 2025] [mpm_winnt:debug] [pid 25712:tid 1316] child.c(430): AH00334: Child: Accept thread listening on [::]:80 using AcceptFilter connect
+[Fri Apr 18 12:47:08.651311 2025] [authz_core:debug] [pid 25712:tid 1284] mod_authz_core.c(815): [client 127.0.0.1:55316] AH01626: authorization result of Require all granted: granted
+[Fri Apr 18 12:47:08.651311 2025] [authz_core:debug] [pid 25712:tid 1284] mod_authz_core.c(815): [client 127.0.0.1:55316] AH01626: authorization result of <RequireAny>: granted
+[Fri Apr 18 12:47:08.792314 2025] [authz_core:debug] [pid 25712:tid 1284] mod_authz_core.c(815): [client 127.0.0.1:55316] AH01626: authorization result of Require all granted: granted, referer: http://localhost/index.html
+[Fri Apr 18 12:47:08.792314 2025] [authz_core:debug] [pid 25712:tid 1284] mod_authz_core.c(815): [client 127.0.0.1:55316] AH01626: authorization result of <RequireAny>: granted, referer: http://localhost/index.html
+[Fri Apr 18 12:47:08.792314 2025] [core:info] [pid 25712:tid 1284] [client 127.0.0.1:55316] AH00128: File does not exist: C:/Users/P_M_Labs/Desktop/game for the jam/apache2.4.63/htdocs/favicon.ico, referer: http://localhost/index.html
+[Fri Apr 18 12:47:09.360788 2025] [authz_core:debug] [pid 25712:tid 1284] mod_authz_core.c(815): [client 127.0.0.1:55316] AH01626: authorization result of Require all granted: granted
+[Fri Apr 18 12:47:09.360788 2025] [authz_core:debug] [pid 25712:tid 1284] mod_authz_core.c(815): [client 127.0.0.1:55316] AH01626: authorization result of <RequireAny>: granted
+[Fri Apr 18 12:47:50.318386 2025] [mpm_winnt:notice] [pid 11212:tid 424] AH00422: Parent: Received shutdown signal -- Shutting down the server.
+[Fri Apr 18 12:47:50.318386 2025] [mpm_winnt:debug] [pid 25712:tid 448] child.c(1123): AH00357: Child: Exit event signaled. Child process is ending.
+[Fri Apr 18 12:47:50.318386 2025] [mpm_winnt:debug] [pid 25712:tid 1312] child.c(727): AH00348: Child: Accept thread exiting.
+[Fri Apr 18 12:47:50.318386 2025] [mpm_winnt:debug] [pid 25712:tid 1316] child.c(727): AH00348: Child: Accept thread exiting.
+[Fri Apr 18 12:47:51.324911 2025] [mpm_winnt:debug] [pid 25712:tid 448] child.c(1180): AH00359: Child: Released the start mutex
+[Fri Apr 18 12:47:51.324911 2025] [mpm_winnt:debug] [pid 25712:tid 448] child.c(1192): AH00361: Child: 64 threads blocked on the completion port
+[Fri Apr 18 12:47:52.331435 2025] [mpm_winnt:notice] [pid 25712:tid 448] AH00364: Child: All worker threads have exited.
+[Fri Apr 18 12:47:52.333435 2025] [mpm_winnt:debug] [pid 25712:tid 448] mpm_winnt.c(1721): AH00454: Child process is exiting
+[Fri Apr 18 12:47:52.352266 2025] [mpm_winnt:notice] [pid 11212:tid 424] AH00430: Parent: Child process 25712 exited successfully.
+[Fri Apr 18 12:47:52.352266 2025] [core:info] [pid 11212:tid 424] AH00096: removed PID file C:/Users/P_M_Labs/Desktop/game for the jam/apache2.4.63/logs/httpd.pid (pid=11212)
+PHP Warning:  PHP Startup: sqlite3: Unable to initialize module\nModule compiled with module API=20220829\nPHP    compiled with module API=20230831\nThese options need to match\n in Unknown on line 0
+[Fri Apr 18 12:47:55.245283 2025] [mpm_winnt:notice] [pid 23560:tid 448] AH00455: Apache/2.4.63 (Win64) PHP/8.3.20 configured -- resuming normal operations
+[Fri Apr 18 12:47:55.245283 2025] [mpm_winnt:notice] [pid 23560:tid 448] AH00456: Apache Lounge VS17 Server built: Feb  3 2025 10:10:51
+[Fri Apr 18 12:47:55.245283 2025] [core:notice] [pid 23560:tid 448] AH00094: Command line: 'bin\\httpd.exe -d C:/Users/P_M_Labs/Desktop/game for the jam/apache2.4.63'
+[Fri Apr 18 12:47:55.245283 2025] [core:debug] [pid 23560:tid 448] log.c(1605): AH02639: Using SO_REUSEPORT: no (0)
+[Fri Apr 18 12:47:55.248255 2025] [mpm_winnt:notice] [pid 23560:tid 448] AH00418: Parent: Created child process 3876
+[Fri Apr 18 12:47:55.248255 2025] [mpm_winnt:debug] [pid 23560:tid 448] mpm_winnt.c(430): AH00402: Parent: Sent the scoreboard to the child
+PHP Warning:  PHP Startup: sqlite3: Unable to initialize module\nModule compiled with module API=20220829\nPHP    compiled with module API=20230831\nThese options need to match\n in Unknown on line 0
+[Fri Apr 18 12:47:55.672254 2025] [mpm_winnt:debug] [pid 3876:tid 436] mpm_winnt.c(1716): AH00453: Child process is running
+[Fri Apr 18 12:47:55.672254 2025] [mpm_winnt:debug] [pid 3876:tid 436] mpm_winnt.c(344): AH00391: Child: Retrieved our scoreboard from the parent.
+[Fri Apr 18 12:47:55.672254 2025] [mpm_winnt:debug] [pid 3876:tid 436] mpm_winnt.c(466): AH00403: Child: Waiting for data for listening socket 0.0.0.0:80
+[Fri Apr 18 12:47:55.672254 2025] [mpm_winnt:debug] [pid 23560:tid 448] mpm_winnt.c(513): AH00408: Parent: Duplicating socket 560 (0.0.0.0:80) and sending it to child process 3876
+[Fri Apr 18 12:47:55.674255 2025] [mpm_winnt:debug] [pid 23560:tid 448] mpm_winnt.c(513): AH00408: Parent: Duplicating socket 456 ([::]:80) and sending it to child process 3876
+[Fri Apr 18 12:47:55.674255 2025] [mpm_winnt:debug] [pid 23560:tid 448] mpm_winnt.c(532): AH00411: Parent: Sent 2 listeners to child 3876
+Apache server shutdown initiated...
+pm_winnt:debug] [pid 3876:tid 436] mpm_winnt.c(466): AH00403: Child: Waiting for data for listening socket [::]:80
+[Fri Apr 18 12:47:55.676285 2025] [mpm_winnt:debug] [pid 3876:tid 436] mpm_winnt.c(491): AH00407: Child: retrieved 2 listeners from parent
+[Fri Apr 18 12:47:55.676285 2025] [mpm_winnt:debug] [pid 3876:tid 436] child.c(986): AH00352: Child: Acquired the start mutex.
+[Fri Apr 18 12:47:55.676285 2025] [mpm_winnt:notice] [pid 3876:tid 436] AH00354: Child: Starting 64 worker threads.
+[Fri Apr 18 12:47:55.678254 2025] [mpm_winnt:debug] [pid 3876:tid 1160] child.c(430): AH00334: Child: Accept thread listening on 0.0.0.0:80 using AcceptFilter connect
+[Fri Apr 18 12:47:55.678254 2025] [mpm_winnt:debug] [pid 3876:tid 1164] child.c(430): AH00334: Child: Accept thread listening on [::]:80 using AcceptFilter connect
+[Fri Apr 18 12:48:26.535938 2025] [mpm_winnt:notice] [pid 23560:tid 448] AH00422: Parent: Received shutdown signal -- Shutting down the server.
+[Fri Apr 18 12:48:26.535938 2025] [mpm_winnt:debug] [pid 3876:tid 436] child.c(1123): AH00357: Child: Exit event signaled. Child process is ending.
+[Fri Apr 18 12:48:26.535938 2025] [mpm_winnt:debug] [pid 3876:tid 1164] child.c(727): AH00348: Child: Accept thread exiting.
+[Fri Apr 18 12:48:26.535938 2025] [mpm_winnt:debug] [pid 3876:tid 1160] child.c(727): AH00348: Child: Accept thread exiting.
+[Fri Apr 18 12:48:27.538069 2025] [mpm_winnt:debug] [pid 3876:tid 436] child.c(1180): AH00359: Child: Released the start mutex
+[Fri Apr 18 12:48:27.538069 2025] [mpm_winnt:debug] [pid 3876:tid 436] child.c(1192): AH00361: Child: 64 threads blocked on the completion port
+[Fri Apr 18 12:48:28.550195 2025] [mpm_winnt:notice] [pid 3876:tid 436] AH00364: Child: All worker threads have exited.
+[Fri Apr 18 12:48:28.551190 2025] [mpm_winnt:debug] [pid 3876:tid 436] mpm_winnt.c(1721): AH00454: Child process is exiting
+[Fri Apr 18 12:48:28.570512 2025] [mpm_winnt:notice] [pid 23560:tid 448] AH00430: Parent: Child process 3876 exited successfully.
+[Fri Apr 18 12:48:28.570512 2025] [core:info] [pid 23560:tid 448] AH00096: removed PID file C:/Users/P_M_Labs/Desktop/game for the jam/apache2.4.63/logs/httpd.pid (pid=23560)
+PHP Warning:  PHP Startup: sqlite3: Unable to initialize module\nModule compiled with module API=20220829\nPHP    compiled with module API=20230831\nThese options need to match\n in Unknown on line 0
+[Fri Apr 18 12:48:31.502483 2025] [mpm_winnt:notice] [pid 13408:tid 424] AH00455: Apache/2.4.63 (Win64) PHP/8.3.20 configured -- resuming normal operations
+[Fri Apr 18 12:48:31.502483 2025] [mpm_winnt:notice] [pid 13408:tid 424] AH00456: Apache Lounge VS17 Server built: Feb  3 2025 10:10:51
+[Fri Apr 18 12:48:31.502483 2025] [core:notice] [pid 13408:tid 424] AH00094: Command line: 'bin\\httpd.exe -d C:/Users/P_M_Labs/Desktop/game for the jam/apache2.4.63'
+[Fri Apr 18 12:48:31.502483 2025] [core:debug] [pid 13408:tid 424] log.c(1605): AH02639: Using SO_REUSEPORT: no (0)
+[Fri Apr 18 12:48:31.505484 2025] [mpm_winnt:notice] [pid 13408:tid 424] AH00418: Parent: Created child process 12992
+[Fri Apr 18 12:48:31.505484 2025] [mpm_winnt:debug] [pid 13408:tid 424] mpm_winnt.c(430): AH00402: Parent: Sent the scoreboard to the child
+PHP Warning:  PHP Startup: sqlite3: Unable to initialize module\nModule compiled with module API=20220829\nPHP    compiled with module API=20230831\nThese options need to match\n in Unknown on line 0
+[Fri Apr 18 12:48:31.932452 2025] [mpm_winnt:debug] [pid 12992:tid 436] mpm_winnt.c(1716): AH00453: Child process is running
+[Fri Apr 18 12:48:31.933452 2025] [mpm_winnt:debug] [pid 12992:tid 436] mpm_winnt.c(344): AH00391: Child: Retrieved our scoreboard from the parent.
+[Fri Apr 18 12:48:31.933452 2025] [mpm_winnt:debug] [pid 13408:tid 424] mpm_winnt.c(513): AH00408: Parent: Duplicating socket 552 (0.0.0.0:80) and sending it to child process 12992
+[Fri Apr 18 12:48:31.933452 2025] [mpm_winnt:debug] [pid 12992:tid 436] mpm_winnt.c(466): AH00403: Child: Waiting for data for listening socket 0.0.0.0:80
+[Fri Apr 18 12:48:31.934452 2025] [mpm_winnt:debug] [pid 13408:tid 424] mpm_winnt.c(513): AH00408: Parent: Duplicating socket 472 ([::]:80) and sending it to child process 12992
+[Fri Apr 18 12:48:31.934452 2025] [mpm_winnt:debug] [pid 13408:tid 424] mpm_winnt.c(532): AH00411: Parent: Sent 2 listeners to child 12992
+Apache server shutdown initiated...
+pm_winnt:debug] [pid 12992:tid 436] mpm_winnt.c(466): AH00403: Child: Waiting for data for listening socket [::]:80
+[Fri Apr 18 12:48:31.936451 2025] [mpm_winnt:debug] [pid 12992:tid 436] mpm_winnt.c(491): AH00407: Child: retrieved 2 listeners from parent
+[Fri Apr 18 12:48:31.936451 2025] [mpm_winnt:debug] [pid 12992:tid 436] child.c(986): AH00352: Child: Acquired the start mutex.
+[Fri Apr 18 12:48:31.936451 2025] [mpm_winnt:notice] [pid 12992:tid 436] AH00354: Child: Starting 64 worker threads.
+[Fri Apr 18 12:48:31.938452 2025] [mpm_winnt:debug] [pid 12992:tid 1160] child.c(430): AH00334: Child: Accept thread listening on 0.0.0.0:80 using AcceptFilter connect
+[Fri Apr 18 12:48:31.938452 2025] [mpm_winnt:debug] [pid 12992:tid 1164] child.c(430): AH00334: Child: Accept thread listening on [::]:80 using AcceptFilter connect
+[Fri Apr 18 12:48:37.831038 2025] [authz_core:debug] [pid 12992:tid 1140] mod_authz_core.c(815): [client 127.0.0.1:55352] AH01626: authorization result of Require all granted: granted
+[Fri Apr 18 12:48:37.831038 2025] [authz_core:debug] [pid 12992:tid 1140] mod_authz_core.c(815): [client 127.0.0.1:55352] AH01626: authorization result of <RequireAny>: granted
+[Fri Apr 18 12:48:37.958790 2025] [authz_core:debug] [pid 12992:tid 1140] mod_authz_core.c(815): [client 127.0.0.1:55352] AH01626: authorization result of Require all granted: granted, referer: http://localhost/
+[Fri Apr 18 12:48:37.958790 2025] [authz_core:debug] [pid 12992:tid 1140] mod_authz_core.c(815): [client 127.0.0.1:55352] AH01626: authorization result of <RequireAny>: granted, referer: http://localhost/
+[Fri Apr 18 12:48:37.958790 2025] [core:info] [pid 12992:tid 1140] [client 127.0.0.1:55352] AH00128: File does not exist: C:/Users/P_M_Labs/Desktop/game for the jam/apache2.4.63/htdocs/favicon.ico, referer: http://localhost/
+[Fri Apr 18 12:48:50.282956 2025] [authz_core:debug] [pid 12992:tid 1140] mod_authz_core.c(815): [client ::1:55385] AH01626: authorization result of Require all granted: granted
+[Fri Apr 18 12:48:50.282956 2025] [authz_core:debug] [pid 12992:tid 1140] mod_authz_core.c(815): [client ::1:55385] AH01626: authorization result of <RequireAny>: granted
+[Fri Apr 18 12:48:50.369954 2025] [authz_core:debug] [pid 12992:tid 1140] mod_authz_core.c(815): [client ::1:55385] AH01626: authorization result of Require all granted: granted, referer: http://localhost/
+[Fri Apr 18 12:48:50.369954 2025] [authz_core:debug] [pid 12992:tid 1140] mod_authz_core.c(815): [client ::1:55385] AH01626: authorization result of <RequireAny>: granted, referer: http://localhost/
+[Fri Apr 18 12:48:50.369954 2025] [core:info] [pid 12992:tid 1140] [client ::1:55385] AH00128: File does not exist: C:/Users/P_M_Labs/Desktop/game for the jam/apache2.4.63/htdocs/favicon.ico, referer: http://localhost/
+[Fri Apr 18 12:48:58.592457 2025] [mpm_winnt:notice] [pid 13408:tid 424] AH00422: Parent: Received shutdown signal -- Shutting down the server.
+[Fri Apr 18 12:48:58.592457 2025] [mpm_winnt:debug] [pid 12992:tid 436] child.c(1123): AH00357: Child: Exit event signaled. Child process is ending.
+[Fri Apr 18 12:48:58.592457 2025] [mpm_winnt:debug] [pid 12992:tid 1160] child.c(727): AH00348: Child: Accept thread exiting.
+[Fri Apr 18 12:48:58.592457 2025] [mpm_winnt:debug] [pid 12992:tid 1164] child.c(727): AH00348: Child: Accept thread exiting.
+[Fri Apr 18 12:48:59.595471 2025] [mpm_winnt:debug] [pid 12992:tid 436] child.c(1180): AH00359: Child: Released the start mutex
+[Fri Apr 18 12:48:59.595471 2025] [mpm_winnt:debug] [pid 12992:tid 436] child.c(1192): AH00361: Child: 64 threads blocked on the completion port
+[Fri Apr 18 12:49:00.602578 2025] [mpm_winnt:notice] [pid 12992:tid 436] AH00364: Child: All worker threads have exited.
+[Fri Apr 18 12:49:00.603579 2025] [mpm_winnt:debug] [pid 12992:tid 436] mpm_winnt.c(1721): AH00454: Child process is exiting
+[Fri Apr 18 12:49:00.623338 2025] [mpm_winnt:notice] [pid 13408:tid 424] AH00430: Parent: Child process 12992 exited successfully.
+[Fri Apr 18 12:49:00.624338 2025] [core:info] [pid 13408:tid 424] AH00096: removed PID file C:/Users/P_M_Labs/Desktop/game for the jam/apache2.4.63/logs/httpd.pid (pid=13408)
+PHP Warning:  PHP Startup: sqlite3: Unable to initialize module\nModule compiled with module API=20220829\nPHP    compiled with module API=20230831\nThese options need to match\n in Unknown on line 0
+[Fri Apr 18 12:49:13.188804 2025] [mpm_winnt:notice] [pid 13000:tid 424] AH00455: Apache/2.4.63 (Win64) PHP/8.3.20 configured -- resuming normal operations
+[Fri Apr 18 12:49:13.188804 2025] [mpm_winnt:notice] [pid 13000:tid 424] AH00456: Apache Lounge VS17 Server built: Feb  3 2025 10:10:51
+[Fri Apr 18 12:49:13.188804 2025] [core:notice] [pid 13000:tid 424] AH00094: Command line: 'bin\\httpd.exe -d C:/Users/P_M_Labs/Desktop/game for the jam/apache2.4.63'
+[Fri Apr 18 12:49:13.188804 2025] [core:debug] [pid 13000:tid 424] log.c(1605): AH02639: Using SO_REUSEPORT: no (0)
+[Fri Apr 18 12:49:13.191803 2025] [mpm_winnt:notice] [pid 13000:tid 424] AH00418: Parent: Created child process 23236
+[Fri Apr 18 12:49:13.191803 2025] [mpm_winnt:debug] [pid 13000:tid 424] mpm_winnt.c(430): AH00402: Parent: Sent the scoreboard to the child
+PHP Warning:  PHP Startup: sqlite3: Unable to initialize module\nModule compiled with module API=20220829\nPHP    compiled with module API=20230831\nThese options need to match\n in Unknown on line 0
+[Fri Apr 18 12:49:13.612803 2025] [mpm_winnt:debug] [pid 23236:tid 428] mpm_winnt.c(1716): AH00453: Child process is running
+[Fri Apr 18 12:49:13.612803 2025] [mpm_winnt:debug] [pid 23236:tid 428] mpm_winnt.c(344): AH00391: Child: Retrieved our scoreboard from the parent.
+[Fri Apr 18 12:49:13.612803 2025] [mpm_winnt:debug] [pid 13000:tid 424] mpm_winnt.c(513): AH00408: Parent: Duplicating socket 564 (0.0.0.0:80) and sending it to child process 23236
+[Fri Apr 18 12:49:13.612803 2025] [mpm_winnt:debug] [pid 23236:tid 428] mpm_winnt.c(466): AH00403: Child: Waiting for data for listening socket 0.0.0.0:80
+[Fri Apr 18 12:49:13.614805 2025] [mpm_winnt:debug] [pid 13000:tid 424] mpm_winnt.c(513): AH00408: Parent: Duplicating socket 472 ([::]:80) and sending it to child process 23236
+[Fri Apr 18 12:49:13.614805 2025] [mpm_winnt:debug] [pid 13000:tid 424] mpm_winnt.c(532): AH00411: Parent: Sent 2 listeners to child 23236
+Apache server shutdown initiated...
+pm_winnt:debug] [pid 23236:tid 428] mpm_winnt.c(466): AH00403: Child: Waiting for data for listening socket [::]:80
+[Fri Apr 18 12:49:13.616804 2025] [mpm_winnt:debug] [pid 23236:tid 428] mpm_winnt.c(491): AH00407: Child: retrieved 2 listeners from parent
+[Fri Apr 18 12:49:13.616804 2025] [mpm_winnt:debug] [pid 23236:tid 428] child.c(986): AH00352: Child: Acquired the start mutex.
+[Fri Apr 18 12:49:13.616804 2025] [mpm_winnt:notice] [pid 23236:tid 428] AH00354: Child: Starting 64 worker threads.
+[Fri Apr 18 12:49:13.618805 2025] [mpm_winnt:debug] [pid 23236:tid 1160] child.c(430): AH00334: Child: Accept thread listening on 0.0.0.0:80 using AcceptFilter connect
+[Fri Apr 18 12:49:13.618805 2025] [mpm_winnt:debug] [pid 23236:tid 1164] child.c(430): AH00334: Child: Accept thread listening on [::]:80 using AcceptFilter connect
+[Fri Apr 18 12:49:14.023849 2025] [authz_core:debug] [pid 23236:tid 1140] mod_authz_core.c(815): [client 127.0.0.1:55396] AH01626: authorization result of Require all granted: granted
+[Fri Apr 18 12:49:14.023849 2025] [authz_core:debug] [pid 23236:tid 1140] mod_authz_core.c(815): [client 127.0.0.1:55396] AH01626: authorization result of <RequireAny>: granted
+[Fri Apr 18 12:49:14.974464 2025] [authz_core:debug] [pid 23236:tid 1140] mod_authz_core.c(815): [client 127.0.0.1:55396] AH01626: authorization result of Require all granted: granted
+[Fri Apr 18 12:49:14.974464 2025] [authz_core:debug] [pid 23236:tid 1140] mod_authz_core.c(815): [client 127.0.0.1:55396] AH01626: authorization result of <RequireAny>: granted
+[Fri Apr 18 12:49:15.560542 2025] [authz_core:debug] [pid 23236:tid 1140] mod_authz_core.c(815): [client 127.0.0.1:55396] AH01626: authorization result of Require all granted: granted
+[Fri Apr 18 12:49:15.560542 2025] [authz_core:debug] [pid 23236:tid 1140] mod_authz_core.c(815): [client 127.0.0.1:55396] AH01626: authorization result of <RequireAny>: granted
+[Fri Apr 18 12:50:37.088980 2025] [mpm_winnt:notice] [pid 13000:tid 424] AH00422: Parent: Received shutdown signal -- Shutting down the server.
+[Fri Apr 18 12:50:37.088980 2025] [mpm_winnt:debug] [pid 23236:tid 428] child.c(1123): AH00357: Child: Exit event signaled. Child process is ending.
+[Fri Apr 18 12:50:37.088980 2025] [mpm_winnt:debug] [pid 23236:tid 1160] child.c(727): AH00348: Child: Accept thread exiting.
+[Fri Apr 18 12:50:37.088980 2025] [mpm_winnt:debug] [pid 23236:tid 1164] child.c(727): AH00348: Child: Accept thread exiting.
+[Fri Apr 18 12:50:38.095966 2025] [mpm_winnt:debug] [pid 23236:tid 428] child.c(1180): AH00359: Child: Released the start mutex
+[Fri Apr 18 12:50:38.095966 2025] [mpm_winnt:debug] [pid 23236:tid 428] child.c(1192): AH00361: Child: 64 threads blocked on the completion port
+[Fri Apr 18 12:50:39.110431 2025] [mpm_winnt:notice] [pid 23236:tid 428] AH00364: Child: All worker threads have exited.
+[Fri Apr 18 12:50:39.111429 2025] [mpm_winnt:debug] [pid 23236:tid 428] mpm_winnt.c(1721): AH00454: Child process is exiting
+[Fri Apr 18 12:50:39.130430 2025] [mpm_winnt:notice] [pid 13000:tid 424] AH00430: Parent: Child process 23236 exited successfully.
+[Fri Apr 18 12:50:39.131403 2025] [core:info] [pid 13000:tid 424] AH00096: removed PID file C:/Users/P_M_Labs/Desktop/game for the jam/apache2.4.63/logs/httpd.pid (pid=13000)
+PHP Warning:  PHP Startup: sqlite3: Unable to initialize module\nModule compiled with module API=20220829\nPHP    compiled with module API=20230831\nThese options need to match\n in Unknown on line 0
+[Fri Apr 18 12:50:41.011456 2025] [mpm_winnt:notice] [pid 5664:tid 424] AH00455: Apache/2.4.63 (Win64) PHP/8.3.20 configured -- resuming normal operations
+[Fri Apr 18 12:50:41.011456 2025] [mpm_winnt:notice] [pid 5664:tid 424] AH00456: Apache Lounge VS17 Server built: Feb  3 2025 10:10:51
+[Fri Apr 18 12:50:41.011456 2025] [core:notice] [pid 5664:tid 424] AH00094: Command line: 'bin\\httpd.exe -d C:/Users/P_M_Labs/Desktop/game for the jam/apache2.4.63'
+[Fri Apr 18 12:50:41.011456 2025] [core:debug] [pid 5664:tid 424] log.c(1605): AH02639: Using SO_REUSEPORT: no (0)
+[Fri Apr 18 12:50:41.014427 2025] [mpm_winnt:notice] [pid 5664:tid 424] AH00418: Parent: Created child process 16988
+[Fri Apr 18 12:50:41.014427 2025] [mpm_winnt:debug] [pid 5664:tid 424] mpm_winnt.c(430): AH00402: Parent: Sent the scoreboard to the child
+PHP Warning:  PHP Startup: sqlite3: Unable to initialize module\nModule compiled with module API=20220829\nPHP    compiled with module API=20230831\nThese options need to match\n in Unknown on line 0
+[Fri Apr 18 12:50:41.435783 2025] [mpm_winnt:debug] [pid 16988:tid 428] mpm_winnt.c(1716): AH00453: Child process is running
+[Fri Apr 18 12:50:41.435783 2025] [mpm_winnt:debug] [pid 16988:tid 428] mpm_winnt.c(344): AH00391: Child: Retrieved our scoreboard from the parent.
+[Fri Apr 18 12:50:41.435783 2025] [mpm_winnt:debug] [pid 16988:tid 428] mpm_winnt.c(466): AH00403: Child: Waiting for data for listening socket 0.0.0.0:80
+[Fri Apr 18 12:50:41.435783 2025] [mpm_winnt:debug] [pid 5664:tid 424] mpm_winnt.c(513): AH00408: Parent: Duplicating socket 536 (0.0.0.0:80) and sending it to child process 16988
+[Fri Apr 18 12:50:41.437783 2025] [mpm_winnt:debug] [pid 5664:tid 424] mpm_winnt.c(513): AH00408: Parent: Duplicating socket 472 ([::]:80) and sending it to child process 16988
+[Fri Apr 18 12:50:41.437783 2025] [mpm_winnt:debug] [pid 5664:tid 424] mpm_winnt.c(532): AH00411: Parent: Sent 2 listeners to child 16988
+Apache server shutdown initiated...
+pm_winnt:debug] [pid 16988:tid 428] mpm_winnt.c(466): AH00403: Child: Waiting for data for listening socket [::]:80
+[Fri Apr 18 12:50:41.438785 2025] [mpm_winnt:debug] [pid 16988:tid 428] mpm_winnt.c(491): AH00407: Child: retrieved 2 listeners from parent
+[Fri Apr 18 12:50:41.438785 2025] [mpm_winnt:debug] [pid 16988:tid 428] child.c(986): AH00352: Child: Acquired the start mutex.
+[Fri Apr 18 12:50:41.438785 2025] [mpm_winnt:notice] [pid 16988:tid 428] AH00354: Child: Starting 64 worker threads.
+[Fri Apr 18 12:50:41.441751 2025] [mpm_winnt:debug] [pid 16988:tid 1148] child.c(430): AH00334: Child: Accept thread listening on [::]:80 using AcceptFilter connect
+[Fri Apr 18 12:50:41.441751 2025] [mpm_winnt:debug] [pid 16988:tid 1172] child.c(430): AH00334: Child: Accept thread listening on 0.0.0.0:80 using AcceptFilter connect
+[Fri Apr 18 12:51:06.155113 2025] [mpm_winnt:notice] [pid 5664:tid 424] AH00422: Parent: Received shutdown signal -- Shutting down the server.
+[Fri Apr 18 12:51:06.155113 2025] [mpm_winnt:debug] [pid 16988:tid 428] child.c(1123): AH00357: Child: Exit event signaled. Child process is ending.
+[Fri Apr 18 12:51:06.155113 2025] [mpm_winnt:debug] [pid 16988:tid 1172] child.c(727): AH00348: Child: Accept thread exiting.
+[Fri Apr 18 12:51:06.155113 2025] [mpm_winnt:debug] [pid 16988:tid 1148] child.c(727): AH00348: Child: Accept thread exiting.
+[Fri Apr 18 12:51:07.169428 2025] [mpm_winnt:debug] [pid 16988:tid 428] child.c(1180): AH00359: Child: Released the start mutex
+[Fri Apr 18 12:51:07.169428 2025] [mpm_winnt:debug] [pid 16988:tid 428] child.c(1192): AH00361: Child: 64 threads blocked on the completion port
+[Fri Apr 18 12:51:08.177890 2025] [mpm_winnt:notice] [pid 16988:tid 428] AH00364: Child: All worker threads have exited.
+[Fri Apr 18 12:51:08.178844 2025] [mpm_winnt:debug] [pid 16988:tid 428] mpm_winnt.c(1721): AH00454: Child process is exiting
+[Fri Apr 18 12:51:08.198076 2025] [mpm_winnt:notice] [pid 5664:tid 424] AH00430: Parent: Child process 16988 exited successfully.
+[Fri Apr 18 12:51:08.198076 2025] [core:info] [pid 5664:tid 424] AH00096: removed PID file C:/Users/P_M_Labs/Desktop/game for the jam/apache2.4.63/logs/httpd.pid (pid=5664)
+PHP Warning:  PHP Startup: sqlite3: Unable to initialize module\nModule compiled with module API=20220829\nPHP    compiled with module API=20230831\nThese options need to match\n in Unknown on line 0
+[Fri Apr 18 12:51:10.780517 2025] [mpm_winnt:notice] [pid 13060:tid 424] AH00455: Apache/2.4.63 (Win64) PHP/8.3.20 configured -- resuming normal operations
+[Fri Apr 18 12:51:10.780517 2025] [mpm_winnt:notice] [pid 13060:tid 424] AH00456: Apache Lounge VS17 Server built: Feb  3 2025 10:10:51
+[Fri Apr 18 12:51:10.780517 2025] [core:notice] [pid 13060:tid 424] AH00094: Command line: 'bin\\httpd.exe -d C:/Users/P_M_Labs/Desktop/game for the jam/apache2.4.63'
+[Fri Apr 18 12:51:10.780517 2025] [core:debug] [pid 13060:tid 424] log.c(1605): AH02639: Using SO_REUSEPORT: no (0)
+[Fri Apr 18 12:51:10.784518 2025] [mpm_winnt:notice] [pid 13060:tid 424] AH00418: Parent: Created child process 18188
+[Fri Apr 18 12:51:10.784518 2025] [mpm_winnt:debug] [pid 13060:tid 424] mpm_winnt.c(430): AH00402: Parent: Sent the scoreboard to the child
+PHP Warning:  PHP Startup: sqlite3: Unable to initialize module\nModule compiled with module API=20220829\nPHP    compiled with module API=20230831\nThese options need to match\n in Unknown on line 0
+[Fri Apr 18 12:51:11.202419 2025] [mpm_winnt:debug] [pid 18188:tid 428] mpm_winnt.c(1716): AH00453: Child process is running
+[Fri Apr 18 12:51:11.202419 2025] [mpm_winnt:debug] [pid 18188:tid 428] mpm_winnt.c(344): AH00391: Child: Retrieved our scoreboard from the parent.
+[Fri Apr 18 12:51:11.202419 2025] [mpm_winnt:debug] [pid 18188:tid 428] mpm_winnt.c(466): AH00403: Child: Waiting for data for listening socket 0.0.0.0:1337
+[Fri Apr 18 12:51:11.202419 2025] [mpm_winnt:debug] [pid 13060:tid 424] mpm_winnt.c(513): AH00408: Parent: Duplicating socket 536 (0.0.0.0:1337) and sending it to child process 18188
+[Fri Apr 18 12:51:11.204421 2025] [mpm_winnt:debug] [pid 13060:tid 424] mpm_winnt.c(513): AH00408: Parent: Duplicating socket 472 ([::]:1337) and sending it to child process 18188
+[Fri Apr 18 12:51:11.204421 2025] [mpm_winnt:debug] [pid 13060:tid 424] mpm_winnt.c(532): AH00411: Parent: Sent 2 listeners to child 18188
+Apache server shutdown initiated...
+pm_winnt:debug] [pid 18188:tid 428] mpm_winnt.c(466): AH00403: Child: Waiting for data for listening socket [::]:1337
+[Fri Apr 18 12:51:11.205389 2025] [mpm_winnt:debug] [pid 18188:tid 428] mpm_winnt.c(491): AH00407: Child: retrieved 2 listeners from parent
+[Fri Apr 18 12:51:11.205389 2025] [mpm_winnt:debug] [pid 18188:tid 428] child.c(986): AH00352: Child: Acquired the start mutex.
+[Fri Apr 18 12:51:11.205389 2025] [mpm_winnt:notice] [pid 18188:tid 428] AH00354: Child: Starting 64 worker threads.
+[Fri Apr 18 12:51:11.208388 2025] [mpm_winnt:debug] [pid 18188:tid 1160] child.c(430): AH00334: Child: Accept thread listening on 0.0.0.0:1337 using AcceptFilter connect
+[Fri Apr 18 12:51:11.208388 2025] [mpm_winnt:debug] [pid 18188:tid 1164] child.c(430): AH00334: Child: Accept thread listening on [::]:1337 using AcceptFilter connect
+[Fri Apr 18 12:52:16.608200 2025] [mpm_winnt:notice] [pid 13060:tid 424] AH00422: Parent: Received shutdown signal -- Shutting down the server.
+[Fri Apr 18 12:52:16.608200 2025] [mpm_winnt:debug] [pid 18188:tid 428] child.c(1123): AH00357: Child: Exit event signaled. Child process is ending.
+[Fri Apr 18 12:52:16.608200 2025] [mpm_winnt:debug] [pid 18188:tid 1164] child.c(727): AH00348: Child: Accept thread exiting.
+[Fri Apr 18 12:52:16.608200 2025] [mpm_winnt:debug] [pid 18188:tid 1160] child.c(727): AH00348: Child: Accept thread exiting.
+[Fri Apr 18 12:52:17.614509 2025] [mpm_winnt:debug] [pid 18188:tid 428] child.c(1180): AH00359: Child: Released the start mutex
+[Fri Apr 18 12:52:17.614509 2025] [mpm_winnt:debug] [pid 18188:tid 428] child.c(1192): AH00361: Child: 64 threads blocked on the completion port
+[Fri Apr 18 12:52:18.626507 2025] [mpm_winnt:notice] [pid 18188:tid 428] AH00364: Child: All worker threads have exited.
+[Fri Apr 18 12:52:18.627502 2025] [mpm_winnt:debug] [pid 18188:tid 428] mpm_winnt.c(1721): AH00454: Child process is exiting
+[Fri Apr 18 12:52:18.647162 2025] [mpm_winnt:notice] [pid 13060:tid 424] AH00430: Parent: Child process 18188 exited successfully.
+[Fri Apr 18 12:52:18.647162 2025] [core:info] [pid 13060:tid 424] AH00096: removed PID file C:/Users/P_M_Labs/Desktop/game for the jam/apache2.4.63/logs/httpd.pid (pid=13060)
+PHP Warning:  PHP Startup: sqlite3: Unable to initialize module\nModule compiled with module API=20220829\nPHP    compiled with module API=20230831\nThese options need to match\n in Unknown on line 0
+[Fri Apr 18 12:52:21.387158 2025] [mpm_winnt:notice] [pid 16460:tid 432] AH00455: Apache/2.4.63 (Win64) PHP/8.3.20 configured -- resuming normal operations
+[Fri Apr 18 12:52:21.387158 2025] [mpm_winnt:notice] [pid 16460:tid 432] AH00456: Apache Lounge VS17 Server built: Feb  3 2025 10:10:51
+[Fri Apr 18 12:52:21.387158 2025] [core:notice] [pid 16460:tid 432] AH00094: Command line: 'bin\\httpd.exe -d C:/Users/P_M_Labs/Desktop/game for the jam/apache2.4.63'
+[Fri Apr 18 12:52:21.387158 2025] [core:debug] [pid 16460:tid 432] log.c(1605): AH02639: Using SO_REUSEPORT: no (0)
+[Fri Apr 18 12:52:21.390158 2025] [mpm_winnt:notice] [pid 16460:tid 432] AH00418: Parent: Created child process 27452
+[Fri Apr 18 12:52:21.390158 2025] [mpm_winnt:debug] [pid 16460:tid 432] mpm_winnt.c(430): AH00402: Parent: Sent the scoreboard to the child
+PHP Warning:  PHP Startup: sqlite3: Unable to initialize module\nModule compiled with module API=20220829\nPHP    compiled with module API=20230831\nThese options need to match\n in Unknown on line 0
+[Fri Apr 18 12:52:21.807157 2025] [mpm_winnt:debug] [pid 27452:tid 432] mpm_winnt.c(1716): AH00453: Child process is running
+[Fri Apr 18 12:52:21.807157 2025] [mpm_winnt:debug] [pid 27452:tid 432] mpm_winnt.c(344): AH00391: Child: Retrieved our scoreboard from the parent.
+[Fri Apr 18 12:52:21.807157 2025] [mpm_winnt:debug] [pid 27452:tid 432] mpm_winnt.c(466): AH00403: Child: Waiting for data for listening socket 0.0.0.0:1337
+[Fri Apr 18 12:52:21.807157 2025] [mpm_winnt:debug] [pid 16460:tid 432] mpm_winnt.c(513): AH00408: Parent: Duplicating socket 552 (0.0.0.0:1337) and sending it to child process 27452
+[Fri Apr 18 12:52:21.808189 2025] [mpm_winnt:debug] [pid 16460:tid 432] mpm_winnt.c(513): AH00408: Parent: Duplicating socket 492 ([::]:1337) and sending it to child process 27452
+[Fri Apr 18 12:52:21.808189 2025] [mpm_winnt:debug] [pid 16460:tid 432] mpm_winnt.c(532): AH00411: Parent: Sent 2 listeners to child 27452
+Apache server shutdown initiated...
+pm_winnt:debug] [pid 27452:tid 432] mpm_winnt.c(466): AH00403: Child: Waiting for data for listening socket [::]:1337
+[Fri Apr 18 12:52:21.810158 2025] [mpm_winnt:debug] [pid 27452:tid 432] mpm_winnt.c(491): AH00407: Child: retrieved 2 listeners from parent
+[Fri Apr 18 12:52:21.810158 2025] [mpm_winnt:debug] [pid 27452:tid 432] child.c(986): AH00352: Child: Acquired the start mutex.
+[Fri Apr 18 12:52:21.810158 2025] [mpm_winnt:notice] [pid 27452:tid 432] AH00354: Child: Starting 64 worker threads.
+[Fri Apr 18 12:52:21.812157 2025] [mpm_winnt:debug] [pid 27452:tid 1148] child.c(430): AH00334: Child: Accept thread listening on 0.0.0.0:1337 using AcceptFilter connect
+[Fri Apr 18 12:52:21.812157 2025] [mpm_winnt:debug] [pid 27452:tid 1168] child.c(430): AH00334: Child: Accept thread listening on [::]:1337 using AcceptFilter connect
+[Fri Apr 18 12:53:26.396022 2025] [mpm_winnt:notice] [pid 16460:tid 432] AH00422: Parent: Received shutdown signal -- Shutting down the server.
+[Fri Apr 18 12:53:26.396022 2025] [mpm_winnt:debug] [pid 27452:tid 432] child.c(1123): AH00357: Child: Exit event signaled. Child process is ending.
+[Fri Apr 18 12:53:26.396022 2025] [mpm_winnt:debug] [pid 27452:tid 1148] child.c(727): AH00348: Child: Accept thread exiting.
+[Fri Apr 18 12:53:26.396022 2025] [mpm_winnt:debug] [pid 27452:tid 1168] child.c(727): AH00348: Child: Accept thread exiting.
+[Fri Apr 18 12:53:27.400103 2025] [mpm_winnt:debug] [pid 27452:tid 432] child.c(1180): AH00359: Child: Released the start mutex
+[Fri Apr 18 12:53:27.400103 2025] [mpm_winnt:debug] [pid 27452:tid 432] child.c(1192): AH00361: Child: 64 threads blocked on the completion port
+[Fri Apr 18 12:53:28.406639 2025] [mpm_winnt:notice] [pid 27452:tid 432] AH00364: Child: All worker threads have exited.
+[Fri Apr 18 12:53:28.407677 2025] [mpm_winnt:debug] [pid 27452:tid 432] mpm_winnt.c(1721): AH00454: Child process is exiting
+[Fri Apr 18 12:53:28.426921 2025] [mpm_winnt:notice] [pid 16460:tid 432] AH00430: Parent: Child process 27452 exited successfully.
+[Fri Apr 18 12:53:28.426921 2025] [core:info] [pid 16460:tid 432] AH00096: removed PID file C:/Users/P_M_Labs/Desktop/game for the jam/apache2.4.63/logs/httpd.pid (pid=16460)
+PHP Warning:  PHP Startup: sqlite3: Unable to initialize module\nModule compiled with module API=20220829\nPHP    compiled with module API=20230831\nThese options need to match\n in Unknown on line 0
+[Fri Apr 18 12:53:30.165025 2025] [mpm_winnt:notice] [pid 2804:tid 424] AH00455: Apache/2.4.63 (Win64) PHP/8.3.20 configured -- resuming normal operations
+[Fri Apr 18 12:53:30.166056 2025] [mpm_winnt:notice] [pid 2804:tid 424] AH00456: Apache Lounge VS17 Server built: Feb  3 2025 10:10:51
+[Fri Apr 18 12:53:30.166056 2025] [core:notice] [pid 2804:tid 424] AH00094: Command line: 'bin\\httpd.exe -d C:/Users/P_M_Labs/Desktop/game for the jam/apache2.4.63'
+[Fri Apr 18 12:53:30.166056 2025] [core:debug] [pid 2804:tid 424] log.c(1605): AH02639: Using SO_REUSEPORT: no (0)
+[Fri Apr 18 12:53:30.169025 2025] [mpm_winnt:notice] [pid 2804:tid 424] AH00418: Parent: Created child process 5068
+[Fri Apr 18 12:53:30.169025 2025] [mpm_winnt:debug] [pid 2804:tid 424] mpm_winnt.c(430): AH00402: Parent: Sent the scoreboard to the child
+PHP Warning:  PHP Startup: sqlite3: Unable to initialize module\nModule compiled with module API=20220829\nPHP    compiled with module API=20230831\nThese options need to match\n in Unknown on line 0
+[Fri Apr 18 12:53:30.584050 2025] [mpm_winnt:debug] [pid 5068:tid 428] mpm_winnt.c(1716): AH00453: Child process is running
+[Fri Apr 18 12:53:30.584050 2025] [mpm_winnt:debug] [pid 5068:tid 428] mpm_winnt.c(344): AH00391: Child: Retrieved our scoreboard from the parent.
+[Fri Apr 18 12:53:30.584050 2025] [mpm_winnt:debug] [pid 5068:tid 428] mpm_winnt.c(466): AH00403: Child: Waiting for data for listening socket 0.0.0.0:1337
+[Fri Apr 18 12:53:30.584050 2025] [mpm_winnt:debug] [pid 2804:tid 424] mpm_winnt.c(513): AH00408: Parent: Duplicating socket 540 (0.0.0.0:1337) and sending it to child process 5068
+[Fri Apr 18 12:53:30.586025 2025] [mpm_winnt:debug] [pid 2804:tid 424] mpm_winnt.c(513): AH00408: Parent: Duplicating socket 432 ([::]:1337) and sending it to child process 5068
+[Fri Apr 18 12:53:30.586025 2025] [mpm_winnt:debug] [pid 2804:tid 424] mpm_winnt.c(532): AH00411: Parent: Sent 2 listeners to child 5068
+Apache server shutdown initiated...
+pm_winnt:debug] [pid 5068:tid 428] mpm_winnt.c(466): AH00403: Child: Waiting for data for listening socket [::]:1337
+[Fri Apr 18 12:53:30.588026 2025] [mpm_winnt:debug] [pid 5068:tid 428] mpm_winnt.c(491): AH00407: Child: retrieved 2 listeners from parent
+[Fri Apr 18 12:53:30.588026 2025] [mpm_winnt:debug] [pid 5068:tid 428] child.c(986): AH00352: Child: Acquired the start mutex.
+[Fri Apr 18 12:53:30.588026 2025] [mpm_winnt:notice] [pid 5068:tid 428] AH00354: Child: Starting 64 worker threads.
+[Fri Apr 18 12:53:30.590027 2025] [mpm_winnt:debug] [pid 5068:tid 1160] child.c(430): AH00334: Child: Accept thread listening on [::]:1337 using AcceptFilter connect
+[Fri Apr 18 12:53:30.590027 2025] [mpm_winnt:debug] [pid 5068:tid 1164] child.c(430): AH00334: Child: Accept thread listening on 0.0.0.0:1337 using AcceptFilter connect
+[Fri Apr 18 12:54:18.566957 2025] [mpm_winnt:notice] [pid 2804:tid 424] AH00422: Parent: Received shutdown signal -- Shutting down the server.
+[Fri Apr 18 12:54:18.566957 2025] [mpm_winnt:debug] [pid 5068:tid 428] child.c(1123): AH00357: Child: Exit event signaled. Child process is ending.
+[Fri Apr 18 12:54:18.566957 2025] [mpm_winnt:debug] [pid 5068:tid 1164] child.c(727): AH00348: Child: Accept thread exiting.
+[Fri Apr 18 12:54:18.566957 2025] [mpm_winnt:debug] [pid 5068:tid 1160] child.c(727): AH00348: Child: Accept thread exiting.
+[Fri Apr 18 12:54:19.574352 2025] [mpm_winnt:debug] [pid 5068:tid 428] child.c(1180): AH00359: Child: Released the start mutex
+[Fri Apr 18 12:54:19.574352 2025] [mpm_winnt:debug] [pid 5068:tid 428] child.c(1192): AH00361: Child: 64 threads blocked on the completion port
+[Fri Apr 18 12:54:20.581575 2025] [mpm_winnt:notice] [pid 5068:tid 428] AH00364: Child: All worker threads have exited.
+[Fri Apr 18 12:54:20.582504 2025] [mpm_winnt:debug] [pid 5068:tid 428] mpm_winnt.c(1721): AH00454: Child process is exiting
+[Fri Apr 18 12:54:20.602069 2025] [mpm_winnt:notice] [pid 2804:tid 424] AH00430: Parent: Child process 5068 exited successfully.
+[Fri Apr 18 12:54:20.603096 2025] [core:info] [pid 2804:tid 424] AH00096: removed PID file C:/Users/P_M_Labs/Desktop/game for the jam/apache2.4.63/logs/httpd.pid (pid=2804)
+PHP Warning:  PHP Startup: sqlite3: Unable to initialize module\nModule compiled with module API=20220829\nPHP    compiled with module API=20230831\nThese options need to match\n in Unknown on line 0
+[Fri Apr 18 12:54:22.364176 2025] [mpm_winnt:notice] [pid 2128:tid 424] AH00455: Apache/2.4.63 (Win64) PHP/8.3.20 configured -- resuming normal operations
+[Fri Apr 18 12:54:22.364176 2025] [mpm_winnt:notice] [pid 2128:tid 424] AH00456: Apache Lounge VS17 Server built: Feb  3 2025 10:10:51
+[Fri Apr 18 12:54:22.364176 2025] [core:notice] [pid 2128:tid 424] AH00094: Command line: 'bin\\httpd.exe -d C:/Users/P_M_Labs/Desktop/game for the jam/apache2.4.63'
+[Fri Apr 18 12:54:22.364176 2025] [core:debug] [pid 2128:tid 424] log.c(1605): AH02639: Using SO_REUSEPORT: no (0)
+[Fri Apr 18 12:54:22.367174 2025] [mpm_winnt:notice] [pid 2128:tid 424] AH00418: Parent: Created child process 3608
+[Fri Apr 18 12:54:22.367174 2025] [mpm_winnt:debug] [pid 2128:tid 424] mpm_winnt.c(430): AH00402: Parent: Sent the scoreboard to the child
+PHP Warning:  PHP Startup: sqlite3: Unable to initialize module\nModule compiled with module API=20220829\nPHP    compiled with module API=20230831\nThese options need to match\n in Unknown on line 0
+[Fri Apr 18 12:54:22.791143 2025] [mpm_winnt:debug] [pid 3608:tid 432] mpm_winnt.c(1716): AH00453: Child process is running
+[Fri Apr 18 12:54:22.791143 2025] [mpm_winnt:debug] [pid 3608:tid 432] mpm_winnt.c(344): AH00391: Child: Retrieved our scoreboard from the parent.
+[Fri Apr 18 12:54:22.791143 2025] [mpm_winnt:debug] [pid 2128:tid 424] mpm_winnt.c(513): AH00408: Parent: Duplicating socket 556 (0.0.0.0:4200) and sending it to child process 3608
+[Fri Apr 18 12:54:22.792143 2025] [mpm_winnt:debug] [pid 3608:tid 432] mpm_winnt.c(466): AH00403: Child: Waiting for data for listening socket 0.0.0.0:4200
+[Fri Apr 18 12:54:22.793145 2025] [mpm_winnt:debug] [pid 2128:tid 424] mpm_winnt.c(513): AH00408: Parent: Duplicating socket 468 ([::]:4200) and sending it to child process 3608
+[Fri Apr 18 12:54:22.793145 2025] [mpm_winnt:debug] [pid 2128:tid 424] mpm_winnt.c(532): AH00411: Parent: Sent 2 listeners to child 3608
+Apache server shutdown initiated...
+pm_winnt:debug] [pid 3608:tid 432] mpm_winnt.c(466): AH00403: Child: Waiting for data for listening socket [::]:4200
+[Fri Apr 18 12:54:22.795144 2025] [mpm_winnt:debug] [pid 3608:tid 432] mpm_winnt.c(491): AH00407: Child: retrieved 2 listeners from parent
+[Fri Apr 18 12:54:22.795144 2025] [mpm_winnt:debug] [pid 3608:tid 432] child.c(986): AH00352: Child: Acquired the start mutex.
+[Fri Apr 18 12:54:22.795144 2025] [mpm_winnt:notice] [pid 3608:tid 432] AH00354: Child: Starting 64 worker threads.
+[Fri Apr 18 12:54:22.797145 2025] [mpm_winnt:debug] [pid 3608:tid 1160] child.c(430): AH00334: Child: Accept thread listening on 0.0.0.0:4200 using AcceptFilter connect
+[Fri Apr 18 12:54:22.797145 2025] [mpm_winnt:debug] [pid 3608:tid 1164] child.c(430): AH00334: Child: Accept thread listening on [::]:4200 using AcceptFilter connect
+[Fri Apr 18 12:54:30.599760 2025] [authz_core:debug] [pid 3608:tid 1136] mod_authz_core.c(815): [client 127.0.0.1:55555] AH01626: authorization result of Require all granted: granted
+[Fri Apr 18 12:54:30.600759 2025] [authz_core:debug] [pid 3608:tid 1136] mod_authz_core.c(815): [client 127.0.0.1:55555] AH01626: authorization result of <RequireAny>: granted
+[Fri Apr 18 12:54:30.722758 2025] [authz_core:debug] [pid 3608:tid 1136] mod_authz_core.c(815): [client 127.0.0.1:55555] AH01626: authorization result of Require all granted: granted, referer: http://localhost:4200/
+[Fri Apr 18 12:54:30.722758 2025] [authz_core:debug] [pid 3608:tid 1136] mod_authz_core.c(815): [client 127.0.0.1:55555] AH01626: authorization result of <RequireAny>: granted, referer: http://localhost:4200/
+[Fri Apr 18 12:54:30.722758 2025] [core:info] [pid 3608:tid 1136] [client 127.0.0.1:55555] AH00128: File does not exist: C:/Users/P_M_Labs/Desktop/game for the jam/apache2.4.63/htdocs/favicon.ico, referer: http://localhost:4200/
+[Fri Apr 18 12:54:38.181886 2025] [mpm_winnt:notice] [pid 2128:tid 424] AH00422: Parent: Received shutdown signal -- Shutting down the server.
+[Fri Apr 18 12:54:38.181886 2025] [mpm_winnt:debug] [pid 3608:tid 432] child.c(1123): AH00357: Child: Exit event signaled. Child process is ending.
+[Fri Apr 18 12:54:38.181886 2025] [mpm_winnt:debug] [pid 3608:tid 1160] child.c(727): AH00348: Child: Accept thread exiting.
+[Fri Apr 18 12:54:38.181886 2025] [mpm_winnt:debug] [pid 3608:tid 1164] child.c(727): AH00348: Child: Accept thread exiting.
+[Fri Apr 18 12:54:39.195952 2025] [mpm_winnt:debug] [pid 3608:tid 432] child.c(1180): AH00359: Child: Released the start mutex
+[Fri Apr 18 12:54:39.195952 2025] [mpm_winnt:debug] [pid 3608:tid 432] child.c(1192): AH00361: Child: 64 threads blocked on the completion port
+[Fri Apr 18 12:54:40.207531 2025] [mpm_winnt:notice] [pid 3608:tid 432] AH00364: Child: All worker threads have exited.
+[Fri Apr 18 12:54:40.208532 2025] [mpm_winnt:debug] [pid 3608:tid 432] mpm_winnt.c(1721): AH00454: Child process is exiting
+[Fri Apr 18 12:54:40.228532 2025] [mpm_winnt:notice] [pid 2128:tid 424] AH00430: Parent: Child process 3608 exited successfully.
+[Fri Apr 18 12:54:40.229531 2025] [core:info] [pid 2128:tid 424] AH00096: removed PID file C:/Users/P_M_Labs/Desktop/game for the jam/apache2.4.63/logs/httpd.pid (pid=2128)
+PHP Warning:  PHP Startup: sqlite3: Unable to initialize module\nModule compiled with module API=20220829\nPHP    compiled with module API=20230831\nThese options need to match\n in Unknown on line 0
+[Fri Apr 18 12:56:58.526841 2025] [mpm_winnt:notice] [pid 25040:tid 432] AH00455: Apache/2.4.63 (Win64) PHP/8.3.20 configured -- resuming normal operations
+[Fri Apr 18 12:56:58.526841 2025] [mpm_winnt:notice] [pid 25040:tid 432] AH00456: Apache Lounge VS17 Server built: Feb  3 2025 10:10:51
+[Fri Apr 18 12:56:58.526841 2025] [core:notice] [pid 25040:tid 432] AH00094: Command line: 'bin\\httpd.exe -d C:/Users/P_M_Labs/Desktop/game for the jam/apache2.4.63'
+[Fri Apr 18 12:56:58.526841 2025] [core:debug] [pid 25040:tid 432] log.c(1605): AH02639: Using SO_REUSEPORT: no (0)
+[Fri Apr 18 12:56:58.530843 2025] [mpm_winnt:notice] [pid 25040:tid 432] AH00418: Parent: Created child process 9376
+[Fri Apr 18 12:56:58.530843 2025] [mpm_winnt:debug] [pid 25040:tid 432] mpm_winnt.c(430): AH00402: Parent: Sent the scoreboard to the child
+PHP Warning:  PHP Startup: sqlite3: Unable to initialize module\nModule compiled with module API=20220829\nPHP    compiled with module API=20230831\nThese options need to match\n in Unknown on line 0
+[Fri Apr 18 12:56:58.947872 2025] [mpm_winnt:debug] [pid 9376:tid 428] mpm_winnt.c(1716): AH00453: Child process is running
+[Fri Apr 18 12:56:58.947872 2025] [mpm_winnt:debug] [pid 9376:tid 428] mpm_winnt.c(344): AH00391: Child: Retrieved our scoreboard from the parent.
+[Fri Apr 18 12:56:58.947872 2025] [mpm_winnt:debug] [pid 9376:tid 428] mpm_winnt.c(466): AH00403: Child: Waiting for data for listening socket 0.0.0.0:80
+[Fri Apr 18 12:56:58.947872 2025] [mpm_winnt:debug] [pid 25040:tid 432] mpm_winnt.c(513): AH00408: Parent: Duplicating socket 536 (0.0.0.0:80) and sending it to child process 9376
+[Fri Apr 18 12:56:58.948874 2025] [mpm_winnt:debug] [pid 25040:tid 432] mpm_winnt.c(513): AH00408: Parent: Duplicating socket 76 ([::]:80) and sending it to child process 9376
+[Fri Apr 18 12:56:58.949873 2025] [mpm_winnt:debug] [pid 25040:tid 432] mpm_winnt.c(532): AH00411: Parent: Sent 2 listeners to child 9376
+Apache server interrupted...
+025] [mpm_winnt:debug] [pid 9376:tid 428] mpm_winnt.c(466): AH00403: Child: Waiting for data for listening socket [::]:80
+[Fri Apr 18 12:56:58.950873 2025] [mpm_winnt:debug] [pid 9376:tid 428] mpm_winnt.c(491): AH00407: Child: retrieved 2 listeners from parent
+[Fri Apr 18 12:56:58.950873 2025] [mpm_winnt:debug] [pid 9376:tid 428] child.c(986): AH00352: Child: Acquired the start mutex.
+[Fri Apr 18 12:56:58.950873 2025] [mpm_winnt:notice] [pid 9376:tid 428] AH00354: Child: Starting 64 worker threads.
+[Fri Apr 18 12:56:58.952844 2025] [mpm_winnt:debug] [pid 9376:tid 1084] child.c(430): AH00334: Child: Accept thread listening on [::]:80 using AcceptFilter connect
+[Fri Apr 18 12:56:58.953842 2025] [mpm_winnt:debug] [pid 9376:tid 1164] child.c(430): AH00334: Child: Accept thread listening on 0.0.0.0:80 using AcceptFilter connect
+[Fri Apr 18 12:57:09.260238 2025] [mpm_winnt:notice] [pid 25040:tid 432] AH00422: Parent: Received shutdown signal -- Shutting down the server.
+Apache server interrupted...
+Apache server interrupted...
+376:tid 428] child.c(1123): AH00357: Child: Exit event signaled. Child process is ending.
+[Fri Apr 18 12:57:09.261238 2025] [mpm_winnt:debug] [pid 9376:tid 1084] child.c(727): AH00348: Child: Accept thread exiting.
+[Fri Apr 18 12:57:09.261238 2025] [mpm_winnt:debug] [pid 9376:tid 1164] child.c(727): AH00348: Child: Accept thread exiting.
+[Fri Apr 18 12:57:10.276026 2025] [mpm_winnt:debug] [pid 9376:tid 428] child.c(1180): AH00359: Child: Released the start mutex
+[Fri Apr 18 12:57:10.276026 2025] [mpm_winnt:debug] [pid 9376:tid 428] child.c(1192): AH00361: Child: 64 threads blocked on the completion port
+[Fri Apr 18 12:57:11.286760 2025] [mpm_winnt:notice] [pid 9376:tid 428] AH00364: Child: All worker threads have exited.
+[Fri Apr 18 12:57:11.287760 2025] [mpm_winnt:debug] [pid 9376:tid 428] mpm_winnt.c(1721): AH00454: Child process is exiting
+[Fri Apr 18 12:57:11.307392 2025] [mpm_winnt:notice] [pid 25040:tid 432] AH00430: Parent: Child process 9376 exited successfully.
+[Fri Apr 18 12:57:11.307392 2025] [core:info] [pid 25040:tid 432] AH00096: removed PID file C:/Users/P_M_Labs/Desktop/game for the jam/apache2.4.63/logs/httpd.pid (pid=25040)
+PHP Warning:  PHP Startup: sqlite3: Unable to initialize module\nModule compiled with module API=20220829\nPHP    compiled with module API=20230831\nThese options need to match\n in Unknown on line 0
+[Fri Apr 18 13:03:37.044608 2025] [mpm_winnt:notice] [pid 7652:tid 432] AH00455: Apache/2.4.63 (Win64) PHP/8.3.20 configured -- resuming normal operations
+[Fri Apr 18 13:03:37.044608 2025] [mpm_winnt:notice] [pid 7652:tid 432] AH00456: Apache Lounge VS17 Server built: Feb  3 2025 10:10:51
+[Fri Apr 18 13:03:37.044608 2025] [core:notice] [pid 7652:tid 432] AH00094: Command line: 'bin\\httpd.exe -d C:/Users/P_M_Labs/Desktop/game for the jam/apache2.4.63'
+[Fri Apr 18 13:03:37.044608 2025] [core:debug] [pid 7652:tid 432] log.c(1605): AH02639: Using SO_REUSEPORT: no (0)
+[Fri Apr 18 13:03:37.048609 2025] [mpm_winnt:notice] [pid 7652:tid 432] AH00418: Parent: Created child process 2732
+[Fri Apr 18 13:03:37.048609 2025] [mpm_winnt:debug] [pid 7652:tid 432] mpm_winnt.c(430): AH00402: Parent: Sent the scoreboard to the child
+PHP Warning:  PHP Startup: sqlite3: Unable to initialize module\nModule compiled with module API=20220829\nPHP    compiled with module API=20230831\nThese options need to match\n in Unknown on line 0
+[Fri Apr 18 13:03:37.563681 2025] [mpm_winnt:debug] [pid 2732:tid 432] mpm_winnt.c(1716): AH00453: Child process is running
+[Fri Apr 18 13:03:37.563681 2025] [mpm_winnt:debug] [pid 2732:tid 432] mpm_winnt.c(344): AH00391: Child: Retrieved our scoreboard from the parent.
+[Fri Apr 18 13:03:37.563681 2025] [mpm_winnt:debug] [pid 7652:tid 432] mpm_winnt.c(513): AH00408: Parent: Duplicating socket 572 (0.0.0.0:80) and sending it to child process 2732
+[Fri Apr 18 13:03:37.563681 2025] [mpm_winnt:debug] [pid 2732:tid 432] mpm_winnt.c(466): AH00403: Child: Waiting for data for listening socket 0.0.0.0:80
+[Fri Apr 18 13:03:37.565681 2025] [mpm_winnt:debug] [pid 7652:tid 432] mpm_winnt.c(513): AH00408: Parent: Duplicating socket 496 ([::]:80) and sending it to child process 2732
+[Fri Apr 18 13:03:37.565681 2025] [mpm_winnt:debug] [pid 7652:tid 432] mpm_winnt.c(532): AH00411: Parent: Sent 2 listeners to child 2732
+[Fri Apr 18 13:03:37.567680 2025] [mpm_winnt:debug] [pid 2732:tid 432] mpm_winnt.c(466): AH00403: Child: Waiting for data for listening socket [::]:80
+[Fri Apr 18 13:03:37.567680 2025] [mpm_winnt:debug] [pid 2732:tid 432] mpm_winnt.c(491): AH00407: Child: retrieved 2 listeners from parent
+[Fri Apr 18 13:03:37.567680 2025] [mpm_winnt:debug] [pid 2732:tid 432] child.c(986): AH00352: Child: Acquired the start mutex.
+[Fri Apr 18 13:03:37.567680 2025] [mpm_winnt:notice] [pid 2732:tid 432] AH00354: Child: Starting 64 worker threads.
+[Fri Apr 18 13:03:37.569648 2025] [mpm_winnt:debug] [pid 2732:tid 1156] child.c(430): AH00334: Child: Accept thread listening on 0.0.0.0:80 using AcceptFilter connect
+[Fri Apr 18 13:03:37.569648 2025] [mpm_winnt:debug] [pid 2732:tid 1168] child.c(430): AH00334: Child: Accept thread listening on [::]:80 using AcceptFilter connect
+[Fri Apr 18 13:03:51.892321 2025] [core:warn] [pid 10532:tid 452] AH00098: pid file C:/Users/P_M_Labs/Desktop/game for the jam/apache2.4.63/logs/httpd.pid overwritten -- Unclean shutdown of previous Apache run?
+PHP Warning:  PHP Startup: sqlite3: Unable to initialize module\nModule compiled with module API=20220829\nPHP    compiled with module API=20230831\nThese options need to match\n in Unknown on line 0
+[Fri Apr 18 13:03:51.925322 2025] [mpm_winnt:notice] [pid 10532:tid 452] AH00455: Apache/2.4.63 (Win64) PHP/8.3.20 configured -- resuming normal operations
+[Fri Apr 18 13:03:51.925322 2025] [mpm_winnt:notice] [pid 10532:tid 452] AH00456: Apache Lounge VS17 Server built: Feb  3 2025 10:10:51
+[Fri Apr 18 13:03:51.925322 2025] [core:notice] [pid 10532:tid 452] AH00094: Command line: 'bin\\httpd.exe -d C:/Users/P_M_Labs/Desktop/game for the jam/apache2.4.63'
+[Fri Apr 18 13:03:51.925322 2025] [core:debug] [pid 10532:tid 452] log.c(1605): AH02639: Using SO_REUSEPORT: no (0)
+[Fri Apr 18 13:03:51.928321 2025] [mpm_winnt:notice] [pid 10532:tid 452] AH00418: Parent: Created child process 3904
+[Fri Apr 18 13:03:51.928321 2025] [mpm_winnt:debug] [pid 10532:tid 452] mpm_winnt.c(430): AH00402: Parent: Sent the scoreboard to the child
+PHP Warning:  PHP Startup: sqlite3: Unable to initialize module\nModule compiled with module API=20220829\nPHP    compiled with module API=20230831\nThese options need to match\n in Unknown on line 0
+[Fri Apr 18 13:03:52.450390 2025] [mpm_winnt:debug] [pid 3904:tid 428] mpm_winnt.c(1716): AH00453: Child process is running
+[Fri Apr 18 13:03:52.451389 2025] [mpm_winnt:debug] [pid 3904:tid 428] mpm_winnt.c(344): AH00391: Child: Retrieved our scoreboard from the parent.
+[Fri Apr 18 13:03:52.451389 2025] [mpm_winnt:debug] [pid 3904:tid 428] mpm_winnt.c(466): AH00403: Child: Waiting for data for listening socket 0.0.0.0:80
+[Fri Apr 18 13:03:52.451389 2025] [mpm_winnt:debug] [pid 10532:tid 452] mpm_winnt.c(513): AH00408: Parent: Duplicating socket 576 (0.0.0.0:80) and sending it to child process 3904
+[Fri Apr 18 13:03:52.452390 2025] [mpm_winnt:debug] [pid 10532:tid 452] mpm_winnt.c(513): AH00408: Parent: Duplicating socket 512 ([::]:80) and sending it to child process 3904
+[Fri Apr 18 13:03:52.452390 2025] [mpm_winnt:debug] [pid 10532:tid 452] mpm_winnt.c(532): AH00411: Parent: Sent 2 listeners to child 3904
+Apache server shutdown initiated...
+pm_winnt:debug] [pid 3904:tid 428] mpm_winnt.c(466): AH00403: Child: Waiting for data for listening socket [::]:80
+[Fri Apr 18 13:03:52.454390 2025] [mpm_winnt:debug] [pid 3904:tid 428] mpm_winnt.c(491): AH00407: Child: retrieved 2 listeners from parent
+[Fri Apr 18 13:03:52.454390 2025] [mpm_winnt:debug] [pid 3904:tid 428] child.c(986): AH00352: Child: Acquired the start mutex.
+[Fri Apr 18 13:03:52.454390 2025] [mpm_winnt:notice] [pid 3904:tid 428] AH00354: Child: Starting 64 worker threads.
+[Fri Apr 18 13:03:52.456389 2025] [mpm_winnt:debug] [pid 3904:tid 1160] child.c(430): AH00334: Child: Accept thread listening on [::]:80 using AcceptFilter connect
+[Fri Apr 18 13:03:52.456389 2025] [mpm_winnt:debug] [pid 3904:tid 1164] child.c(430): AH00334: Child: Accept thread listening on 0.0.0.0:80 using AcceptFilter connect
+[Fri Apr 18 13:04:41.749064 2025] [mpm_winnt:notice] [pid 10532:tid 452] AH00422: Parent: Received shutdown signal -- Shutting down the server.
+[Fri Apr 18 13:04:41.749064 2025] [mpm_winnt:debug] [pid 3904:tid 428] child.c(1123): AH00357: Child: Exit event signaled. Child process is ending.
+[Fri Apr 18 13:04:41.749064 2025] [mpm_winnt:debug] [pid 3904:tid 1164] child.c(727): AH00348: Child: Accept thread exiting.
+[Fri Apr 18 13:04:41.749064 2025] [mpm_winnt:debug] [pid 3904:tid 1160] child.c(727): AH00348: Child: Accept thread exiting.
+[Fri Apr 18 13:04:42.753251 2025] [mpm_winnt:debug] [pid 3904:tid 428] child.c(1180): AH00359: Child: Released the start mutex
+[Fri Apr 18 13:04:42.753251 2025] [mpm_winnt:debug] [pid 3904:tid 428] child.c(1192): AH00361: Child: 64 threads blocked on the completion port
+[Fri Apr 18 13:04:43.762889 2025] [mpm_winnt:notice] [pid 3904:tid 428] AH00364: Child: All worker threads have exited.
+[Fri Apr 18 13:04:43.763847 2025] [mpm_winnt:debug] [pid 3904:tid 428] mpm_winnt.c(1721): AH00454: Child process is exiting
+[Fri Apr 18 13:04:43.783338 2025] [mpm_winnt:notice] [pid 10532:tid 452] AH00430: Parent: Child process 3904 exited successfully.
+[Fri Apr 18 13:04:43.783338 2025] [core:info] [pid 10532:tid 452] AH00096: removed PID file C:/Users/P_M_Labs/Desktop/game for the jam/apache2.4.63/logs/httpd.pid (pid=10532)
+PHP Warning:  PHP Startup: sqlite3: Unable to initialize module\nModule compiled with module API=20220829\nPHP    compiled with module API=20230831\nThese options need to match\n in Unknown on line 0
+[Fri Apr 18 13:04:55.525731 2025] [mpm_winnt:notice] [pid 24640:tid 424] AH00455: Apache/2.4.63 (Win64) PHP/8.3.20 configured -- resuming normal operations
+[Fri Apr 18 13:04:55.525731 2025] [mpm_winnt:notice] [pid 24640:tid 424] AH00456: Apache Lounge VS17 Server built: Feb  3 2025 10:10:51
+[Fri Apr 18 13:04:55.525731 2025] [core:notice] [pid 24640:tid 424] AH00094: Command line: 'bin\\httpd.exe -d C:/Users/P_M_Labs/Desktop/game for the jam/apache2.4.63'
+[Fri Apr 18 13:04:55.525731 2025] [core:debug] [pid 24640:tid 424] log.c(1605): AH02639: Using SO_REUSEPORT: no (0)
+[Fri Apr 18 13:04:55.529700 2025] [mpm_winnt:notice] [pid 24640:tid 424] AH00418: Parent: Created child process 24192
+[Fri Apr 18 13:04:55.529700 2025] [mpm_winnt:debug] [pid 24640:tid 424] mpm_winnt.c(430): AH00402: Parent: Sent the scoreboard to the child
+PHP Warning:  PHP Startup: sqlite3: Unable to initialize module\nModule compiled with module API=20220829\nPHP    compiled with module API=20230831\nThese options need to match\n in Unknown on line 0
+[Fri Apr 18 13:04:56.071699 2025] [mpm_winnt:debug] [pid 24192:tid 432] mpm_winnt.c(1716): AH00453: Child process is running
+[Fri Apr 18 13:04:56.071699 2025] [mpm_winnt:debug] [pid 24192:tid 432] mpm_winnt.c(344): AH00391: Child: Retrieved our scoreboard from the parent.
+[Fri Apr 18 13:04:56.071699 2025] [mpm_winnt:debug] [pid 24640:tid 424] mpm_winnt.c(513): AH00408: Parent: Duplicating socket 548 (0.0.0.0:80) and sending it to child process 24192
+[Fri Apr 18 13:04:56.071699 2025] [mpm_winnt:debug] [pid 24192:tid 432] mpm_winnt.c(466): AH00403: Child: Waiting for data for listening socket 0.0.0.0:80
+[Fri Apr 18 13:04:56.072699 2025] [mpm_winnt:debug] [pid 24640:tid 424] mpm_winnt.c(513): AH00408: Parent: Duplicating socket 488 ([::]:80) and sending it to child process 24192
+[Fri Apr 18 13:04:56.072699 2025] [mpm_winnt:debug] [pid 24640:tid 424] mpm_winnt.c(532): AH00411: Parent: Sent 2 listeners to child 24192
+[Fri Apr 18 13:04:56.074699 2025] [mpm_winnt:debug] [pid 24192:tid 432] mpm_winnt.c(466): AH00403: Child: Waiting for data for listening socket [::]:80
+[Fri Apr 18 13:04:56.074699 2025] [mpm_winnt:debug] [pid 24192:tid 432] mpm_winnt.c(491): AH00407: Child: retrieved 2 listeners from parent
+[Fri Apr 18 13:04:56.074699 2025] [mpm_winnt:debug] [pid 24192:tid 432] child.c(986): AH00352: Child: Acquired the start mutex.
+[Fri Apr 18 13:04:56.074699 2025] [mpm_winnt:notice] [pid 24192:tid 432] AH00354: Child: Starting 64 worker threads.
+[Fri Apr 18 13:04:56.076699 2025] [mpm_winnt:debug] [pid 24192:tid 1160] child.c(430): AH00334: Child: Accept thread listening on 0.0.0.0:80 using AcceptFilter connect
+[Fri Apr 18 13:04:56.076699 2025] [mpm_winnt:debug] [pid 24192:tid 1164] child.c(430): AH00334: Child: Accept thread listening on [::]:80 using AcceptFilter connect
+[Fri Apr 18 13:05:55.478973 2025] [core:warn] [pid 22092:tid 436] AH00098: pid file C:/Users/P_M_Labs/Desktop/game for the jam/apache2.4.63/logs/httpd.pid overwritten -- Unclean shutdown of previous Apache run?
+PHP Warning:  PHP Startup: sqlite3: Unable to initialize module\nModule compiled with module API=20220829\nPHP    compiled with module API=20230831\nThese options need to match\n in Unknown on line 0
+[Fri Apr 18 13:05:55.510979 2025] [mpm_winnt:notice] [pid 22092:tid 436] AH00455: Apache/2.4.63 (Win64) PHP/8.3.20 configured -- resuming normal operations
+[Fri Apr 18 13:05:55.510979 2025] [mpm_winnt:notice] [pid 22092:tid 436] AH00456: Apache Lounge VS17 Server built: Feb  3 2025 10:10:51
+[Fri Apr 18 13:05:55.510979 2025] [core:notice] [pid 22092:tid 436] AH00094: Command line: 'bin\\httpd.exe -d C:/Users/P_M_Labs/Desktop/game for the jam/apache2.4.63'
+[Fri Apr 18 13:05:55.510979 2025] [core:debug] [pid 22092:tid 436] log.c(1605): AH02639: Using SO_REUSEPORT: no (0)
+[Fri Apr 18 13:05:55.513979 2025] [mpm_winnt:notice] [pid 22092:tid 436] AH00418: Parent: Created child process 18132
+[Fri Apr 18 13:05:55.514980 2025] [mpm_winnt:debug] [pid 22092:tid 436] mpm_winnt.c(430): AH00402: Parent: Sent the scoreboard to the child
+PHP Warning:  PHP Startup: sqlite3: Unable to initialize module\nModule compiled with module API=20220829\nPHP    compiled with module API=20230831\nThese options need to match\n in Unknown on line 0
+[Fri Apr 18 13:05:56.052978 2025] [mpm_winnt:debug] [pid 18132:tid 428] mpm_winnt.c(1716): AH00453: Child process is running
+[Fri Apr 18 13:05:56.052978 2025] [mpm_winnt:debug] [pid 18132:tid 428] mpm_winnt.c(344): AH00391: Child: Retrieved our scoreboard from the parent.
+[Fri Apr 18 13:05:56.052978 2025] [mpm_winnt:debug] [pid 18132:tid 428] mpm_winnt.c(466): AH00403: Child: Waiting for data for listening socket 0.0.0.0:80
+[Fri Apr 18 13:05:56.052978 2025] [mpm_winnt:debug] [pid 22092:tid 436] mpm_winnt.c(513): AH00408: Parent: Duplicating socket 568 (0.0.0.0:80) and sending it to child process 18132
+[Fri Apr 18 13:05:56.054979 2025] [mpm_winnt:debug] [pid 22092:tid 436] mpm_winnt.c(513): AH00408: Parent: Duplicating socket 480 ([::]:80) and sending it to child process 18132
+[Fri Apr 18 13:05:56.054979 2025] [mpm_winnt:debug] [pid 22092:tid 436] mpm_winnt.c(532): AH00411: Parent: Sent 2 listeners to child 18132
+Apache server shutdown initiated...
+pm_winnt:debug] [pid 18132:tid 428] mpm_winnt.c(466): AH00403: Child: Waiting for data for listening socket [::]:80
+[Fri Apr 18 13:05:56.055981 2025] [mpm_winnt:debug] [pid 18132:tid 428] mpm_winnt.c(491): AH00407: Child: retrieved 2 listeners from parent
+[Fri Apr 18 13:05:56.055981 2025] [mpm_winnt:debug] [pid 18132:tid 428] child.c(986): AH00352: Child: Acquired the start mutex.
+[Fri Apr 18 13:05:56.055981 2025] [mpm_winnt:notice] [pid 18132:tid 428] AH00354: Child: Starting 64 worker threads.
+[Fri Apr 18 13:05:56.057980 2025] [mpm_winnt:debug] [pid 18132:tid 1160] child.c(430): AH00334: Child: Accept thread listening on 0.0.0.0:80 using AcceptFilter connect
+[Fri Apr 18 13:05:56.057980 2025] [mpm_winnt:debug] [pid 18132:tid 1164] child.c(430): AH00334: Child: Accept thread listening on [::]:80 using AcceptFilter connect
+[Fri Apr 18 13:06:16.518339 2025] [authz_core:debug] [pid 18132:tid 1140] mod_authz_core.c(815): [client 127.0.0.1:55757] AH01626: authorization result of Require all granted: granted
+[Fri Apr 18 13:06:16.518339 2025] [authz_core:debug] [pid 18132:tid 1140] mod_authz_core.c(815): [client 127.0.0.1:55757] AH01626: authorization result of <RequireAny>: granted
+[Fri Apr 18 13:06:16.519338 2025] [core:info] [pid 18132:tid 1140] [client 127.0.0.1:55757] AH00128: File does not exist: C:/Users/P_M_Labs/Desktop/game for the jam/apache2.4.63/htdocs/szachy_w_PE-HA-PE/index.html
+[Fri Apr 18 13:07:04.644108 2025] [authz_core:debug] [pid 18132:tid 1140] mod_authz_core.c(815): [client 127.0.0.1:55772] AH01626: authorization result of Require all granted: granted
+[Fri Apr 18 13:07:04.644108 2025] [authz_core:debug] [pid 18132:tid 1140] mod_authz_core.c(815): [client 127.0.0.1:55772] AH01626: authorization result of <RequireAny>: granted
+[Fri Apr 18 13:07:04.644108 2025] [authz_core:debug] [pid 18132:tid 1140] mod_authz_core.c(815): [client 127.0.0.1:55772] AH01626: authorization result of Require all granted: granted
+[Fri Apr 18 13:07:04.644108 2025] [authz_core:debug] [pid 18132:tid 1140] mod_authz_core.c(815): [client 127.0.0.1:55772] AH01626: authorization result of <RequireAny>: granted
+[Fri Apr 18 13:07:05.584697 2025] [authz_core:debug] [pid 18132:tid 1140] mod_authz_core.c(815): [client 127.0.0.1:55772] AH01626: authorization result of Require all granted: granted
+[Fri Apr 18 13:07:05.584697 2025] [authz_core:debug] [pid 18132:tid 1140] mod_authz_core.c(815): [client 127.0.0.1:55772] AH01626: authorization result of <RequireAny>: granted
+[Fri Apr 18 13:07:05.584697 2025] [authz_core:debug] [pid 18132:tid 1140] mod_authz_core.c(815): [client 127.0.0.1:55772] AH01626: authorization result of Require all granted: granted
+[Fri Apr 18 13:07:05.585697 2025] [authz_core:debug] [pid 18132:tid 1140] mod_authz_core.c(815): [client 127.0.0.1:55772] AH01626: authorization result of <RequireAny>: granted
+[Fri Apr 18 13:07:05.965537 2025] [authz_core:debug] [pid 18132:tid 1140] mod_authz_core.c(815): [client 127.0.0.1:55772] AH01626: authorization result of Require all granted: granted
+[Fri Apr 18 13:07:05.965537 2025] [authz_core:debug] [pid 18132:tid 1140] mod_authz_core.c(815): [client 127.0.0.1:55772] AH01626: authorization result of <RequireAny>: granted
+[Fri Apr 18 13:07:05.966535 2025] [authz_core:debug] [pid 18132:tid 1140] mod_authz_core.c(815): [client 127.0.0.1:55772] AH01626: authorization result of Require all granted: granted
+[Fri Apr 18 13:07:05.966535 2025] [authz_core:debug] [pid 18132:tid 1140] mod_authz_core.c(815): [client 127.0.0.1:55772] AH01626: authorization result of <RequireAny>: granted
+[Fri Apr 18 13:07:06.277625 2025] [authz_core:debug] [pid 18132:tid 1140] mod_authz_core.c(815): [client 127.0.0.1:55772] AH01626: authorization result of Require all granted: granted
+[Fri Apr 18 13:07:06.277625 2025] [authz_core:debug] [pid 18132:tid 1140] mod_authz_core.c(815): [client 127.0.0.1:55772] AH01626: authorization result of <RequireAny>: granted
+[Fri Apr 18 13:07:06.278623 2025] [authz_core:debug] [pid 18132:tid 1140] mod_authz_core.c(815): [client 127.0.0.1:55772] AH01626: authorization result of Require all granted: granted
+[Fri Apr 18 13:07:06.278623 2025] [authz_core:debug] [pid 18132:tid 1140] mod_authz_core.c(815): [client 127.0.0.1:55772] AH01626: authorization result of <RequireAny>: granted
+[Fri Apr 18 13:07:10.175663 2025] [mpm_winnt:notice] [pid 22092:tid 436] AH00422: Parent: Received shutdown signal -- Shutting down the server.
+[Fri Apr 18 13:07:10.176665 2025] [mpm_winnt:debug] [pid 18132:tid 428] child.c(1123): AH00357: Child: Exit event signaled. Child process is ending.
+[Fri Apr 18 13:07:10.176665 2025] [mpm_winnt:debug] [pid 18132:tid 1164] child.c(727): AH00348: Child: Accept thread exiting.
+[Fri Apr 18 13:07:10.176665 2025] [mpm_winnt:debug] [pid 18132:tid 1160] child.c(727): AH00348: Child: Accept thread exiting.
+[Fri Apr 18 13:07:11.183537 2025] [mpm_winnt:debug] [pid 18132:tid 428] child.c(1180): AH00359: Child: Released the start mutex
+[Fri Apr 18 13:07:11.183537 2025] [mpm_winnt:debug] [pid 18132:tid 428] child.c(1192): AH00361: Child: 63 threads blocked on the completion port
+[Fri Apr 18 13:07:12.192919 2025] [mpm_winnt:notice] [pid 18132:tid 428] AH00364: Child: All worker threads have exited.
+[Fri Apr 18 13:07:12.193922 2025] [mpm_winnt:debug] [pid 18132:tid 428] mpm_winnt.c(1721): AH00454: Child process is exiting
+[Fri Apr 18 13:07:12.213228 2025] [mpm_winnt:notice] [pid 22092:tid 436] AH00430: Parent: Child process 18132 exited successfully.
+[Fri Apr 18 13:07:12.214257 2025] [core:info] [pid 22092:tid 436] AH00096: removed PID file C:/Users/P_M_Labs/Desktop/game for the jam/apache2.4.63/logs/httpd.pid (pid=22092)
+PHP Warning:  PHP Startup: sqlite3: Unable to initialize module\nModule compiled with module API=20220829\nPHP    compiled with module API=20230831\nThese options need to match\n in Unknown on line 0
+[Fri Apr 18 13:07:16.302193 2025] [mpm_winnt:notice] [pid 16120:tid 456] AH00455: Apache/2.4.63 (Win64) PHP/8.3.20 configured -- resuming normal operations
+[Fri Apr 18 13:07:16.302193 2025] [mpm_winnt:notice] [pid 16120:tid 456] AH00456: Apache Lounge VS17 Server built: Feb  3 2025 10:10:51
+[Fri Apr 18 13:07:16.302193 2025] [core:notice] [pid 16120:tid 456] AH00094: Command line: 'bin\\httpd.exe -d C:/Users/P_M_Labs/Desktop/game for the jam/apache2.4.63'
+[Fri Apr 18 13:07:16.302193 2025] [core:debug] [pid 16120:tid 456] log.c(1605): AH02639: Using SO_REUSEPORT: no (0)
+[Fri Apr 18 13:07:16.305192 2025] [mpm_winnt:notice] [pid 16120:tid 456] AH00418: Parent: Created child process 23168
+[Fri Apr 18 13:07:16.305192 2025] [mpm_winnt:debug] [pid 16120:tid 456] mpm_winnt.c(430): AH00402: Parent: Sent the scoreboard to the child
+PHP Warning:  PHP Startup: sqlite3: Unable to initialize module\nModule compiled with module API=20220829\nPHP    compiled with module API=20230831\nThese options need to match\n in Unknown on line 0
+[Fri Apr 18 13:07:16.730192 2025] [mpm_winnt:debug] [pid 23168:tid 428] mpm_winnt.c(1716): AH00453: Child process is running
+[Fri Apr 18 13:07:16.730192 2025] [mpm_winnt:debug] [pid 23168:tid 428] mpm_winnt.c(344): AH00391: Child: Retrieved our scoreboard from the parent.
+[Fri Apr 18 13:07:16.730192 2025] [mpm_winnt:debug] [pid 23168:tid 428] mpm_winnt.c(466): AH00403: Child: Waiting for data for listening socket 0.0.0.0:80
+[Fri Apr 18 13:07:16.730192 2025] [mpm_winnt:debug] [pid 16120:tid 456] mpm_winnt.c(513): AH00408: Parent: Duplicating socket 552 (0.0.0.0:80) and sending it to child process 23168
+[Fri Apr 18 13:07:16.732192 2025] [mpm_winnt:debug] [pid 16120:tid 456] mpm_winnt.c(513): AH00408: Parent: Duplicating socket 180 ([::]:80) and sending it to child process 23168
+[Fri Apr 18 13:07:16.732192 2025] [mpm_winnt:debug] [pid 16120:tid 456] mpm_winnt.c(532): AH00411: Parent: Sent 2 listeners to child 23168
+Apache server shutdown initiated...
+pm_winnt:debug] [pid 23168:tid 428] mpm_winnt.c(466): AH00403: Child: Waiting for data for listening socket [::]:80
+[Fri Apr 18 13:07:16.734224 2025] [mpm_winnt:debug] [pid 23168:tid 428] mpm_winnt.c(491): AH00407: Child: retrieved 2 listeners from parent
+[Fri Apr 18 13:07:16.734224 2025] [mpm_winnt:debug] [pid 23168:tid 428] child.c(986): AH00352: Child: Acquired the start mutex.
+[Fri Apr 18 13:07:16.734224 2025] [mpm_winnt:notice] [pid 23168:tid 428] AH00354: Child: Starting 64 worker threads.
+[Fri Apr 18 13:07:16.736193 2025] [mpm_winnt:debug] [pid 23168:tid 1156] child.c(430): AH00334: Child: Accept thread listening on 0.0.0.0:80 using AcceptFilter connect
+[Fri Apr 18 13:07:16.736193 2025] [mpm_winnt:debug] [pid 23168:tid 1168] child.c(430): AH00334: Child: Accept thread listening on [::]:80 using AcceptFilter connect
+[Fri Apr 18 13:07:19.083453 2025] [authz_core:debug] [pid 23168:tid 1148] mod_authz_core.c(815): [client 127.0.0.1:55775] AH01626: authorization result of Require all granted: granted
+[Fri Apr 18 13:07:19.083453 2025] [authz_core:debug] [pid 23168:tid 1148] mod_authz_core.c(815): [client 127.0.0.1:55775] AH01626: authorization result of <RequireAny>: granted
+[Fri Apr 18 13:07:19.723045 2025] [authz_core:debug] [pid 23168:tid 1148] mod_authz_core.c(815): [client 127.0.0.1:55775] AH01626: authorization result of Require all granted: granted
+[Fri Apr 18 13:07:19.723045 2025] [authz_core:debug] [pid 23168:tid 1148] mod_authz_core.c(815): [client 127.0.0.1:55775] AH01626: authorization result of <RequireAny>: granted
+[Fri Apr 18 13:07:20.001177 2025] [authz_core:debug] [pid 23168:tid 1148] mod_authz_core.c(815): [client 127.0.0.1:55775] AH01626: authorization result of Require all granted: granted
+[Fri Apr 18 13:07:20.001177 2025] [authz_core:debug] [pid 23168:tid 1148] mod_authz_core.c(815): [client 127.0.0.1:55775] AH01626: authorization result of <RequireAny>: granted
+[Fri Apr 18 13:07:28.449821 2025] [authz_core:debug] [pid 23168:tid 1148] mod_authz_core.c(815): [client 127.0.0.1:55778] AH01626: authorization result of Require all granted: granted
+[Fri Apr 18 13:07:28.449821 2025] [authz_core:debug] [pid 23168:tid 1148] mod_authz_core.c(815): [client 127.0.0.1:55778] AH01626: authorization result of <RequireAny>: granted
+[Fri Apr 18 13:07:28.450821 2025] [authz_core:debug] [pid 23168:tid 1148] mod_authz_core.c(815): [client 127.0.0.1:55778] AH01626: authorization result of Require all granted: granted
+[Fri Apr 18 13:07:28.450821 2025] [authz_core:debug] [pid 23168:tid 1148] mod_authz_core.c(815): [client 127.0.0.1:55778] AH01626: authorization result of <RequireAny>: granted
+[Fri Apr 18 13:07:28.533822 2025] [authz_core:debug] [pid 23168:tid 1148] mod_authz_core.c(815): [client 127.0.0.1:55778] AH01626: authorization result of Require all granted: granted, referer: http://localhost/
+[Fri Apr 18 13:07:28.533822 2025] [authz_core:debug] [pid 23168:tid 1148] mod_authz_core.c(815): [client 127.0.0.1:55778] AH01626: authorization result of <RequireAny>: granted, referer: http://localhost/
+[Fri Apr 18 13:07:28.533822 2025] [core:info] [pid 23168:tid 1148] [client 127.0.0.1:55778] AH00128: File does not exist: C:/Users/P_M_Labs/Desktop/game for the jam/game/favicon.ico, referer: http://localhost/
+[Fri Apr 18 13:07:29.572210 2025] [authz_core:debug] [pid 23168:tid 1148] mod_authz_core.c(815): [client 127.0.0.1:55779] AH01626: authorization result of Require all granted: granted
+[Fri Apr 18 13:07:29.572210 2025] [authz_core:debug] [pid 23168:tid 1148] mod_authz_core.c(815): [client 127.0.0.1:55779] AH01626: authorization result of <RequireAny>: granted
+[Fri Apr 18 13:07:29.572210 2025] [authz_core:debug] [pid 23168:tid 1148] mod_authz_core.c(815): [client 127.0.0.1:55779] AH01626: authorization result of Require all granted: granted
+[Fri Apr 18 13:07:29.572210 2025] [authz_core:debug] [pid 23168:tid 1148] mod_authz_core.c(815): [client 127.0.0.1:55779] AH01626: authorization result of <RequireAny>: granted
+[Fri Apr 18 13:07:38.594609 2025] [mpm_winnt:notice] [pid 16120:tid 456] AH00422: Parent: Received shutdown signal -- Shutting down the server.
+[Fri Apr 18 13:07:38.594609 2025] [mpm_winnt:debug] [pid 23168:tid 428] child.c(1123): AH00357: Child: Exit event signaled. Child process is ending.
+[Fri Apr 18 13:07:38.594609 2025] [mpm_winnt:debug] [pid 23168:tid 1156] child.c(727): AH00348: Child: Accept thread exiting.
+[Fri Apr 18 13:07:38.594609 2025] [mpm_winnt:debug] [pid 23168:tid 1168] child.c(727): AH00348: Child: Accept thread exiting.
+[Fri Apr 18 13:07:39.606747 2025] [mpm_winnt:debug] [pid 23168:tid 428] child.c(1180): AH00359: Child: Released the start mutex
+[Fri Apr 18 13:07:39.606747 2025] [mpm_winnt:debug] [pid 23168:tid 428] child.c(1192): AH00361: Child: 64 threads blocked on the completion port
+[Fri Apr 18 13:07:40.617473 2025] [mpm_winnt:notice] [pid 23168:tid 428] AH00364: Child: All worker threads have exited.
+[Fri Apr 18 13:07:40.618493 2025] [mpm_winnt:debug] [pid 23168:tid 428] mpm_winnt.c(1721): AH00454: Child process is exiting
+[Fri Apr 18 13:07:40.637657 2025] [mpm_winnt:notice] [pid 16120:tid 456] AH00430: Parent: Child process 23168 exited successfully.
+[Fri Apr 18 13:07:40.637657 2025] [core:info] [pid 16120:tid 456] AH00096: removed PID file C:/Users/P_M_Labs/Desktop/game for the jam/apache2.4.63/logs/httpd.pid (pid=16120)
+PHP Warning:  PHP Startup: sqlite3: Unable to initialize module\nModule compiled with module API=20220829\nPHP    compiled with module API=20230831\nThese options need to match\n in Unknown on line 0
+[Fri Apr 18 13:07:42.614872 2025] [mpm_winnt:notice] [pid 24412:tid 448] AH00455: Apache/2.4.63 (Win64) PHP/8.3.20 configured -- resuming normal operations
+[Fri Apr 18 13:07:42.614872 2025] [mpm_winnt:notice] [pid 24412:tid 448] AH00456: Apache Lounge VS17 Server built: Feb  3 2025 10:10:51
+[Fri Apr 18 13:07:42.614872 2025] [core:notice] [pid 24412:tid 448] AH00094: Command line: 'bin\\httpd.exe -d C:/Users/P_M_Labs/Desktop/game for the jam/apache2.4.63'
+[Fri Apr 18 13:07:42.614872 2025] [core:debug] [pid 24412:tid 448] log.c(1605): AH02639: Using SO_REUSEPORT: no (0)
+[Fri Apr 18 13:07:42.617872 2025] [mpm_winnt:notice] [pid 24412:tid 448] AH00418: Parent: Created child process 10004
+[Fri Apr 18 13:07:42.617872 2025] [mpm_winnt:debug] [pid 24412:tid 448] mpm_winnt.c(430): AH00402: Parent: Sent the scoreboard to the child
+PHP Warning:  PHP Startup: sqlite3: Unable to initialize module\nModule compiled with module API=20220829\nPHP    compiled with module API=20230831\nThese options need to match\n in Unknown on line 0
+[Fri Apr 18 13:07:43.036870 2025] [mpm_winnt:debug] [pid 10004:tid 428] mpm_winnt.c(1716): AH00453: Child process is running
+[Fri Apr 18 13:07:43.036870 2025] [mpm_winnt:debug] [pid 10004:tid 428] mpm_winnt.c(344): AH00391: Child: Retrieved our scoreboard from the parent.
+[Fri Apr 18 13:07:43.036870 2025] [mpm_winnt:debug] [pid 10004:tid 428] mpm_winnt.c(466): AH00403: Child: Waiting for data for listening socket 0.0.0.0:80
+[Fri Apr 18 13:07:43.036870 2025] [mpm_winnt:debug] [pid 24412:tid 448] mpm_winnt.c(513): AH00408: Parent: Duplicating socket 584 (0.0.0.0:80) and sending it to child process 10004
+[Fri Apr 18 13:07:43.037872 2025] [mpm_winnt:debug] [pid 24412:tid 448] mpm_winnt.c(513): AH00408: Parent: Duplicating socket 508 ([::]:80) and sending it to child process 10004
+[Fri Apr 18 13:07:43.037872 2025] [mpm_winnt:debug] [pid 24412:tid 448] mpm_winnt.c(532): AH00411: Parent: Sent 2 listeners to child 10004
+[Fri Apr 18 13:07:43.039871 2025] [mpm_winnt:debug] [pid 10004:tid 428] mpm_winnt.c(466): AH00403: Child: Waiting for data for listening socket [::]:80
+[Fri Apr 18 13:07:43.039871 2025] [mpm_winnt:debug] [pid 10004:tid 428] mpm_winnt.c(491): AH00407: Child: retrieved 2 listeners from parent
+[Fri Apr 18 13:07:43.039871 2025] [mpm_winnt:debug] [pid 10004:tid 428] child.c(986): AH00352: Child: Acquired the start mutex.
+[Fri Apr 18 13:07:43.039871 2025] [mpm_winnt:notice] [pid 10004:tid 428] AH00354: Child: Starting 64 worker threads.
+[Fri Apr 18 13:07:43.041872 2025] [mpm_winnt:debug] [pid 10004:tid 1160] child.c(430): AH00334: Child: Accept thread listening on 0.0.0.0:80 using AcceptFilter connect
+[Fri Apr 18 13:07:43.041872 2025] [mpm_winnt:debug] [pid 10004:tid 1164] child.c(430): AH00334: Child: Accept thread listening on [::]:80 using AcceptFilter connect
+[Fri Apr 18 20:31:35.748216 2025] [core:warn] [pid 32444:tid 460] AH00098: pid file C:/Users/P_M_Labs/Desktop/SubmissionScoreJam-34/server/apache2.4.63/logs/httpd.pid overwritten -- Unclean shutdown of previous Apache run?
+PHP Warning:  PHP Startup: sqlite3: Unable to initialize module\nModule compiled with module API=20220829\nPHP    compiled with module API=20230831\nThese options need to match\n in Unknown on line 0
+[Fri Apr 18 20:31:35.846538 2025] [mpm_winnt:notice] [pid 32444:tid 460] AH00455: Apache/2.4.63 (Win64) PHP/8.3.20 configured -- resuming normal operations
+[Fri Apr 18 20:31:35.846538 2025] [mpm_winnt:notice] [pid 32444:tid 460] AH00456: Apache Lounge VS17 Server built: Feb  3 2025 10:10:51
+[Fri Apr 18 20:31:35.846538 2025] [core:notice] [pid 32444:tid 460] AH00094: Command line: 'bin\\httpd.exe -d C:/Users/P_M_Labs/Desktop/SubmissionScoreJam-34/server/apache2.4.63'
+[Fri Apr 18 20:31:35.846538 2025] [core:debug] [pid 32444:tid 460] log.c(1605): AH02639: Using SO_REUSEPORT: no (0)
+[Fri Apr 18 20:31:35.849539 2025] [mpm_winnt:notice] [pid 32444:tid 460] AH00418: Parent: Created child process 2936
+[Fri Apr 18 20:31:35.849539 2025] [mpm_winnt:debug] [pid 32444:tid 460] mpm_winnt.c(430): AH00402: Parent: Sent the scoreboard to the child
+PHP Warning:  PHP Startup: sqlite3: Unable to initialize module\nModule compiled with module API=20220829\nPHP    compiled with module API=20230831\nThese options need to match\n in Unknown on line 0
+[Fri Apr 18 20:31:36.273496 2025] [mpm_winnt:debug] [pid 2936:tid 428] mpm_winnt.c(1716): AH00453: Child process is running
+[Fri Apr 18 20:31:36.273496 2025] [mpm_winnt:debug] [pid 2936:tid 428] mpm_winnt.c(344): AH00391: Child: Retrieved our scoreboard from the parent.
+[Fri Apr 18 20:31:36.273496 2025] [mpm_winnt:debug] [pid 2936:tid 428] mpm_winnt.c(466): AH00403: Child: Waiting for data for listening socket 0.0.0.0:80
+[Fri Apr 18 20:31:36.273496 2025] [mpm_winnt:debug] [pid 32444:tid 460] mpm_winnt.c(513): AH00408: Parent: Duplicating socket 540 (0.0.0.0:80) and sending it to child process 2936
+[Fri Apr 18 20:31:36.275464 2025] [mpm_winnt:debug] [pid 32444:tid 460] mpm_winnt.c(513): AH00408: Parent: Duplicating socket 76 ([::]:80) and sending it to child process 2936
+[Fri Apr 18 20:31:36.275464 2025] [mpm_winnt:debug] [pid 32444:tid 460] mpm_winnt.c(532): AH00411: Parent: Sent 2 listeners to child 2936
+Apache server shutdown initiated...
+pm_winnt:debug] [pid 2936:tid 428] mpm_winnt.c(466): AH00403: Child: Waiting for data for listening socket [::]:80
+[Fri Apr 18 20:31:36.277496 2025] [mpm_winnt:debug] [pid 2936:tid 428] mpm_winnt.c(491): AH00407: Child: retrieved 2 listeners from parent
+[Fri Apr 18 20:31:36.277496 2025] [mpm_winnt:debug] [pid 2936:tid 428] child.c(986): AH00352: Child: Acquired the start mutex.
+[Fri Apr 18 20:31:36.277496 2025] [mpm_winnt:notice] [pid 2936:tid 428] AH00354: Child: Starting 64 worker threads.
+[Fri Apr 18 20:31:36.279463 2025] [mpm_winnt:debug] [pid 2936:tid 1160] child.c(430): AH00334: Child: Accept thread listening on 0.0.0.0:80 using AcceptFilter connect
+[Fri Apr 18 20:31:36.279463 2025] [mpm_winnt:debug] [pid 2936:tid 1164] child.c(430): AH00334: Child: Accept thread listening on [::]:80 using AcceptFilter connect
+[Fri Apr 18 20:31:47.898726 2025] [authz_core:debug] [pid 2936:tid 1136] mod_authz_core.c(815): [client 127.0.0.1:53872] AH01626: authorization result of Require all granted: granted
+[Fri Apr 18 20:31:47.898726 2025] [authz_core:debug] [pid 2936:tid 1136] mod_authz_core.c(815): [client 127.0.0.1:53872] AH01626: authorization result of <RequireAny>: granted
+[Fri Apr 18 20:31:48.062754 2025] [authz_core:debug] [pid 2936:tid 1136] mod_authz_core.c(815): [client 127.0.0.1:53872] AH01626: authorization result of Require all granted: granted, referer: http://localhost/
+[Fri Apr 18 20:31:48.062754 2025] [authz_core:debug] [pid 2936:tid 1136] mod_authz_core.c(815): [client 127.0.0.1:53872] AH01626: authorization result of <RequireAny>: granted, referer: http://localhost/
+[Fri Apr 18 20:31:48.062754 2025] [core:info] [pid 2936:tid 1136] [client 127.0.0.1:53872] AH00128: File does not exist: C:/Users/P_M_Labs/Desktop/SubmissionScoreJam-34/game/favicon.ico, referer: http://localhost/
+[Fri Apr 18 20:32:10.930624 2025] [mpm_winnt:notice] [pid 32444:tid 460] AH00422: Parent: Received shutdown signal -- Shutting down the server.
+[Fri Apr 18 20:32:10.930624 2025] [mpm_winnt:debug] [pid 2936:tid 428] child.c(1123): AH00357: Child: Exit event signaled. Child process is ending.
+[Fri Apr 18 20:32:10.930624 2025] [mpm_winnt:debug] [pid 2936:tid 1164] child.c(727): AH00348: Child: Accept thread exiting.
+[Fri Apr 18 20:32:10.930624 2025] [mpm_winnt:debug] [pid 2936:tid 1160] child.c(727): AH00348: Child: Accept thread exiting.
+[Fri Apr 18 20:32:11.944874 2025] [mpm_winnt:debug] [pid 2936:tid 428] child.c(1180): AH00359: Child: Released the start mutex
+[Fri Apr 18 20:32:11.944874 2025] [mpm_winnt:debug] [pid 2936:tid 428] child.c(1192): AH00361: Child: 64 threads blocked on the completion port
+[Fri Apr 18 20:32:12.954452 2025] [mpm_winnt:notice] [pid 2936:tid 428] AH00364: Child: All worker threads have exited.
+[Fri Apr 18 20:32:12.955415 2025] [mpm_winnt:debug] [pid 2936:tid 428] mpm_winnt.c(1721): AH00454: Child process is exiting
+[Fri Apr 18 20:32:12.975131 2025] [mpm_winnt:notice] [pid 32444:tid 460] AH00430: Parent: Child process 2936 exited successfully.
+[Fri Apr 18 20:32:12.975131 2025] [core:info] [pid 32444:tid 460] AH00096: removed PID file C:/Users/P_M_Labs/Desktop/SubmissionScoreJam-34/server/apache2.4.63/logs/httpd.pid (pid=32444)
