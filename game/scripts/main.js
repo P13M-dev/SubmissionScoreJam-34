@@ -3,18 +3,18 @@ ctx = canvas.getContext("2d"),
 fps = 60,
 gas = {
     gases: {
-        smoke: { name:"Sm", displayName: "Smoke", score: 0, price: 0, color:""},
-        tritium: { name:"Tri", displayName: "Tritium", score: 3, price: 1, color:""},
-        industrialOxidizer: { name:"IndOxi", displayName: "Industrial oxidizer", score: 5, price: 3, color:""},
-        fluxium: { name:"Fl", displayName: "Fluxium", score: 6, price: 2, color:""},
-        acidicWaste: { name:"AW", displayName: "Acidic waste", score: 0, price: 0, color:""},
-        gasFuel: { name:"GFu", displayName: "Gas fuel", score: 9, price: 4, color:""},
-        helium3: { name:"He", displayName: "Helium-3", score: 12, price: 3, color:""},
-        gelidVapour: { name:"GeV", displayName: "Gelid vapour", score: 15, price: 5, color:""},
-        neonCompound: { name:"NeCo", displayName: "Neonous compound", score: 20, price: 8, color:""},
-        xenium: { name:"Xe", displayName: "Xenium", score: 25, price: 10, color:""},
-        deuterium: { name:"Deu", displayName: "Deuterium", score: 30, price: 20, color:""},
-        argonium: { name:"Arg", displayName: "Argonium", score: 40, price: 0, color:""}
+        smoke: { name:"Sm", displayName: "Smoke", score: 0, price: 0, color:"a"},
+        tritium: { name:"Tri", displayName: "Tritium", score: 3, price: 1, color:"b"},
+        industrialOxidizer: { name:"IndOxi", displayName: "Industrial oxidizer", score: 5, price: 3, color:"c"},
+        fluxium: { name:"Fl", displayName: "Fluxium", score: 6, price: 2, color:"d"},
+        acidicWaste: { name:"AW", displayName: "Acidic waste", score: 0, price: 0, color:"e"},
+        gasFuel: { name:"GFu", displayName: "Gas fuel", score: 9, price: 4, color:"f"},
+        helium3: { name:"He", displayName: "Helium-3", score: 12, price: 3, color:"g"},
+        gelidVapour: { name:"GeV", displayName: "Gelid vapour", score: 15, price: 5, color:"h"},
+        neonCompound: { name:"NeCo", displayName: "Neonous compound", score: 20, price: 8, color:"i"},
+        xenium: { name:"Xe", displayName: "Xenium", score: 25, price: 10, color:"j"},
+        deuterium: { name:"Deu", displayName: "Deuterium", score: 30, price: 20, color:"k"},
+        argonium: { name:"Arg", displayName: "Argonium", score: 40, price: 0, color:"l"}
     },
 
     getId(gasName){
@@ -204,7 +204,7 @@ player = {
                     this.gasTankContents[0].push(gasId);
                     this.gasTankContents[1].push([amount,gas.getColor(gasId),gasName]); 
                 } else {
-                    this.gasTankContents[1][index][1] += amount;
+                    this.gasTankContents[1][index][0] += amount;
                 }
             }
         }
