@@ -255,7 +255,11 @@ player = {
         }
     }
 
-}
+},
+tankTXT =  document.getElementById("tank"),
+fuelBottom =  document.getElementById("fuelBottom"),
+fuelMiddle =  document.getElementById("fuelMiddle"),
+fuelTop =  document.getElementById("fuelTop")
 
 class Button {
     constructor(x,y,width,height,text,func){
@@ -280,15 +284,18 @@ keysPressed = {}, // Track keys pressed
 frameCount = 0,
 gravity = 3,
 moveVector = { x: 30, y: 0 },
-clouds = [], 
-// zapisane w formacie {x, y, width, height, composition: [[id, amount], [id, amount],...]} gdzie id to id gazu a amount to ilość tego gazu w chmurze(%)
+clouds = [],
+// tablica chmur, na razie pusta, później będą się generować w randomowych miejscach 
+// zapisane w formacie {x, y, width, height, composition: [[id, amount], [id, amount]]} gdzie id to id gazu a amount to ilość tego gazu w chmurze
+fuelFrame = 1,
+
 currentLayer = 1, 
 paused = false,
 canPause = true,
 mouseClick = {x: 0, y: 0};
 buttons = [];
 
-buttons.push([buttons.length,new Button(450, 40, 300, 100,"Resume",() => {unpause();canPause = true;})]);
+buttons.push([buttons.length,new Button(450, 64, 300, 100,"Resume",() => {unpause();canPause = true;})]);
 buttons.push([buttons.length,new Button(450, 180, 300, 100,"Settings",)]);
 buttons.push([buttons.length,new Button(450, 320, 300, 100,"Controls",)]);
 buttons.push([buttons.length,new Button(450, 460, 300, 100,"Exit",)]);
@@ -310,6 +317,9 @@ function handleKeyInputs() {
             return;
         }
         if(keysPressed[" "]){
+            player.boost();
+        }
+        else if(keysPressed["w"]){
             player.boost();
         }
     }
@@ -838,8 +848,6 @@ function handleMouseInputs(){
 function pausedLoop(){
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     draw();
-    drawClouds();
-    drawUI();
     handleKeyInputs();
     handleMouseInputs();
     drawPauseGui();
@@ -861,8 +869,9 @@ window.addEventListener("keyup", function(event) {
 
 // Listen for mouse events
 window.addEventListener("click", function(event) {
+    mult = window.innerWidth *0.8 / 1200;
     const rect = canvas.getBoundingClientRect();
-    mouseClick = {x: event.clientX-rect.left, y: event.clientY-rect.top};
+    mouseClick = {x: (event.clientX-rect.left)/mult, y: (event.clientY-rect.top)/mult};
 });
 
 
