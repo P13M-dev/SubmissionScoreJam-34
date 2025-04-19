@@ -15,7 +15,6 @@ gas = {
         xenium: { name:"Xe", displayName: "Xenium", score: 25, price: 10, color:""},
         deuterium: { name:"Deu", displayName: "Deuterium", score: 30, price: 20, color:""},
         argonium: { name:"Arg", displayName: "Argonium", score: 40, price: 0, color:""}
-        
     },
 
     getId(gasName){
@@ -521,8 +520,6 @@ function pausedLoop(){
     handleKeyInputs();
     handleMouseInputs();
     drawPauseGui();
-
-
 }
 
 // Listen for keydown events
