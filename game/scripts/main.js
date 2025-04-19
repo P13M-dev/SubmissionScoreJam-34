@@ -2,46 +2,133 @@ const canvas = document.getElementById("canvas"),
 ctx = canvas.getContext("2d"),
 fps = 60,
 gas = {
+    gases: {
+        smoke: { name:"Sm", displayName: "Smoke", score: 0, price: 0, color:""},
+        tritium: { name:"IndOxi", displayName: "Tritium", score: 3, price: 1, color:""},
+        industrialOxidizer: { name:"Tri", displayName: "Industrial oxidizer", score: 5, price: 3, color:""},
+        fluxium: { name:"Fl", displayName: "Fluxium", score: 6, price: 2, color:""},
+        acidicWaste: { name:"AW", displayName: "Acidic waste", score: 0, price: 0, color:""},
+        gasFuel: { name:"GFu", displayName: "Gas fuel", score: 9, price: 4, color:""},
+        helium3: { name:"He", displayName: "Helium-3", score: 12, price: 3, color:""},
+        gelidVapour: { name:"GeV", displayName: "Gelid vapour", score: 15, price: 5, color:""},
+        neonCompound: { name:"NeCo", displayName: "Neonous compound", score: 20, price: 8, color:""},
+        xenium: { name:"Xe", displayName: "Xenium", score: 25, price: 10, color:""},
+        deuterium: { name:"Deu", displayName: "Deuterium", score: 30, price: 20, color:""},
+        argonium: { name:"Arg", displayName: "Argonium", score: 40, price: 0, color:""}
+        
+    },
     getId(gasName){
         switch(gasName){
-            case "gas1":
+            case this.gases.smoke.name:
                 return 1;
-            case "gas2":
+            case this.gases.industrialOxidizer.name:
                 return 2;
-            case "gas3":
+            case this.gases.tritium.name:
                 return 3;
-            case "gas4":
+            case this.gases.fluxium.name:
                 return 4;
-            case "gas5":
+            case this.gases.acidicWaste.name:
                 return 5;
+            case this.gases.gasFuel.name:
+                return 6;
+            case this.gases.helium3.name:
+                return 7;
+            case this.gases.gelidVapour.name:
+                return 8;
+            case this.gases.neonCompound.name:
+                return 9;
+            case this.gases.xenium.name:
+                return 10;
+            case this.gases.deuterium.name:
+                return 11;
+            case this.gases.argonium.name:
+                return 12;
+
         }
     },
     getColor(gasId){
         switch(gasId){
             case 1:
-                return "red";
+                return this.gases.smoke.color;
             case 2:
-                return "blue";
+                return this.gases.industrialOxidizer.color;
             case 3:
-                return "green";
+                return this.gases.tritium.color;
             case 4:
-                return "yellow";
+                return this.gases.fluxium.color;
             case 5:
-                return "black";
+                return this.gases.acidicWaste.color;
+            case 6:
+                return this.gases.gasFuel.color;
+            case 7:
+                return this.gases.helium3.color;
+            case 8:
+                return this.gases.gelidVapour.color;
+            case 9:
+                return this.gases.neonCompound.color;
+            case 10:
+                return this.gases.xenium.color;
+            case 11:
+                return this.gases.deuterium.color;
+            case 12:
+                return this.gases.argonium.color;
         }
     },
-    getValue(gasId){ // ceny podczas sprzedaży (placeholdery)
+    getValue(gasId){ 
         switch(gasId){
             case 1:
-                return 1;
+                return this.gases.smoke.score;
             case 2:
-                return 2;
+                return this.gases.industrialOxidizer.score;
             case 3:
-                return 3;
+                return this.gases.tritium.score;
             case 4:
-                return 4;
+                return this.gases.fluxium.score;
             case 5:
-                return 5;
+                return this.gases.acidicWaste.score;
+            case 6:
+                return this.gases.gasFuel.score;
+            case 7:
+                return this.gases.helium3.score;
+            case 8:
+                return this.gases.gelidVapour.score;
+            case 9:
+                return this.gases.neonCompound.score;
+            case 10:
+                return this.gases.xenium.score;
+            case 11:
+                return this.gases.deuterium.score;
+            case 12:
+                return this.gases.argonium.score;
+        }
+    },
+    getPrice(gasId){ 
+        switch(gasId){
+            case 1:
+                return this.gases.smoke.price;
+            case 2:
+                return this.gases.industrialOxidizer.price;
+            case 3:
+                return this.gases.tritium.price;
+            case 4:
+                return this.gases.fluxium.price;
+            case 5:
+                return this.gases.acidicWaste.price;
+            case 6:
+                return this.gases.gasFuel.price;
+            case 7:
+                return this.gases.helium3.price;
+            case 8:
+                return this.gases.gelidVapour.price;
+            case 9:
+                return this.gases.neonCompound.price;
+            case 10:
+                return this.gases.xenium.price;
+            case 11:
+                return this.gases.deuterium.price;
+            case 12:
+                return this.gases.argonium.price;
+
         }
     }
 }
@@ -68,6 +155,7 @@ class Player {
         this.height = 50;
         this.speed = 5;
         this.score = 0;
+        this.money = 0;
         this.fuel = 1000;
         this.gasTankSpaceLeft = 1000;
         this.gasTankContents = [[],[]]; // tu są 2 tablice , w jednej będą same id gasów , w drugiej szczegóły (ilość,kolor,nazwa) później będziemy mogli pozbyć się nazw ale na teraz żeby nie było za bardzo skomplikowane to są.
@@ -85,7 +173,8 @@ class Player {
 
     }
     addGasToTank(gasName,amount){
-        if(gasName == "gas1") { // ten zły gaz niszczy inne, nazwa jest placeholderem
+        let gasId = gas.getId(gasName);
+        if(gasId == 4) { // ten zły gaz niszczy inne, nazwa jest placeholderem
             this.gasBurning(amount);
         } else {
             if(this.gasTankSpaceLeft == 0) {
@@ -93,8 +182,8 @@ class Player {
             } else {
                 amount = amount > this.gasTankSpaceLeft ? this.gasTankSpaceLeft : amount;
                 this.gasTankSpaceLeft -= amount;
-                let gasId = gas.getId(gasName),
-                index = this.gasTankContents[0].findIndex((gasInTank) => gasInTank == gasId)
+                
+                let index = this.gasTankContents[0].findIndex((gasInTank) => gasInTank == gasId)
                 if(index == -1){
                     this.gasTankContents[0].push(gasId);
                     this.gasTankContents[1].push([amount,gas.getColor(gasId),gasName]); 
