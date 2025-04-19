@@ -79,11 +79,6 @@ class Player {
         xCamera = this.x - canvas.width/ 10
         yCamera = this.y - canvas.height / 2 + this.height / 2; 
         
-        // Check for boundaries
-        if (this.x < 0) this.x = 0;
-        if (this.x + this.width > canvas.width) this.x = canvas.width - this.width;
-        if (this.y < 0) this.y = 0;
-        if (this.y + this.height > canvas.height) this.y = canvas.height - this.height;
 
 
     }
@@ -142,16 +137,27 @@ yCamera = 0;
 let frameCount = 0,
 gravity = 3;
 // Game loop
-var moveVector = { x: 15, y: 0 };
+var moveVector = { x: 30, y: 0 };
 
 clouds = []; // tablica chmur, na razie pusta, później będą się generować w randomowych miejscach 
 // zapisane w formacie {x, y, width, height, composition: [[id, amount], [id, amount]]} gdzie id to id gazu a amount to ilość tego gazu w chmurze
+for (let i =0; i<3;i++){
+    clouds.push({x: Math.random() * canvas.width, y: Math.random() * canvas.height, width: Math.random() * 200 + 30, height: Math.random() * 200 + 30, composition: [[gas.getId("gas1"), Math.floor(Math.random() * 100)], [gas.getId("gas2"), Math.floor(Math.random() * 100)]]})
+}
+
 
 
 function physics() {
-    if (keysPressed[" "]) {
-        moveVector.y -= 7;
-        player.fuel -= 5;
+    if (frameCount % 50 == 0){
+        moveVector.x+= 2
+    }
+    if (keysPressed[" "] && player.fuel >0) {
+        if (moveVector.y < -15){ // limit
+            moveVector.y -= 5
+        }else{
+            moveVector.y -= 7;
+        }
+        player.fuel = Math.max(player.fuel-5/fps,0);
     }
     moveVector.y += gravity;
 }
@@ -159,9 +165,9 @@ function physics() {
 function gameLoop() {
     // Clear the canvas
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    //generate terrain
-    if (frameCount % 100 == 0) {
-        clouds.push({x: Math.random() * canvas.width, y: Math.random() * canvas.height, width: 50, height: 50, composition: [[gas.getId("gas1"), Math.floor(Math.random() * 100)], [gas.getId("gas2"), Math.floor(Math.random() * 100)]]}); // wczesny kod, zasugerowany przez AI, zmienię później, chwilowo używam do testów
+    //generate clouds
+    if (frameCount % 50 == 0) {
+        clouds.push({x: Math.random() * canvas.width + canvas.width+xCamera, y: Math.random() * canvas.height*2 + yCamera-canvas.height/2, width: Math.random() * 200 + 30, height: Math.random() * 200 + 30, composition: [[gas.getId("gas1"), Math.floor(Math.random() * 100)], [gas.getId("gas2"), Math.floor(Math.random() * 100)]]}); // wczesny kod, zasugerowany przez AI, zmienię później, chwilowo używam do testów
     }
     //physics
     physics()
@@ -171,12 +177,19 @@ function gameLoop() {
     player.draw(xCamera, yCamera);
     //draw clouds
     for(let i = 0; i < clouds.length; i++){
-        ctx.fillStyle = "black";
-        ctx.fillRect(clouds[i].x-xCamera, clouds[i].y-yCamera, clouds[i].width, clouds[i].height);
+        if (clouds[i].x + clouds[i].width < xCamera){ //usuwanie chmur zbyt po lewej
+            clouds.splice(i,1)
+            i--
+        }else{
+            ctx.fillStyle = "black";
+            ctx.fillRect(clouds[i].x-xCamera, clouds[i].y-yCamera, clouds[i].width, clouds[i].height);
+        }
+        
     }
     // ui
     drawUI();
     // Update the frame count
+
     frameCount++;
 }
 
