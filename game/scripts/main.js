@@ -255,52 +255,27 @@ player = {
         }
     }
 
-},
-buttonsOnScreen = {
-    buttons:[],
-    buttonCollisions: [[],[],[],[]], 
+}
 
-    addNew(x,y,width,height){
-        if(x<canvas.width/2){
-            if(y<canvas.height/2){
-                this.buttons.push([0,this.buttonCollisions[0].length]);
-                this.buttonCollisions[0].push([x,y,width,height]);
-            } else {
-                this.buttons.push([3,this.buttonCollisions[3].length]);
-                this.buttonCollisions[3].push([x,y,width,height]);
-            }
-        } else {
-            if(y<canvas.height/2){
-                this.buttons.push([1,this.buttonCollisions[1].length]);
-                this.buttonCollisions[1].push([x,y,width,height]);
-            } else {
-                this.buttons.push([2,this.buttonCollisions[2].length]);
-                this.buttonCollisions[2].push([x,y,width,height]);
-            }
-        }
-        return this.buttons.length-1
-    },
-
-    remove(index){
-        let indx = this.buttons[index][0]
-        this.buttonCollisions[indx].splice(indx,1);
-        this.buttons.splice(index,1);
-    },
-
-    checkForClicks(x,y,sector){
-        for(let i = 0; i < this.buttonCollisions[sector].length; i++){
-            if( x >= this.buttonCollisions[sector][i][0] && 
-                x <= this.buttonCollisions[sector][i][0]+this.buttonCollisions[sector][i][2] && 
-                y >= this.buttonCollisions[sector][i][1] &&
-                y <= this.buttonCollisions[sector][i][1]+this.buttonCollisions[sector][i][3]
-            ){
-                return i;
-            }
-        }
-
-        return -1
+class Button {
+    constructor(x,y,width,height,text,func){
+        this.x = x;
+        this.y = y;
+        this.width = width;
+        this.height = height;
+        this.text = text;        
+        this.func = func;
     }
-};
+
+    checkForClicks(x,y){
+        if(x >= this.x && x <= this.x+this.width && y >= this.y && y <= this.y+this.height){
+            this.func();
+        }
+    }
+
+}
+
+
 
 let camera = {x: 0, y: 0},
 keysPressed = {}, // Track keys pressed
@@ -313,6 +288,13 @@ currentLayer = 1,
 paused = false,
 canPause = true,
 mouseClick = {x: 0, y: 0};
+buttons = [];
+
+buttons.push([buttons.length,new Button(450, 40, 300, 100,"Resume",() => {unpause();canPause = true;})]);
+buttons.push([buttons.length,new Button(450, 180, 300, 100,"Settings",)]);
+buttons.push([buttons.length,new Button(450, 320, 300, 100,"Controls",)]);
+buttons.push([buttons.length,new Button(450, 460, 300, 100,"Exit",)]);
+pauseButtons = [0,1,2,3];
 
 for (let i =0; i<3;i++){
     generateClouds()
@@ -456,7 +438,7 @@ function pause(){
     clearInterval(gameLoopInterval);
     gameLoopInterval = setInterval(pausedLoop , 1000/fps);
     canPause = false;
-    console.log("paused")
+    console.log("paused");
 }
 
 function unpause(){
@@ -464,7 +446,7 @@ function unpause(){
     clearInterval(gameLoopInterval);
     gameLoopInterval = setInterval(gameLoop , 1000/fps);
     canPause = false;
-    console.log("unpaused")
+    console.log("unpaused");
 }
 
 function handleCloudCollisions(){
@@ -506,7 +488,7 @@ function handleCloudCollisions(){
 // Game loop
 function gameLoop() {
     if (frameCount%10 == 0){
-        console.log(player.gasTankContents)
+        //console.log(player.gasTankContents)
     }
     // Clear the canvas
     ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -534,7 +516,28 @@ function gameLoop() {
 
 function drawPauseGui(){
     // kod na rysowanie gui pauzy
-    
+    ctx.beginPath();
+    ctx.fillStyle = "rgba(0,0,0, 0.5)";
+    ctx.fillRect(0,0,canvas.width,canvas.height)
+    ctx.fill();
+    ctx.closePath();
+    for (let i = 0; i < pauseButtons.length; i++) {
+        let button = buttons.findIndex((button) => button[0] == pauseButtons[i]);
+        button = buttons[button][1];
+        ctx.beginPath();
+        ctx.fillStyle = "white";
+
+        ctx.fillRect(button.x, button.y, button.width, button.height);
+        ctx.fill();
+        ctx.fillStyle = "black";
+        ctx.fillRect(button.x + 10, button.y + 10, button.width - 20, button.height - 20);
+        ctx.fill();
+        ctx.fillStyle = "white";
+        ctx.font = "30px Arial";
+        ctx.textAlign = "center";
+        ctx.fillText(button.text, button.x + button.width / 2 , button.y + button.height / 2+10);
+        ctx.closePath();
+    }
     
 }
 
@@ -542,25 +545,11 @@ function drawPauseGui(){
 
 function handleMouseInputs(){
     if(mouseClick){
-        if(buttonsOnScreen.buttons.length > 0){
-            let buttonClicked = -1;
-            if(mouseClick.x < canvas.width/2){
-                if(mouseClick.y < canvas.height/2){
-                    buttonClicked = buttonsOnScreen.checkForClicks(mouseClick.x, mouseClick.y, 0);
-                } else {
-                    buttonClicked = buttonsOnScreen.checkForClicks(mouseClick.x, mouseClick.y, 3);
-                }
-            } else {
-                if(mouseClick.y < canvas.height/2){
-                    buttonClicked = buttonsOnScreen.checkForClicks(mouseClick.x, mouseClick.y, 1);
-                } else {
-                    buttonClicked = buttonsOnScreen.checkForClicks(mouseClick.x, mouseClick.y, 2);
-                }
-            }
-            if(buttonClicked!=-1){
-                console.log("cliked button of id "+buttonClicked)
-            }
+        for (let i = 0; i < buttons.length; i++) {
+            buttons[i][1].checkForClicks(mouseClick.x, mouseClick.y);
         }
+        
+        console.log("clicked"+mouseClick.x+" "+mouseClick.y)
         mouseClick = null
     }
 }
