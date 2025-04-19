@@ -295,7 +295,7 @@ canPause = true,
 mouseClick = {x: 0, y: 0};
 buttons = [];
 
-buttons.push([buttons.length,new Button(450, 40, 300, 100,"Resume",() => {unpause();canPause = true;})]);
+buttons.push([buttons.length,new Button(450, 64, 300, 100,"Resume",() => {unpause();canPause = true;})]);
 buttons.push([buttons.length,new Button(450, 180, 300, 100,"Settings",)]);
 buttons.push([buttons.length,new Button(450, 320, 300, 100,"Controls",)]);
 buttons.push([buttons.length,new Button(450, 460, 300, 100,"Exit",)]);
@@ -317,6 +317,9 @@ function handleKeyInputs() {
             return;
         }
         if(keysPressed[" "]){
+            player.boost();
+        }
+        else if(keysPressed["w"]){
             player.boost();
         }
     }
@@ -562,8 +565,6 @@ function handleMouseInputs(){
 function pausedLoop(){
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     draw();
-    drawClouds();
-    drawUI();
     handleKeyInputs();
     handleMouseInputs();
     drawPauseGui();

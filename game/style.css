@@ -6,5 +6,6 @@ canvas{
     border-left: #000;
     border-width: 2;
     border-style: solid;
+    width: 80%;
     margin: 0 auto 3px auto;
 }
