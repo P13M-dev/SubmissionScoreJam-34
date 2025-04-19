@@ -164,7 +164,7 @@ player = {
     addGasToTank(gasName,amount)
     {
         let gasId = gas.getId(gasName);
-        if(gasId == 4) { // ten zły gaz niszczy inne, nazwa jest placeholderem
+        if(gasId == 4) { // ten zły gaz niszczy inne
             this.gasBurning(amount);
         } else {
             if(this.gasTankSpaceLeft == 0) {
@@ -185,7 +185,7 @@ player = {
     },
 
     gasBurning(amount)
-    { // dzieje się to wtedy kiedy zbiera się kwas, idzie od tyłu arraya i niszczy ten kwas
+    { // dzieje się to wtedy kiedy zbiera się kwas, idzie od tyłu arraya i niszczy ten gaz 
         let i = this.gasTankContents[1].length - 1,
         amountLeft = amount;
         while(amount > 0 && i > -1){
@@ -205,7 +205,8 @@ player = {
     {
         this.gasTankSpaceLeft = 1000;
         for(let i = 0; i < this.gasTankContents[0].length; i++){
-            score += gas.getValue(this.gasTankContents[0][i])*this.gasTankContents[1][i][0];
+            this.score += gas.getValue(this.gasTankContents[0][i])*this.gasTankContents[1][i][0];
+            this.money += gas.getPrice(this.gasTankContents[0][i])*this.gasTankContents[1][i][0];
         }
         this.gasTankContents = [[],[]];
     },
