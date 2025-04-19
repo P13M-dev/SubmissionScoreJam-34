@@ -216,14 +216,19 @@ player = {
         ctx.fillRect(this.x-camera.x, this.y-camera.y, this.width, this.height);
     }
 
-}
+},
+tankTXT =  document.getElementById("tank"),
+fuelBottom =  document.getElementById("fuelBottom"),
+fuelMiddle =  document.getElementById("fuelMiddle"),
+fuelTop =  document.getElementById("fuelTop")
 
 let camera = {x: 0, y: 0},
 keysPressed = {}, // Track keys pressed
 frameCount = 0,
 gravity = 3,
 moveVector = { x: 30, y: 0 },
-clouds = []; 
+clouds = [],
+fuelFrame = 1
 // tablica chmur, na razie pusta, później będą się generować w randomowych miejscach 
 // zapisane w formacie {x, y, width, height, composition: [[id, amount], [id, amount]]} gdzie id to id gazu a amount to ilość tego gazu w chmurze
 
