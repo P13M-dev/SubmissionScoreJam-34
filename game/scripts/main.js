@@ -272,6 +272,7 @@ class Button {
     }
 
     checkForClicks(x,y){
+        console.log(x,y,this.x,this.y)
         if(x >= this.x && x <= this.x+this.width && y >= this.y && y <= this.y+this.height){
             this.func();
         }
@@ -291,14 +292,20 @@ fuelFrame = 1,
 
 currentLayer = 1, 
 paused = false,
+inStartScreen = true,
 canPause = true,
 mouseClick = {x: 0, y: 0};
-buttons = [];
+buttons = [],
+buttonsMenu = [],
+
+buttonsMenu.push(new Button(canvas.width/2-canvas.width/8, canvas.height/7*1.5, canvas.width/4, canvas.height/7,"Start",()=>{startGame();}));
+buttonsMenu.push(new Button(canvas.width/2-canvas.width/8, canvas.height/7*3, canvas.width/4, canvas.height/7,"Settings",()=>{}));
+buttonsMenu.push(new Button(canvas.width/2-canvas.width/8, canvas.height/7*4.5, canvas.width/4, canvas.height/7,"Authors",()=>{}));
 
 buttons.push([buttons.length,new Button(450, 64, 300, 100,"Resume",() => {unpause();canPause = true;})]);
-buttons.push([buttons.length,new Button(450, 180, 300, 100,"Settings",)]);
-buttons.push([buttons.length,new Button(450, 320, 300, 100,"Controls",)]);
-buttons.push([buttons.length,new Button(450, 460, 300, 100,"Exit",)]);
+buttons.push([buttons.length,new Button(450, 180, 300, 100,"Settings",()=>{})]);
+buttons.push([buttons.length,new Button(450, 320, 300, 100,"Controls",()=>{})]);
+buttons.push([buttons.length,new Button(450, 460, 300, 100,"Exit",()=>{})]);
 pauseButtons = [0,1,2,3];
 
 for (let i =0; i<3;i++){
@@ -409,6 +416,42 @@ function draw(){
     // ui
     drawUI();
 }
+
+function drawStartScreen(){
+    ctx.beginPath();
+    ctx.fillStyle = "rgba(0,0,0, 0.5)";
+    ctx.fillRect(0,0,canvas.width,canvas.height)
+    ctx.fill();
+    ctx.closePath();
+    for (let i = 0; i < buttonsMenu.length; i++) {
+        let  button = buttonsMenu[i];
+        ctx.beginPath();
+        ctx.fillStyle = "white";
+
+        ctx.fillRect(button.x, button.y, button.width, button.height);
+        ctx.fill();
+        ctx.fillStyle = "black";
+        ctx.fillRect(button.x + 10, button.y + 10, button.width - 20, button.height - 20);
+        ctx.fill();
+        ctx.fillStyle = "white";
+        ctx.font = "30px Arial";
+        ctx.textAlign = "center";
+        ctx.fillText(button.text, button.x + button.width / 2 , button.y + button.height / 2+10);
+        ctx.closePath();
+    }
+}
+function startScreenLoop(){
+    drawStartScreen();
+    handleStartScreenMouseInputs();
+    
+}
+function startGame(){
+    clearInterval(gameLoopInterval);
+    gameLoopInterval = setInterval(gameLoop , 1000/fps);
+    canPause = true;
+    inStartScreen = false;
+}
+
 
 function generateClouds(){
     switch (currentLayer){
@@ -844,6 +887,16 @@ function handleMouseInputs(){
         mouseClick = null
     }
 }
+function handleStartScreenMouseInputs(){
+    if(mouseClick){
+        for (let i = 0; i < buttonsMenu.length; i++) {
+            buttonsMenu[i].checkForClicks(mouseClick.x, mouseClick.y);
+        }
+        
+        console.log("clicked "+mouseClick.x+" "+mouseClick.y)
+        mouseClick = null
+    }
+}
 
 function pausedLoop(){
     ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -852,6 +905,8 @@ function pausedLoop(){
     handleMouseInputs();
     drawPauseGui();
 }
+
+
 
 // Listen for keydown events
 window.addEventListener("keydown", function(event) {
@@ -869,7 +924,7 @@ window.addEventListener("keyup", function(event) {
 
 // Listen for mouse events
 window.addEventListener("click", function(event) {
-    mult = window.innerWidth *0.8 / 1200;
+    mult = window.innerWidth *0.75 / 1200;
     const rect = canvas.getBoundingClientRect();
     mouseClick = {x: (event.clientX-rect.left)/mult, y: (event.clientY-rect.top)/mult};
 });
@@ -878,4 +933,4 @@ window.addEventListener("click", function(event) {
 
 // Start the game loop
 
-gameLoopInterval = setInterval(gameLoop, 1000/fps);
+gameLoopInterval = setInterval(startScreenLoop, 1000/fps);
