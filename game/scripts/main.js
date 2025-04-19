@@ -85,20 +85,46 @@ class Player {
 
     }
     addGasToTank(gasName,amount){
-        if(this.gasTankSpaceLeft == 0) {
-            return;
-        }else {
-            amount = amount > this.gasTankSpaceLeft ? this.gasTankSpaceLeft : amount;
-            this.gasTankSpaceLeft -= amount;
-            let gasId = gas.getId(gasName),
-            index = this.gasTankContents[0].findIndex((gasInTank) => gasInTank == gasId)
-            if(index == -1){
-                this.gasTankContents[0].push(gasId);
-                this.gasTankContents[1].push([amount,gas.getColor(gasId),gasName]); 
+        if(gasName == "gas1") { // ten zły gaz niszczy inne, nazwa jest placeholderem
+            this.gasBurning(amount);
+        } else {
+            if(this.gasTankSpaceLeft == 0) {
+               return;
             } else {
-                this.gasTankContents[1][index][1] += amount;
+                amount = amount > this.gasTankSpaceLeft ? this.gasTankSpaceLeft : amount;
+                this.gasTankSpaceLeft -= amount;
+                let gasId = gas.getId(gasName),
+                index = this.gasTankContents[0].findIndex((gasInTank) => gasInTank == gasId)
+                if(index == -1){
+                    this.gasTankContents[0].push(gasId);
+                    this.gasTankContents[1].push([amount,gas.getColor(gasId),gasName]); 
+                } else {
+                    this.gasTankContents[1][index][1] += amount;
+                }
             }
         }
+    }
+    gasBurning(amount){ // dzieje się to wtedy kiedy zbiera się kwas, idzie od tyłu arraya i niszczy ten kwas
+        let i = this.gasTankContents[1].length - 1,
+        amountLeft = amount;
+        while(amount > 0 && i > -1){
+            amountLeft = amount - this.gasTankContents[1][i][0];
+            this.gasTankSpaceLeft += amount;
+            this.gasTankContents[1][i][0] -= amount;
+            amount = amountLeft;
+            if(amount>=0){
+                this.gasTankContents[0].pop();
+                this.gasTankContents[1].pop();
+            }
+            i--;
+        }
+    }
+    emptyGasTank(){
+        this.gasTankSpaceLeft = 1000;
+        for(let i = 0; i < this.gasTankContents[0].length; i++){
+            score += gas.getValue(this.gasTankContents[0][i])*this.gasTankContents[1][i][0];
+        }
+        this.gasTankContents = [[],[]];
     }
     draw() {
         ctx.fillStyle = "red";
