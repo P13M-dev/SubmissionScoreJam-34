@@ -76,6 +76,9 @@ class Player {
     move(vector) {
         this.x += vector.x * this.speed;
         this.y += vector.y * this.speed;
+        xCamera = this.x - canvas.width/ 10
+        yCamera = this.y - canvas.height / 2 + this.height / 2; 
+        
         // Check for boundaries
         if (this.x < 0) this.x = 0;
         if (this.x + this.width > canvas.width) this.x = canvas.width - this.width;
@@ -126,16 +129,18 @@ class Player {
         }
         this.gasTankContents = [[],[]];
     }
-    draw() {
+    draw(xCamera, yCamera) {
         ctx.fillStyle = "red";
-        ctx.fillRect(this.x, this.y, this.width, this.height);
+        ctx.fillRect(this.x-xCamera, this.y-yCamera, this.width, this.height);
     }
 
 }
 
 const player = new Player(50, 50);
+let xCamera = 0,
+yCamera = 0;
 let frameCount = 0,
-gravity = 5;
+gravity = 3;
 // Game loop
 var moveVector = { x: 15, y: 0 };
 
@@ -145,7 +150,7 @@ clouds = []; // tablica chmur, na razie pusta, później będą się generować 
 
 function physics() {
     if (keysPressed[" "]) {
-        moveVector.y -= 12;
+        moveVector.y -= 7;
         player.fuel -= 5;
     }
     moveVector.y += gravity;
@@ -163,8 +168,12 @@ function gameLoop() {
     //movement
     player.move({ x: moveVector.x / fps, y: moveVector.y / fps });
     //drawing
-    player.draw();
+    player.draw(xCamera, yCamera);
     //draw clouds
+    for(let i = 0; i < clouds.length; i++){
+        ctx.fillStyle = "black";
+        ctx.fillRect(clouds[i].x-xCamera, clouds[i].y-yCamera, clouds[i].width, clouds[i].height);
+    }
     // ui
     drawUI();
     // Update the frame count
