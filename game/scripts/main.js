@@ -1,6 +1,50 @@
-const canvas = document.getElementById("canvas");
-const ctx = canvas.getContext("2d");
-const fps = 60; 
+const canvas = document.getElementById("canvas"),
+ctx = canvas.getContext("2d"),
+fps = 60,
+gas = {
+    getId(gasName){
+        switch(gasName){
+            case "gas1":
+                return 1;
+            case "gas2":
+                return 2;
+            case "gas3":
+                return 3;
+            case "gas4":
+                return 4;
+            case "gas5":
+                return 5;
+        }
+    },
+    getColor(gasId){
+        switch(gasId){
+            case 1:
+                return "red";
+            case 2:
+                return "blue";
+            case 3:
+                return "green";
+            case 4:
+                return "yellow";
+            case 5:
+                return "black";
+        }
+    },
+    getValue(gasId){ // ceny podczas sprzedaży (placeholdery)
+        switch(gasId){
+            case 1:
+                return 1;
+            case 2:
+                return 2;
+            case 3:
+                return 3;
+            case 4:
+                return 4;
+            case 5:
+                return 5;
+        }
+    }
+}
 
 var keysPressed = {}; // Track keys pressed
 
@@ -14,6 +58,8 @@ window.addEventListener("keyup", function(event) {
     keysPressed[event.key] = false;
 });
 
+
+
 class Player {
     constructor(x, y) {
         this.x = x;
@@ -23,7 +69,10 @@ class Player {
         this.speed = 5;
         this.score = 0;
         this.fuel = 1000;
+        this.gasTankSpaceLeft = 1000;
+        this.gasTankContents = [[],[]]; // tu są 2 tablice , w jednej będą same id gasów , w drugiej szczegóły (ilość,kolor,nazwa) później będziemy mogli pozbyć się nazw ale na teraz żeby nie było za bardzo skomplikowane to są.
     }
+    
     move(vector) {
         this.x += vector.x * this.speed;
         this.y += vector.y * this.speed;
@@ -35,15 +84,32 @@ class Player {
 
 
     }
+    addGasToTank(gasName,amount){
+        if(this.gasTankSpaceLeft == 0) {
+            return;
+        }else {
+            amount = amount > this.gasTankSpaceLeft ? this.gasTankSpaceLeft : amount;
+            this.gasTankSpaceLeft -= amount;
+            let gasId = gas.getId(gasName),
+            index = this.gasTankContents[0].findIndex((gasInTank) => gasInTank == gasId)
+            if(index == -1){
+                this.gasTankContents[0].push(gasId);
+                this.gasTankContents[1].push([amount,gas.getColor(gasId),gasName]); 
+            } else {
+                this.gasTankContents[1][index][1] += amount;
+            }
+        }
+    }
     draw() {
         ctx.fillStyle = "red";
         ctx.fillRect(this.x, this.y, this.width, this.height);
     }
+
 }
 
 const player = new Player(50, 50);
-let frameCount = 0;
-let gravity = 5;
+let frameCount = 0,
+gravity = 5;
 // Game loop
 var moveVector = { x: 0, y: 0 };
 
@@ -71,6 +137,9 @@ function gameLoop() {
     // Update the frame count
     frameCount++;
 }
+
+// Get id of the gas for easier operations for 
+
 
 // Start the game loop
 setInterval(gameLoop, 1000/fps);
