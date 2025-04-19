@@ -214,34 +214,104 @@ player = {
     {
         ctx.fillStyle = "red";
         ctx.fillRect(this.x-camera.x, this.y-camera.y, this.width, this.height);
+    },
+
+    boost()
+    {
+        if (this.fuel >0) {
+            if (moveVector.y < -15){ // limit
+                moveVector.y -= 5
+            }else{
+                moveVector.y -= 7;
+            }
+            this.fuel = Math.max(this.fuel-5/fps,0);
+        }
     }
 
-}
+},
+buttonsOnScreen = {
+    buttons:[],
+    buttonCollisions: [[],[],[],[]], 
+
+    addNew(x,y,width,height){
+        if(x<canvas.width/2){
+            if(y<canvas.height/2){
+                this.buttons.push([0,this.buttonCollisions[0].length]);
+                this.buttonCollisions[0].push([x,y,width,height]);
+            } else {
+                this.buttons.push([3,this.buttonCollisions[3].length]);
+                this.buttonCollisions[3].push([x,y,width,height]);
+            }
+        } else {
+            if(y<canvas.height/2){
+                this.buttons.push([1,this.buttonCollisions[1].length]);
+                this.buttonCollisions[1].push([x,y,width,height]);
+            } else {
+                this.buttons.push([2,this.buttonCollisions[2].length]);
+                this.buttonCollisions[2].push([x,y,width,height]);
+            }
+        }
+        return this.buttons.length-1
+    },
+
+    remove(index){
+        let indx = this.buttons[index][0]
+        this.buttonCollisions[indx].splice(indx,1);
+        this.buttons.splice(index,1);
+    },
+
+    checkForClicks(x,y,sector){
+        for(let i = 0; i < this.buttonCollisions[sector].length; i++){
+            if( x >= this.buttonCollisions[sector][i][0] && 
+                x <= this.buttonCollisions[sector][i][0]+this.buttonCollisions[sector][i][2] && 
+                y >= this.buttonCollisions[sector][i][1] &&
+                y <= this.buttonCollisions[sector][i][1]+this.buttonCollisions[sector][i][3]
+            ){
+                return i;
+            }
+        }
+
+        return -1
+    }
+};
 
 let camera = {x: 0, y: 0},
 keysPressed = {}, // Track keys pressed
 frameCount = 0,
 gravity = 3,
 moveVector = { x: 30, y: 0 },
-clouds = []; 
+clouds = [], 
 // tablica chmur, na razie pusta, później będą się generować w randomowych miejscach 
 // zapisane w formacie {x, y, width, height, composition: [[id, amount], [id, amount]]} gdzie id to id gazu a amount to ilość tego gazu w chmurze
+paused = false,
+canPause = true,
+mouseClick = {x: 0, y: 0};
 
 for (let i =0; i<3;i++){
     clouds.push({x: Math.random() * canvas.width, y: Math.random() * canvas.height, width: Math.random() * 200 + 30, height: Math.random() * 200 + 30, composition: [[gas.getId("gas1"), Math.floor(Math.random() * 100)], [gas.getId("gas2"), Math.floor(Math.random() * 100)]]})
 }
 
+function handleKeyInputs() {
+    if(paused){
+        if(keysPressed["Escape"] && canPause){
+            unpause();
+            return;
+        }
+    } else {
+        if(keysPressed["Escape"] && canPause){
+            pause();
+            return;
+        }
+        if(keysPressed[" "]){
+            player.boost();
+        }
+    }
+
+}
+
 function physics() {
     if (frameCount % 50 == 0){
         moveVector.x+= 2
-    }
-    if (keysPressed[" "] && player.fuel >0) {
-        if (moveVector.y < -15){ // limit
-            moveVector.y -= 5
-        }else{
-            moveVector.y -= 7;
-        }
-        player.fuel = Math.max(player.fuel-5/fps,0);
     }
     moveVector.y += gravity;
 }
@@ -267,6 +337,22 @@ function draw(){
     drawUI();
 }
 
+function pause(){
+    paused = true;
+    clearInterval(gameLoopInterval);
+    gameLoopInterval = setInterval(pausedLoop , 1000/fps);
+    canPause = false;
+    console.log("paused")
+}
+
+function unpause(){
+    paused = false;
+    clearInterval(gameLoopInterval);
+    gameLoopInterval = setInterval(gameLoop , 1000/fps);
+    canPause = false;
+    console.log("unpaused")
+}
+
 // Game loop
 function gameLoop() {
 
@@ -281,6 +367,9 @@ function gameLoop() {
     //physics
     physics();
 
+    //input
+    handleKeyInputs();
+
     //movement
     player.move({ x: moveVector.x / fps, y: moveVector.y / fps });
 
@@ -291,17 +380,71 @@ function gameLoop() {
     frameCount++;
 }
 
+function drawPauseGui(){
+    // kod na rysowanie gui pauzy
+    
+    
+}
+
+function handleMouseInputs(){
+    if(mouseClick){
+        if(buttonsOnScreen.buttons.length > 0){
+            let buttonClicked = -1;
+            if(mouseClick.x < canvas.width/2){
+                if(mouseClick.y < canvas.height/2){
+                    buttonClicked = buttonsOnScreen.checkForClicks(mouseClick.x, mouseClick.y, 0);
+                } else {
+                    buttonClicked = buttonsOnScreen.checkForClicks(mouseClick.x, mouseClick.y, 3);
+                }
+            } else {
+                if(mouseClick.y < canvas.height/2){
+                    buttonClicked = buttonsOnScreen.checkForClicks(mouseClick.x, mouseClick.y, 1);
+                } else {
+                    buttonClicked = buttonsOnScreen.checkForClicks(mouseClick.x, mouseClick.y, 2);
+                }
+            }
+            if(buttonClicked!=-1){
+                console.log("cliked button of id "+buttonClicked)
+            }
+        }
+        mouseClick = null
+    }
+}
+
+function pausedLoop(){
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    draw();
+    drawClouds();
+    drawUI();
+    handleKeyInputs();
+    handleMouseInputs();
+    drawPauseGui();
+
+
+}
+
 // Listen for keydown events
 window.addEventListener("keydown", function(event) {
     keysPressed[event.key] = true;
 });
 
+
 // Listen for keyup events
 window.addEventListener("keyup", function(event) {
     keysPressed[event.key] = false;
+    if (event.key == "Escape"){
+        canPause = true;
+    }
+});
+
+// Listen for mouse events
+window.addEventListener("click", function(event) {
+    const rect = canvas.getBoundingClientRect();
+    mouseClick = {x: event.clientX-rect.left, y: event.clientY-rect.top};
 });
 
 
 
 // Start the game loop
-setInterval(gameLoop, 1000/fps);
+
+gameLoopInterval = setInterval(gameLoop, 1000/fps);
