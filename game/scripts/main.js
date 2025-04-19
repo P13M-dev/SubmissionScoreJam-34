@@ -4,8 +4,8 @@ fps = 60,
 gas = {
     gases: {
         smoke: { name:"Sm", displayName: "Smoke", score: 0, price: 0, color:""},
-        tritium: { name:"IndOxi", displayName: "Industrial oxidizer", score: 3, price: 1, color:""},
-        industrialOxidizer: { name:"Tri", displayName: "Tritium", score: 5, price: 3, color:""},
+        tritium: { name:"Tri", displayName: "Tritium", score: 3, price: 1, color:""},
+        industrialOxidizer: { name:"IndOxi", displayName: "Industrial oxidizer", score: 5, price: 3, color:""},
         fluxium: { name:"Fl", displayName: "Fluxium", score: 6, price: 2, color:""},
         acidicWaste: { name:"AW", displayName: "Acidic waste", score: 0, price: 0, color:""},
         gasFuel: { name:"GFu", displayName: "Gas fuel", score: 9, price: 4, color:""},
@@ -22,9 +22,9 @@ gas = {
         switch(gasName){
             case this.gases.smoke.name:
                 return 1;
-            case this.gases.industrialOxidizer.name:
-                return 2;
             case this.gases.tritium.name:
+                return 2;
+            case this.gases.industrialOxidizer.name:
                 return 3;
             case this.gases.fluxium.name:
                 return 4;
@@ -280,15 +280,33 @@ keysPressed = {}, // Track keys pressed
 frameCount = 0,
 gravity = 3,
 moveVector = { x: 30, y: 0 },
-clouds = [], 
+clouds = [],
 // tablica chmur, na razie pusta, później będą się generować w randomowych miejscach 
 // zapisane w formacie {x, y, width, height, composition: [[id, amount], [id, amount]]} gdzie id to id gazu a amount to ilość tego gazu w chmurze
 paused = false,
 canPause = true,
-mouseClick = {x: 0, y: 0};
-
+mouseClick = {x: 0, y: 0},
+currentLayer = 1;
 for (let i =0; i<3;i++){
-    clouds.push({x: Math.random() * canvas.width, y: Math.random() * canvas.height, width: Math.random() * 200 + 30, height: Math.random() * 200 + 30, composition: [[gas.getId("gas1"), Math.floor(Math.random() * 100)], [gas.getId("gas2"), Math.floor(Math.random() * 100)]]})
+    generateClouds()
+}
+
+function handleKeyInputs() {
+    if(paused){
+        if(keysPressed["Escape"] && canPause){
+            unpause();
+            return;
+        }
+    } else {
+        if(keysPressed["Escape"] && canPause){
+            pause();
+            return;
+        }
+        if(keysPressed[" "]){
+            player.boost();
+        }
+    }
+
 }
 
 function handleKeyInputs() {
@@ -322,8 +340,27 @@ function drawClouds(){
             clouds.splice(i,1)
             i--
         }else{
-            ctx.fillStyle = "black";
-            ctx.fillRect(clouds[i].x-camera.x, clouds[i].y-camera.y, clouds[i].width, clouds[i].height);
+            let splitPoint = 0
+            console.log(clouds[i])
+            for (let j = 0; j < clouds[i].composition.length;j++){
+                switch (clouds[i].composition[j][0]){
+                    case 1:
+                        ctx.fillStyle = "black";
+                        ctx.fillRect(clouds[i].x-camera.x, clouds[i].y-camera.y, clouds[i].width, clouds[i].height);
+                        break
+                    case 2:
+                        ctx.fillStyle = "lightgreen";
+                        ctx.fillRect(clouds[i].x + clouds[i].width*(splitPoint/100)-camera.x, clouds[i].y-camera.y, clouds[i].width*(clouds[i].composition[j][1]/100), clouds[i].height);
+                        break
+                    case 3:
+                        ctx.fillStyle = "lightblue";
+                        ctx.fillRect(clouds[i].x + clouds[i].width*(splitPoint/100)-camera.x, clouds[i].y-camera.y, clouds[i].width*(clouds[i].composition[j][1]/100), clouds[i].height);
+                        break
+                }
+                splitPoint += clouds[i].composition[j][1]
+                console.log(splitPoint)
+            }
+            
         }
     }
 }
@@ -353,6 +390,155 @@ function unpause(){
     console.log("unpaused")
 }
 
+function generateClouds(){
+    switch (currentLayer){
+        case 1:
+            if (frameCount % 30 == 0) {
+                let ratio = Math.random()
+                if (ratio > 0.9){
+                    // IndOxi
+                    if (ratio > 0.97) {
+                        // duża chmura
+                        clouds.push({
+                            x: Math.random() * canvas.width + canvas.width + camera.x,
+                            y: Math.random() * canvas.height * 2 + camera.y - canvas.height / 2,
+                            width: Math.random() * 200 + 50,
+                            height: Math.random() * 200 + 50,
+                            composition: [[gas.getId("IndOxi"), 100]]
+                        });
+                    } else {
+                        // mała chmura
+                        clouds.push({
+                            x: Math.random() * canvas.width + canvas.width + camera.x,
+                            y: Math.random() * canvas.height * 2 + camera.y - canvas.height / 2,
+                            width: Math.random() * 100 + 30,
+                            height: Math.random() * 100 + 30,
+                            composition: [[gas.getId("IndOxi"), 100]]
+                        });
+                    }
+                }else if(ratio < 0.2){
+                    // Smog
+                    clouds.push({
+                        x: Math.random() * canvas.width + canvas.width + camera.x,
+                        y: Math.random() * canvas.height * 2 + camera.y - canvas.height / 2,
+                        width: Math.random() * 150 + 20,
+                        height: Math.random() * 150 + 20,
+                        composition: [[gas.getId("Sm"), 100]]
+                    });
+                }else{
+                    // Tritium i mało IndOxi
+                    let tritiumAmount = Math.floor(Math.random() * 70) + 40; // Przynajmniej 40% Tritium
+                    let indOxiAmount = 100 - tritiumAmount;
+                    clouds.push({
+                        x: Math.random() * canvas.width + canvas.width + camera.x,
+                        y: Math.random() * canvas.height * 2 + camera.y - canvas.height / 2,
+                        width: Math.random() * 150 + 40,
+                        height: Math.random() * 150 + 40,
+                        composition: [
+                            [gas.getId("Tri"), tritiumAmount],
+                            [gas.getId("IndOxi"), indOxiAmount]
+                        ]
+                    });
+                }
+                
+                
+            }  
+            break
+        case 2:
+            break
+        case 3:
+            break
+        case 4:
+            break
+        case 5:
+            break
+        case 6:
+            break;
+    }
+}
+
+function generateClouds(){
+    switch (currentLayer){
+        case 1:
+            if (frameCount % 30 == 0) {
+                let ratio = Math.random()
+                if (ratio > 0.9){
+                    // IndOxi
+                    if (ratio > 0.97) {
+                        // duża chmura
+                        clouds.push({
+                            x: Math.random() * canvas.width + canvas.width + camera.x,
+                            y: Math.random() * canvas.height * 2 + camera.y - canvas.height / 2,
+                            width: Math.random() * 200 + 50,
+                            height: Math.random() * 200 + 50,
+                            composition: [[gas.getId("IndOxi"), 100]]
+                        });
+                    } else {
+                        // mała chmura
+                        clouds.push({
+                            x: Math.random() * canvas.width + canvas.width + camera.x,
+                            y: Math.random() * canvas.height * 2 + camera.y - canvas.height / 2,
+                            width: Math.random() * 100 + 30,
+                            height: Math.random() * 100 + 30,
+                            composition: [[gas.getId("IndOxi"), 100]]
+                        });
+                    }
+                }else if(ratio < 0.2){
+                    // Smog
+                    clouds.push({
+                        x: Math.random() * canvas.width + canvas.width + camera.x,
+                        y: Math.random() * canvas.height * 2 + camera.y - canvas.height / 2,
+                        width: Math.random() * 150 + 20,
+                        height: Math.random() * 150 + 20,
+                        composition: [[gas.getId("Sm"), 100]]
+                    });
+                }else{
+                    // Tritium i mało IndOxi
+                    let tritiumAmount = Math.floor(Math.random() * 70) + 40; // Przynajmniej 40% Tritium
+                    let indOxiAmount = 100 - tritiumAmount;
+                    clouds.push({
+                        x: Math.random() * canvas.width + canvas.width + camera.x,
+                        y: Math.random() * canvas.height * 2 + camera.y - canvas.height / 2,
+                        width: Math.random() * 150 + 40,
+                        height: Math.random() * 150 + 40,
+                        composition: [
+                            [gas.getId("Tri"), tritiumAmount],
+                            [gas.getId("IndOxi"), indOxiAmount]
+                        ]
+                    });
+                }
+                
+                
+            }  
+            break
+        case 2:
+            break
+        case 3:
+            break
+        case 4:
+            break
+        case 5:
+            break
+        case 6:
+            break;
+    }
+}
+
+function pause(){
+    paused = true;
+    clearInterval(gameLoopInterval);
+    gameLoopInterval = setInterval(pausedLoop , 1000/fps);
+    canPause = false;
+    console.log("paused")
+}
+
+function unpause(){
+    paused = false;
+    clearInterval(gameLoopInterval);
+    gameLoopInterval = setInterval(gameLoop , 1000/fps);
+    canPause = false;
+    console.log("unpaused")
+}
 // Game loop
 function gameLoop() {
 
@@ -360,10 +546,7 @@ function gameLoop() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
     //generate clouds
-    if (frameCount % 50 == 0) {
-        clouds.push({x: Math.random() * canvas.width + canvas.width+camera.x, y: Math.random() * canvas.height*2 + camera.y-canvas.height/2, width: Math.random() * 200 + 30, height: Math.random() * 200 + 30, composition: [[gas.getId("gas1"), Math.floor(Math.random() * 100)], [gas.getId("gas2"), Math.floor(Math.random() * 100)]]}); // wczesny kod, zasugerowany przez AI, zmienię później, chwilowo używam do testów
-    }
-
+    generateClouds()
     //physics
     physics();
 
