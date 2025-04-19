@@ -280,13 +280,13 @@ keysPressed = {}, // Track keys pressed
 frameCount = 0,
 gravity = 3,
 moveVector = { x: 30, y: 0 },
-clouds = [],
-// tablica chmur, na razie pusta, później będą się generować w randomowych miejscach 
-// zapisane w formacie {x, y, width, height, composition: [[id, amount], [id, amount]]} gdzie id to id gazu a amount to ilość tego gazu w chmurze
+clouds = [], 
+// zapisane w formacie {x, y, width, height, composition: [[id, amount], [id, amount],...]} gdzie id to id gazu a amount to ilość tego gazu w chmurze(%)
+currentLayer = 1, 
 paused = false,
 canPause = true,
-mouseClick = {x: 0, y: 0},
-currentLayer = 1;
+mouseClick = {x: 0, y: 0};
+
 for (let i =0; i<3;i++){
     generateClouds()
 }
@@ -341,7 +341,7 @@ function drawClouds(){
             i--
         }else{
             let splitPoint = 0
-            console.log(clouds[i])
+            //console.log(clouds[i])
             for (let j = 0; j < clouds[i].composition.length;j++){
                 switch (clouds[i].composition[j][0]){
                     case 1:
@@ -358,7 +358,7 @@ function drawClouds(){
                         break
                 }
                 splitPoint += clouds[i].composition[j][1]
-                console.log(splitPoint)
+                //console.log(splitPoint)
             }
             
         }
@@ -372,6 +372,89 @@ function draw(){
     drawClouds();
     // ui
     drawUI();
+}
+
+function generateClouds(){
+    switch (currentLayer){
+        case 1:
+            if (frameCount % 30 == 0) {
+                let ratio = Math.random()
+                if (ratio > 0.9){
+                    // IndOxi
+                    if (ratio > 0.97) {
+                        // duża chmura
+                        clouds.push({
+                            x: Math.random() * canvas.width + canvas.width + camera.x,
+                            y: Math.random() * canvas.height * 2 + camera.y - canvas.height / 2,
+                            width: Math.random() * 200 + 50,
+                            height: Math.random() * 200 + 50,
+                            composition: [[gas.getId("IndOxi"), 100]]
+                        });
+                    } else {
+                        // mała chmura
+                        clouds.push({
+                            x: Math.random() * canvas.width + canvas.width + camera.x,
+                            y: Math.random() * canvas.height * 2 + camera.y - canvas.height / 2,
+                            width: Math.random() * 100 + 30,
+                            height: Math.random() * 100 + 30,
+                            composition: [[gas.getId("IndOxi"), 100]]
+                        });
+                    }
+                }else if(ratio < 0.2){
+                    // Smog
+                    clouds.push({
+                        x: Math.random() * canvas.width + canvas.width + camera.x,
+                        y: Math.random() * canvas.height * 2 + camera.y - canvas.height / 2,
+                        width: Math.random() * 150 + 20,
+                        height: Math.random() * 150 + 20,
+                        composition: [[gas.getId("Sm"), 100]]
+                    });
+                }else{
+                    // Tritium i mało IndOxi
+                    let tritiumAmount = Math.floor(Math.random() * 70) + 40; // Przynajmniej 40% Tritium
+                    let indOxiAmount = 100 - tritiumAmount;
+                    clouds.push({
+                        x: Math.random() * canvas.width + canvas.width + camera.x,
+                        y: Math.random() * canvas.height * 2 + camera.y - canvas.height / 2,
+                        width: Math.random() * 150 + 40,
+                        height: Math.random() * 150 + 40,
+                        composition: [
+                            [gas.getId("Tri"), tritiumAmount],
+                            [gas.getId("IndOxi"), indOxiAmount]
+                        ]
+                    });
+                }
+                
+                
+            }  
+            break
+        case 2:
+            break
+        case 3:
+            break
+        case 4:
+            break
+        case 5:
+            break
+        case 6:
+            break;
+    }
+}
+
+function pause(){
+    paused = true;
+    clearInterval(gameLoopInterval);
+    gameLoopInterval = setInterval(pausedLoop , 1000/fps);
+    canPause = false;
+    console.log("paused")
+}
+
+function unpause(){
+    paused = false;
+    clearInterval(gameLoopInterval);
+    gameLoopInterval = setInterval(gameLoop , 1000/fps);
+    canPause = false;
+    console.log("unpaused")
 }
 
 function pause(){
