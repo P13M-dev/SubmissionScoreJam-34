@@ -275,8 +275,6 @@ class Button {
 
 }
 
-
-
 let camera = {x: 0, y: 0},
 keysPressed = {}, // Track keys pressed
 frameCount = 0,
@@ -348,6 +346,42 @@ function drawClouds(){
                         ctx.fillStyle = "lightblue";
                         ctx.fillRect(clouds[i].x + clouds[i].width*(splitPoint/100)-camera.x, clouds[i].y-camera.y, clouds[i].width*(clouds[i].composition[j][1]/100), clouds[i].height);
                         break
+                    case 4:  
+                        ctx.fillStyle = "purple"; // Fluxium
+                        ctx.fillRect(clouds[i].x + clouds[i].width * (splitPoint / 100) - camera.x, clouds[i].y - camera.y, clouds[i].width * (clouds[i].composition[j][1] / 100), clouds[i].height);
+                        break;
+                    case 5:
+                        ctx.fillStyle = "darkgreen"; // Acidic Waste
+                        ctx.fillRect(clouds[i].x + clouds[i].width * (splitPoint / 100) - camera.x, clouds[i].y - camera.y, clouds[i].width * (clouds[i].composition[j][1] / 100), clouds[i].height);
+                        break;
+                    case 6:
+                        ctx.fillStyle = "orange"; // Gas Fuel
+                        ctx.fillRect(clouds[i].x + clouds[i].width * (splitPoint / 100) - camera.x, clouds[i].y - camera.y, clouds[i].width * (clouds[i].composition[j][1] / 100), clouds[i].height);
+                        break;
+                    case 7:
+                        ctx.fillStyle = "yellow"; // Helium-3
+                        ctx.fillRect(clouds[i].x + clouds[i].width * (splitPoint / 100) - camera.x, clouds[i].y - camera.y, clouds[i].width * (clouds[i].composition[j][1] / 100), clouds[i].height);
+                        break;
+                    case 8:
+                        ctx.fillStyle = "cyan"; // Gelid Vapour
+                        ctx.fillRect(clouds[i].x + clouds[i].width * (splitPoint / 100) - camera.x, clouds[i].y - camera.y, clouds[i].width * (clouds[i].composition[j][1] / 100), clouds[i].height);
+                        break;
+                    case 9:
+                        ctx.fillStyle = "pink"; // Neonous Compound
+                        ctx.fillRect(clouds[i].x + clouds[i].width * (splitPoint / 100) - camera.x, clouds[i].y - camera.y, clouds[i].width * (clouds[i].composition[j][1] / 100), clouds[i].height);
+                        break;
+                    case 10:
+                        ctx.fillStyle = "blue"; // Xenium
+                        ctx.fillRect(clouds[i].x + clouds[i].width * (splitPoint / 100) - camera.x, clouds[i].y - camera.y, clouds[i].width * (clouds[i].composition[j][1] / 100), clouds[i].height);
+                        break;
+                    case 11:
+                        ctx.fillStyle = "gold"; // Deuterium
+                        ctx.fillRect(clouds[i].x + clouds[i].width * (splitPoint / 100) - camera.x, clouds[i].y - camera.y, clouds[i].width * (clouds[i].composition[j][1] / 100), clouds[i].height);
+                        break;
+                    case 12:
+                        ctx.fillStyle = "silver"; // Argonium
+                        ctx.fillRect(clouds[i].x + clouds[i].width * (splitPoint / 100) - camera.x, clouds[i].y - camera.y, clouds[i].width * (clouds[i].composition[j][1] / 100), clouds[i].height);
+                        break;
                 }
                 splitPoint += clouds[i].composition[j][1]
                 //console.log(splitPoint)
@@ -421,15 +455,264 @@ function generateClouds(){
             }  
             break
         case 2:
-            break
-        case 3:
-            break
-        case 4:
-            break
-        case 5:
-            break
-        case 6:
+            if (frameCount % 30 == 0) {
+            let ratio = Math.random();
+            if (ratio < 0.2) {
+                // Acidic Waste cloud
+                clouds.push({
+                x: Math.random() * canvas.width + canvas.width + camera.x,
+                y: Math.random() * canvas.height * 2 + camera.y - canvas.height / 2,
+                width: Math.random() * 100 + 30,
+                height: Math.random() * 100 + 30,
+                composition: [[gas.getId("AW"), 100]]
+                });
+            } else if (ratio > 0.9) {
+                //IndOxi
+                clouds.push({
+                    x: Math.random() * canvas.width + canvas.width + camera.x,
+                    y: Math.random() * canvas.height * 2 + camera.y - canvas.height / 2,
+                    width: Math.random() * 200 + 50,
+                    height: Math.random() * 200 + 50,
+                    composition: [[gas.getId("IndOxi"), 100]]
+                });
+                
+            } else if (ratio > 0.75){
+                // Tritium
+                clouds.push({
+                x: Math.random() * canvas.width + canvas.width + camera.x,
+                y: Math.random() * canvas.height * 2 + camera.y - canvas.height / 2,
+                width: Math.random() * 150 + 40,
+                height: Math.random() * 150 + 40,
+                composition: [[gas.getId("Tri"), 100]]
+                });
+            }else if(ratio < 35){
+                // Fluxium
+                clouds.push({
+                    x: Math.random() * canvas.width + canvas.width + camera.x,
+                    y: Math.random() * canvas.height * 2 + camera.y - canvas.height / 2,
+                    width: Math.random() * 150 + 40,
+                    height: Math.random() * 150 + 40,
+                    composition: [[gas.getId("Fl"), 100]]
+                    });
+            }else{
+                let tritiumAmount = Math.floor(Math.random() * 100);
+                let fluxiumAmount = 100 - tritiumAmount;
+                clouds.push({
+                    x: Math.random() * canvas.width + canvas.width + camera.x,
+                    y: Math.random() * canvas.height * 2 + camera.y - canvas.height / 2,
+                    width: Math.random() * 150 + 40,
+                    height: Math.random() * 150 + 40,
+                    composition: [
+                        [gas.getId("Tri"), tritiumAmount],
+                        [gas.getId("Fl"), fluxiumAmount]
+                    ]
+                });
+            }
+            }
             break;
+        case 3:
+            if (frameCount % 30 == 0) {
+            let ratio = Math.random();
+            if (ratio > 0.9) {
+                //IndOxi
+                clouds.push({
+                    x: Math.random() * canvas.width + canvas.width + camera.x,
+                    y: Math.random() * canvas.height * 2 + camera.y - canvas.height / 2,
+                    width: Math.random() * 200 + 50,
+                    height: Math.random() * 200 + 50,
+                    composition: [[gas.getId("IndOxi"), 100]]
+                });                
+            }
+            else if (ratio > 0.7) {
+                // Gas Fuel
+                clouds.push({
+                x: Math.random() * canvas.width + canvas.width + camera.x,
+                y: Math.random() * canvas.height * 2 + camera.y - canvas.height / 2,
+                width: Math.random() * 150 + 50,
+                height: Math.random() * 150 + 50,
+                composition: [[gas.getId("GFu"), 100]]
+                });
+            } else if (ratio > 0.5) {
+                // Helium-3
+                clouds.push({
+                x: Math.random() * canvas.width + canvas.width + camera.x,
+                y: Math.random() * canvas.height * 2 + camera.y - canvas.height / 2,
+                width: Math.random() * 150 + 50,
+                height: Math.random() * 150 + 50,
+                composition: [[gas.getId("He"), 100]]
+                });
+            } else if (ratio > 0.25) {
+                // Fluxium
+                clouds.push({
+                x: Math.random() * canvas.width + canvas.width + camera.x,
+                y: Math.random() * canvas.height * 2 + camera.y - canvas.height / 2,
+                width: Math.random() * 150 + 50,
+                height: Math.random() * 150 + 50,
+                composition: [[gas.getId("Fl"), 100]]
+                });
+            }else{
+                let gasFuelAmount = Math.floor(Math.random() * 100);
+                let heliumAmount = Math.floor(Math.random() * (100 - tritiumAmount));
+                let fluxiumAmount = 100 - gasFuelAmount - heliumAmount;
+                clouds.push({
+                    x: Math.random() * canvas.width + canvas.width + camera.x,
+                    y: Math.random() * canvas.height * 2 + camera.y - canvas.height / 2,
+                    width: Math.random() * 150 + 40,
+                    height: Math.random() * 150 + 40,
+                    composition: [
+                        [gas.getId("Gfu"), gasFuelAmount],
+                        [gas.getId("He"), heliumAmount]
+                        [gas.getId("Fl"), fluxiumAmount]
+                        
+                    ]
+                });
+            }
+            }
+            break;
+        case 4:
+            if (frameCount % 30 == 0) {
+            let ratio = Math.random();
+            if (ratio > 0.95) {
+                // Deuterium
+                clouds.push({
+                x: Math.random() * canvas.width + canvas.width + camera.x,
+                y: Math.random() * canvas.height * 2 + camera.y - canvas.height / 2,
+                width: Math.random() * 150 + 50,
+                height: Math.random() * 150 + 50,
+                composition: [[gas.getId("Deu"), 100]]
+                });
+            } else if (ratio > 0.6) {
+                // Gelid Vapour
+                clouds.push({
+                x: Math.random() * canvas.width + canvas.width + camera.x,
+                y: Math.random() * canvas.height * 2 + camera.y - canvas.height / 2,
+                width: Math.random() * 150 + 50,
+                height: Math.random() * 150 + 50,
+                composition: [[gas.getId("GeV"), 100]]
+                });
+            } else if (ratio > 0.3){
+                // Fluxium
+                clouds.push({
+                x: Math.random() * canvas.width + canvas.width + camera.x,
+                y: Math.random() * canvas.height * 2 + camera.y - canvas.height / 2,
+                width: Math.random() * 150 + 50,
+                height: Math.random() * 150 + 50,
+                composition: [[gas.getId("Fl"), 100]]
+                });
+            }else{
+                let gelidVapourAmount = Math.floor(Math.random() * 100) ;
+                let fluxiumAmount = 100 - gelidVapourAmount;
+                clouds.push({
+                    x: Math.random() * canvas.width + canvas.width + camera.x,
+                    y: Math.random() * canvas.height * 2 + camera.y - canvas.height / 2,
+                    width: Math.random() * 150 + 40,
+                    height: Math.random() * 150 + 40,
+                    composition: [
+                        [gas.getId("GeV"), gelidVapourAmount],
+                        [gas.getId("Fl"), fluxiumAmount]
+                    ]
+                });
+            }
+            }
+            break;
+        case 5:
+            if (frameCount % 30 == 0) {
+            let ratio = Math.random();
+            if (ratio > 0.85) {
+                // Xenium
+                clouds.push({
+                x: Math.random() * canvas.width + canvas.width + camera.x,
+                y: Math.random() * canvas.height * 2 + camera.y - canvas.height / 2,
+                width: Math.random() * 150 + 50,
+                height: Math.random() * 150 + 50,
+                composition: [[gas.getId("Xe"), 100]]
+                });
+            } else if (ratio > 0.5) {
+                // Neonous Compounds
+                clouds.push({
+                x: Math.random() * canvas.width + canvas.width + camera.x,
+                y: Math.random() * canvas.height * 2 + camera.y - canvas.height / 2,
+                width: Math.random() * 150 + 50,
+                height: Math.random() * 150 + 50,
+                composition: [[gas.getId("NeCo"), 100]]
+                });
+            } else if (ratio > 0.15){
+                // Gelid Vapour
+                clouds.push({
+                x: Math.random() * canvas.width + canvas.width + camera.x,
+                y: Math.random() * canvas.height * 2 + camera.y - canvas.height / 2,
+                width: Math.random() * 150 + 50,
+                height: Math.random() * 150 + 50,
+                composition: [[gas.getId("GeV"), 100]]
+                });
+            }else{
+                let gelidVapourAmount = Math.floor(Math.random() * 60) + 30; 
+                let neonousCompoundAmount = Math.floor(Math.random() * (100 - gelidVapourAmount - 10)) + 10; 
+                let xeniumAmount = 100 - gelidVapourAmount - neonousCompoundAmount;
+                clouds.push({
+                    x: Math.random() * canvas.width + canvas.width + camera.x,
+                    y: Math.random() * canvas.height * 2 + camera.y - canvas.height / 2,
+                    width: Math.random() * 150 + 40,
+                    height: Math.random() * 150 + 40,
+                    composition: [
+                        [gas.getId("GeV"), gelidVapourAmount],
+                        [gas.getId("NeCo"), neonousCompoundAmount],
+                        [gas.getId("Xe"), xeniumAmount]
+                    ]
+                });
+            }
+            }
+            break;
+        case 6:
+            if (frameCount % 30 == 0) {
+            let ratio = Math.random();
+            if (ratio > 0.9) {
+                // Argonium
+                clouds.push({
+                x: Math.random() * canvas.width + canvas.width + camera.x,
+                y: Math.random() * canvas.height * 2 + camera.y - canvas.height / 2,
+                width: Math.random() * 150 + 50,
+                height: Math.random() * 150 + 50,
+                composition: [[gas.getId("Arg"), 100]]
+                });
+            } else if (ratio > 0.6) {
+                // Deuterium
+                clouds.push({
+                x: Math.random() * canvas.width + canvas.width + camera.x,
+                y: Math.random() * canvas.height * 2 + camera.y - canvas.height / 2,
+                width: Math.random() * 150 + 50,
+                height: Math.random() * 150 + 50,
+                composition: [[gas.getId("Deu"), 100]]
+                });
+            } else if (ratio > 0.2){
+                // Xenium
+                clouds.push({
+                x: Math.random() * canvas.width + canvas.width + camera.x,
+                y: Math.random() * canvas.height * 2 + camera.y - canvas.height / 2,
+                width: Math.random() * 150 + 50,
+                height: Math.random() * 150 + 50,
+                composition: [[gas.getId("Xe"), 100]]
+                });
+            }else{
+                let xeniumAmount = Math.floor(Math.random() * 70) + 50; 
+                let deuteriumAmount = Math.floor(Math.random() * (100 - xeniumAmount - 10)) + 10; 
+                let argoniumAmount = 100 - xeniumAmount - deuteriumAmount; 
+                clouds.push({
+                    x: Math.random() * canvas.width + canvas.width + camera.x,
+                    y: Math.random() * canvas.height * 2 + camera.y - canvas.height / 2,
+                    width: Math.random() * 150 + 40,
+                    height: Math.random() * 150 + 40,
+                    composition: [
+                        [gas.getId("Xe"), xeniumAmount],
+                        [gas.getId("Deu"), deuteriumAmount],
+                        [gas.getId("Arg"), argoniumAmount]
+                    ]
+                });
+            }
+            }
+            break;
+
+        
     }
 }
 
@@ -540,8 +823,6 @@ function drawPauseGui(){
     }
     
 }
-
-
 
 function handleMouseInputs(){
     if(mouseClick){
