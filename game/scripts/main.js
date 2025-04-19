@@ -580,8 +580,9 @@ window.addEventListener("keyup", function(event) {
 
 // Listen for mouse events
 window.addEventListener("click", function(event) {
+    mult = window.innerWidth *0.8 / 1200;
     const rect = canvas.getBoundingClientRect();
-    mouseClick = {x: event.clientX-rect.left, y: event.clientY-rect.top};
+    mouseClick = {x: (event.clientX-rect.left)/mult, y: (event.clientY-rect.top)/mult};
 });
 
 
