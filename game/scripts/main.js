@@ -89,7 +89,7 @@ class Player {
             this.gasBurning(amount);
         } else {
             if(this.gasTankSpaceLeft == 0) {
-               return;
+                return;
             } else {
                 amount = amount > this.gasTankSpaceLeft ? this.gasTankSpaceLeft : amount;
                 this.gasTankSpaceLeft -= amount;
@@ -137,7 +137,11 @@ const player = new Player(50, 50);
 let frameCount = 0,
 gravity = 5;
 // Game loop
-var moveVector = { x: 0, y: 0 };
+var moveVector = { x: 15, y: 0 };
+
+clouds = []; // tablica chmur, na razie pusta, później będą się generować w randomowych miejscach 
+// zapisane w formacie {x, y, width, height, composition: [[id, amount], [id, amount]]} gdzie id to id gazu a amount to ilość tego gazu w chmurze
+
 
 function physics() {
     if (keysPressed[" "]) {
@@ -150,16 +154,19 @@ function physics() {
 function gameLoop() {
     // Clear the canvas
     ctx.clearRect(0, 0, canvas.width, canvas.height);
+    //generate terrain
+    if (frameCount % 100 == 0) {
+        clouds.push({x: Math.random() * canvas.width, y: Math.random() * canvas.height, width: 50, height: 50, composition: [[gas.getId("gas1"), Math.floor(Math.random() * 100)], [gas.getId("gas2"), Math.floor(Math.random() * 100)]]}); // wczesny kod, zasugerowany przez AI, zmienię później, chwilowo używam do testów
+    }
     //physics
     physics()
     //movement
     player.move({ x: moveVector.x / fps, y: moveVector.y / fps });
     //drawing
     player.draw();
-
+    //draw clouds
     // ui
     drawUI();
-    
     // Update the frame count
     frameCount++;
 }
