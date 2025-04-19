@@ -457,21 +457,6 @@ function unpause(){
     console.log("unpaused")
 }
 
-function pause(){
-    paused = true;
-    clearInterval(gameLoopInterval);
-    gameLoopInterval = setInterval(pausedLoop , 1000/fps);
-    canPause = false;
-    console.log("paused")
-}
-
-function unpause(){
-    paused = false;
-    clearInterval(gameLoopInterval);
-    gameLoopInterval = setInterval(gameLoop , 1000/fps);
-    canPause = false;
-    console.log("unpaused")
-}
 
 function generateClouds(){
     switch (currentLayer){
@@ -607,21 +592,6 @@ function generateClouds(){
     }
 }
 
-function pause(){
-    paused = true;
-    clearInterval(gameLoopInterval);
-    gameLoopInterval = setInterval(pausedLoop , 1000/fps);
-    canPause = false;
-    console.log("paused")
-}
-
-function unpause(){
-    paused = false;
-    clearInterval(gameLoopInterval);
-    gameLoopInterval = setInterval(gameLoop , 1000/fps);
-    canPause = false;
-    console.log("unpaused")
-}
 // Game loop
 function gameLoop() {
 
