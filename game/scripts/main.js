@@ -4,8 +4,8 @@ fps = 60,
 gas = {
     gases: {
         smoke: { name:"Sm", displayName: "Smoke", score: 0, price: 0, color:""},
-        tritium: { name:"IndOxi", displayName: "Industrial oxidizer", score: 3, price: 1, color:""},
-        industrialOxidizer: { name:"Tri", displayName: "Tritium", score: 5, price: 3, color:""},
+        tritium: { name:"Tri", displayName: "Tritium", score: 3, price: 1, color:""},
+        industrialOxidizer: { name:"IndOxi", displayName: "Industrial oxidizer", score: 5, price: 3, color:""},
         fluxium: { name:"Fl", displayName: "Fluxium", score: 6, price: 2, color:""},
         acidicWaste: { name:"AW", displayName: "Acidic waste", score: 0, price: 0, color:""},
         gasFuel: { name:"GFu", displayName: "Gas fuel", score: 9, price: 4, color:""},
@@ -223,9 +223,10 @@ keysPressed = {}, // Track keys pressed
 frameCount = 0,
 gravity = 3,
 moveVector = { x: 30, y: 0 },
-clouds = []; 
-// tablica chmur, na razie pusta, później będą się generować w randomowych miejscach 
-// zapisane w formacie {x, y, width, height, composition: [[id, amount], [id, amount]]} gdzie id to id gazu a amount to ilość tego gazu w chmurze
+clouds = [], 
+// zapisane w formacie {x, y, width, height, composition: [[id, amount], [id, amount],...]} gdzie id to id gazu a amount to ilość tego gazu w chmurze(%)
+currentLayer = 1
+
 
 for (let i =0; i<3;i++){
     clouds.push({x: Math.random() * canvas.width, y: Math.random() * canvas.height, width: Math.random() * 200 + 30, height: Math.random() * 200 + 30, composition: [[gas.getId("gas1"), Math.floor(Math.random() * 100)], [gas.getId("gas2"), Math.floor(Math.random() * 100)]]})
@@ -267,6 +268,37 @@ function draw(){
     drawUI();
 }
 
+function generateClouds(){
+    switch (currentLayer){
+        case 1:
+            if (frameCount % 50 == 0) {
+                let ratio = Math.random()
+                if (ratio > 0.9){
+                    // IndOxi
+                    
+                }else if(ratio < 0.2){
+                    //smog
+                }else{
+                    //tritium i bardzo mało IndOxi
+                }
+                    //clouds.push({x: Math.random() * canvas.width + canvas.width+camera.x, y: Math.random() * canvas.height*2 + camera.y-canvas.height/2, width: Math.random() * 200 + 30, height: Math.random() * 200 + 30, composition: [[gas.getId("gas1"), Math.floor(Math.random() * 100)], [gas.getId("gas2"), Math.floor(Math.random() * 100)]]}); // wczesny kod, zasugerowany przez AI, zmienię później, chwilowo używam do testów
+                
+                
+            }  
+            break
+        case 2:
+            break
+        case 3:
+            break
+        case 4:
+            break
+        case 5:
+            break
+        case 6:
+            break;
+    }
+}
+
 // Game loop
 function gameLoop() {
 
@@ -274,10 +306,7 @@ function gameLoop() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
     //generate clouds
-    if (frameCount % 50 == 0) {
-        clouds.push({x: Math.random() * canvas.width + canvas.width+camera.x, y: Math.random() * canvas.height*2 + camera.y-canvas.height/2, width: Math.random() * 200 + 30, height: Math.random() * 200 + 30, composition: [[gas.getId("gas1"), Math.floor(Math.random() * 100)], [gas.getId("gas2"), Math.floor(Math.random() * 100)]]}); // wczesny kod, zasugerowany przez AI, zmienię później, chwilowo używam do testów
-    }
-
+    generateClouds()
     //physics
     physics();
 
