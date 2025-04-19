@@ -246,10 +246,7 @@ function physics() {
     moveVector.y += gravity;
 }
 
-function draw(){
-    //draw player
-    player.draw(camera);
-    //draw clouds
+function drawClouds(){
     for(let i = 0; i < clouds.length; i++){
         if (clouds[i].x + clouds[i].width < camera.x){ //usuwanie chmur zbyt po lewej
             clouds.splice(i,1)
@@ -258,8 +255,14 @@ function draw(){
             ctx.fillStyle = "black";
             ctx.fillRect(clouds[i].x-camera.x, clouds[i].y-camera.y, clouds[i].width, clouds[i].height);
         }
-        
     }
+}
+
+function draw(){
+    //draw player
+    player.draw(camera);
+    //draw clouds
+    drawClouds();
     // ui
     drawUI();
 }
