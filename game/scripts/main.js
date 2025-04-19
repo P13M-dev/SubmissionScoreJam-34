@@ -4,8 +4,8 @@ fps = 60,
 gas = {
     gases: {
         smoke: { name:"Sm", displayName: "Smoke", score: 0, price: 0, color:""},
-        tritium: { name:"IndOxi", displayName: "Tritium", score: 3, price: 1, color:""},
-        industrialOxidizer: { name:"Tri", displayName: "Industrial oxidizer", score: 5, price: 3, color:""},
+        tritium: { name:"IndOxi", displayName: "Industrial oxidizer", score: 3, price: 1, color:""},
+        industrialOxidizer: { name:"Tri", displayName: "Tritium", score: 5, price: 3, color:""},
         fluxium: { name:"Fl", displayName: "Fluxium", score: 6, price: 2, color:""},
         acidicWaste: { name:"AW", displayName: "Acidic waste", score: 0, price: 0, color:""},
         gasFuel: { name:"GFu", displayName: "Gas fuel", score: 9, price: 4, color:""},
