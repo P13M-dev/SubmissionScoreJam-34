@@ -17,6 +17,7 @@ gas = {
         argonium: { name:"Arg", displayName: "Argonium", score: 40, price: 0, color:""}
         
     },
+
     getId(gasName){
         switch(gasName){
             case this.gases.smoke.name:
@@ -46,6 +47,7 @@ gas = {
 
         }
     },
+
     getColor(gasId){
         switch(gasId){
             case 1:
@@ -74,6 +76,7 @@ gas = {
                 return this.gases.argonium.color;
         }
     },
+
     getValue(gasId){ 
         switch(gasId){
             case 1:
@@ -102,6 +105,7 @@ gas = {
                 return this.gases.argonium.score;
         }
     },
+
     getPrice(gasId){ 
         switch(gasId){
             case 1:
@@ -131,46 +135,34 @@ gas = {
 
         }
     }
-}
-
-var keysPressed = {}; // Track keys pressed
-
-// Listen for keydown events
-window.addEventListener("keydown", function(event) {
-    keysPressed[event.key] = true;
-});
-
-// Listen for keyup events
-window.addEventListener("keyup", function(event) {
-    keysPressed[event.key] = false;
-});
-
-
-
-class Player {
-    constructor(x, y) {
-        this.x = x;
-        this.y = y;
-        this.width = 50;
-        this.height = 50;
-        this.speed = 5;
-        this.score = 0;
-        this.money = 0;
-        this.fuel = 1000;
-        this.gasTankSpaceLeft = 1000;
-        this.gasTankContents = [[],[]]; // tu są 2 tablice , w jednej będą same id gasów , w drugiej szczegóły (ilość,kolor,nazwa) później będziemy mogli pozbyć się nazw ale na teraz żeby nie było za bardzo skomplikowane to są.
-    }
+},
+player = {
+    x: 50,
+    y: 50,
+    width: 50,
+    height: 50,
+    speed: 5,
+    score: 0,
+    money: 0,
+    fuel: 1000,
+    gasTankSpaceLeft: 1000,
+    gasTankContents: [[],[]], 
+    // tu są 2 tablice , w jednej będą same id gasów , w drugiej szczegóły (ilość,kolor,nazwa) 
+    // później będziemy mogli pozbyć się nazw ale na teraz żeby nie było za bardzo skomplikowane to są.
     
-    move(vector) {
+    move(vector) 
+    {
         this.x += vector.x * this.speed;
         this.y += vector.y * this.speed;
-        xCamera = this.x - canvas.width/ 10
-        yCamera = this.y - canvas.height / 2 + this.height / 2; 
+        camera.x = this.x - canvas.width/ 10
+        camera.y = this.y - canvas.height / 2 + this.height / 2; 
         
 
 
-    }
-    addGasToTank(gasName,amount){
+    },
+
+    addGasToTank(gasName,amount)
+    {
         let gasId = gas.getId(gasName);
         if(gasId == 4) { // ten zły gaz niszczy inne, nazwa jest placeholderem
             this.gasBurning(amount);
@@ -190,8 +182,10 @@ class Player {
                 }
             }
         }
-    }
-    gasBurning(amount){ // dzieje się to wtedy kiedy zbiera się kwas, idzie od tyłu arraya i niszczy ten kwas
+    },
+
+    gasBurning(amount)
+    { // dzieje się to wtedy kiedy zbiera się kwas, idzie od tyłu arraya i niszczy ten kwas
         let i = this.gasTankContents[1].length - 1,
         amountLeft = amount;
         while(amount > 0 && i > -1){
@@ -205,36 +199,37 @@ class Player {
             }
             i--;
         }
-    }
-    emptyGasTank(){
+    },
+
+    emptyGasTank()
+    {
         this.gasTankSpaceLeft = 1000;
         for(let i = 0; i < this.gasTankContents[0].length; i++){
             score += gas.getValue(this.gasTankContents[0][i])*this.gasTankContents[1][i][0];
         }
         this.gasTankContents = [[],[]];
-    }
-    draw(xCamera, yCamera) {
+    },
+
+    draw(camera) 
+    {
         ctx.fillStyle = "red";
-        ctx.fillRect(this.x-xCamera, this.y-yCamera, this.width, this.height);
+        ctx.fillRect(this.x-camera.x, this.y-camera.y, this.width, this.height);
     }
 
 }
 
-const player = new Player(50, 50);
-let xCamera = 0,
-yCamera = 0;
-let frameCount = 0,
-gravity = 3;
-// Game loop
-var moveVector = { x: 30, y: 0 };
-
-clouds = []; // tablica chmur, na razie pusta, później będą się generować w randomowych miejscach 
+let camera = {x: 0, y: 0},
+keysPressed = {}, // Track keys pressed
+frameCount = 0,
+gravity = 3,
+moveVector = { x: 30, y: 0 },
+clouds = []; 
+// tablica chmur, na razie pusta, później będą się generować w randomowych miejscach 
 // zapisane w formacie {x, y, width, height, composition: [[id, amount], [id, amount]]} gdzie id to id gazu a amount to ilość tego gazu w chmurze
+
 for (let i =0; i<3;i++){
     clouds.push({x: Math.random() * canvas.width, y: Math.random() * canvas.height, width: Math.random() * 200 + 30, height: Math.random() * 200 + 30, composition: [[gas.getId("gas1"), Math.floor(Math.random() * 100)], [gas.getId("gas2"), Math.floor(Math.random() * 100)]]})
 }
-
-
 
 function physics() {
     if (frameCount % 50 == 0){
@@ -251,38 +246,58 @@ function physics() {
     moveVector.y += gravity;
 }
 
-function gameLoop() {
-    // Clear the canvas
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    //generate clouds
-    if (frameCount % 50 == 0) {
-        clouds.push({x: Math.random() * canvas.width + canvas.width+xCamera, y: Math.random() * canvas.height*2 + yCamera-canvas.height/2, width: Math.random() * 200 + 30, height: Math.random() * 200 + 30, composition: [[gas.getId("gas1"), Math.floor(Math.random() * 100)], [gas.getId("gas2"), Math.floor(Math.random() * 100)]]}); // wczesny kod, zasugerowany przez AI, zmienię później, chwilowo używam do testów
-    }
-    //physics
-    physics()
-    //movement
-    player.move({ x: moveVector.x / fps, y: moveVector.y / fps });
-    //drawing
-    player.draw(xCamera, yCamera);
+function draw(){
+    //draw player
+    player.draw(camera);
     //draw clouds
     for(let i = 0; i < clouds.length; i++){
-        if (clouds[i].x + clouds[i].width < xCamera){ //usuwanie chmur zbyt po lewej
+        if (clouds[i].x + clouds[i].width < camera.x){ //usuwanie chmur zbyt po lewej
             clouds.splice(i,1)
             i--
         }else{
             ctx.fillStyle = "black";
-            ctx.fillRect(clouds[i].x-xCamera, clouds[i].y-yCamera, clouds[i].width, clouds[i].height);
+            ctx.fillRect(clouds[i].x-camera.x, clouds[i].y-camera.y, clouds[i].width, clouds[i].height);
         }
         
     }
     // ui
     drawUI();
-    // Update the frame count
+}
 
+// Game loop
+function gameLoop() {
+
+    // Clear the canvas
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    //generate clouds
+    if (frameCount % 50 == 0) {
+        clouds.push({x: Math.random() * canvas.width + canvas.width+camera.x, y: Math.random() * canvas.height*2 + camera.y-canvas.height/2, width: Math.random() * 200 + 30, height: Math.random() * 200 + 30, composition: [[gas.getId("gas1"), Math.floor(Math.random() * 100)], [gas.getId("gas2"), Math.floor(Math.random() * 100)]]}); // wczesny kod, zasugerowany przez AI, zmienię później, chwilowo używam do testów
+    }
+
+    //physics
+    physics();
+
+    //movement
+    player.move({ x: moveVector.x / fps, y: moveVector.y / fps });
+
+    //drawing
+    draw();
+
+    // Update the frame count
     frameCount++;
 }
 
-// Get id of the gas for easier operations for 
+// Listen for keydown events
+window.addEventListener("keydown", function(event) {
+    keysPressed[event.key] = true;
+});
+
+// Listen for keyup events
+window.addEventListener("keyup", function(event) {
+    keysPressed[event.key] = false;
+});
+
 
 
 // Start the game loop
