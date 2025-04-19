@@ -46,7 +46,34 @@ gas = {
 
         }
     },
-
+    getName(gasId){
+        switch(gasId){
+            case 1:
+            return this.gases.smoke.name;
+            case 2:
+            return this.gases.tritium.name;
+            case 3:
+            return this.gases.industrialOxidizer.name;
+            case 4:
+            return this.gases.fluxium.name;
+            case 5:
+            return this.gases.acidicWaste.name;
+            case 6:
+            return this.gases.gasFuel.name;
+            case 7:
+            return this.gases.helium3.name;
+            case 8:
+            return this.gases.gelidVapour.name;
+            case 9:
+            return this.gases.neonCompound.name;
+            case 10:
+            return this.gases.xenium.name;
+            case 11:
+            return this.gases.deuterium.name;
+            case 12:
+            return this.gases.argonium.name;
+        }
+    },
     getColor(gasId){
         switch(gasId){
             case 1:
@@ -309,23 +336,6 @@ function handleKeyInputs() {
 
 }
 
-function handleKeyInputs() {
-    if(paused){
-        if(keysPressed["Escape"] && canPause){
-            unpause();
-            return;
-        }
-    } else {
-        if(keysPressed["Escape"] && canPause){
-            pause();
-            return;
-        }
-        if(keysPressed[" "]){
-            player.boost();
-        }
-    }
-
-}
 
 function physics() {
     if (frameCount % 50 == 0){
@@ -457,9 +467,47 @@ function unpause(){
     console.log("unpaused")
 }
 
+function handleCloudCollisions(){
+    for (let i = 0; i < clouds.length; i++) {
+        const cloud = clouds[i];
+        const playerRect = {
+            x: player.x,
+            y: player.y,
+            width: player.width,
+            height: player.height
+        };
+        const cloudRect = {
+            x: cloud.x,
+            y: cloud.y,
+            width: cloud.width,
+            height: cloud.height
+        };
+
+        if (
+            playerRect.x < cloudRect.x + cloudRect.width &&
+            playerRect.x + playerRect.width > cloudRect.x &&
+            playerRect.y < cloudRect.y + cloudRect.height &&
+            playerRect.y + playerRect.height > cloudRect.y
+        ) {
+            clouds[i].x += 10
+            clouds[i].width -= 20
+            clouds[i].height -= 20
+            clouds[i].y += 10
+            gas.get
+            player.addGasToTank(gas.getName(clouds[i].composition[0][0]),clouds[i].composition[0][1]/10000*clouds[i].width*clouds[i].height)
+            if (clouds[i].width <= 0 || clouds[i].height <= 0){
+                clouds.splice(i,1)
+                i--
+            }
+        }
+    }
+}
+
 // Game loop
 function gameLoop() {
-
+    if (frameCount%10 == 0){
+        console.log(player.gasTankContents)
+    }
     // Clear the canvas
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
@@ -467,6 +515,9 @@ function gameLoop() {
     generateClouds()
     //physics
     physics();
+
+    //collisions with clouds
+    handleCloudCollisions()
 
     //input
     handleKeyInputs();
@@ -486,6 +537,8 @@ function drawPauseGui(){
     
     
 }
+
+
 
 function handleMouseInputs(){
     if(mouseClick){
