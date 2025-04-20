@@ -617,11 +617,9 @@ function drawClouds(){
 }
 
 function draw(){
-    //draw player
     player.draw(camera);
-    //draw clouds
+    drawTankers();
     drawClouds();
-    // ui
     drawUI();
 }
 
@@ -773,7 +771,7 @@ function generateClouds(){
                 });
             }else{
                 let gasFuelAmount = Math.floor(Math.random() * 100);
-                let heliumAmount = Math.floor(Math.random() * (100 - tritiumAmount));
+                let heliumAmount = Math.floor(Math.random() * (100 - gasFuelAmount));
                 let fluxiumAmount = 100 - gasFuelAmount - heliumAmount;
                 clouds.push({
                     x: Math.random() * canvas.width + canvas.width + camera.x,
@@ -781,8 +779,8 @@ function generateClouds(){
                     width: Math.random() * 150 + 40,
                     height: Math.random() * 150 + 40,
                     composition: [
-                        [gas.getId("Gfu"), gasFuelAmount],
-                        [gas.getId("He"), heliumAmount]
+                        [gas.getId("GFu"), gasFuelAmount],
+                        [gas.getId("He"), heliumAmount],
                         [gas.getId("Fl"), fluxiumAmount]
                         
                     ]
@@ -971,11 +969,95 @@ function handleCloudCollisions(){
     }
 }
 
+
+let tankers = [] //w Formacie {x,y,size,rotation}
+
+function generateObstacles(){
+    // Warstwy:
+    // 3. Tanker crash site (szczątki zabierające hp na kolizji) Fioletowa warstwa , dużo szczątków kawałek zniszczonego statku widoczny
+    // 4. Misty bramble ( nieprzyjazna fauna, wjebuje się w ciebie celowo )
+    // 5. Neon battlezone  (drony z pociskami), fioletowo różowa warstwa widać bitwę w tle
+    // 6. Space (drony z laserami (górnicze, nie atakują aktywnie gracza, zagradzają mu drogę) ) widać satelity i asteroidy w tle
+    switch (currentLayer){
+        case 3:
+            if (frameCount % (1000/moveVector.x) == 0){ // do zmiany, jak wpadnę na lepszy pomysł
+                tankers.push({
+                    x: Math.random() * canvas.width + canvas.width + camera.x,
+                    y: Math.random() * canvas.height * 2 + camera.y - canvas.height / 2,
+                    size: Math.random() * 100 + 30,
+                    rotation: Math.random() * 360
+                })
+            }
+            break
+        case 4:
+            break
+        case 5:
+            break
+        case 6:
+            break
+    }
+}
+
+function handleTankerCollisions(){
+    for (let i = 0; i < tankers.length; i++) {
+        const tanker = tankers[i];
+        const playerRect = {
+            x: player.x,
+            y: player.y,
+            width: player.width,
+            height: player.height
+        };
+        const tankerRect = {
+            x: tanker.x,
+            y: tanker.y,
+            width: tanker.size,
+            height: tanker.size
+        };
+
+        if (
+            playerRect.x < tankerRect.x + tankerRect.width &&
+            playerRect.x + playerRect.width > tankerRect.x &&
+            playerRect.y < tankerRect.y + tankerRect.height &&
+            playerRect.y + playerRect.height > tankerRect.y
+        ) {
+
+            moveVector.x = Math.max(moveVector.x - 15, 30);
+            moveVector.y = Math.max(moveVector.y - 15, 0);
+
+            player.hp = Math.max(player.hp - 1, 0)
+
+            tanker.x += 20; // do zmiany później
+            tanker.y += 20;
+        }
+    }
+}
+
+function handleCollisions(){
+    handleCloudCollisions()
+    switch (currentLayer){
+        case 3:
+            handleTankerCollisions()
+            break;
+    }
+}
+function drawTankers(){
+    //dominek zmień to w wolnym czasie pls
+    for (let i = 0; i < tankers.length; i++) {
+        const tanker = tankers[i];
+        ctx.save();
+        ctx.translate(tanker.x - camera.x + tanker.size / 2, tanker.y - camera.y + tanker.size / 2);
+        ctx.rotate((tanker.rotation * Math.PI) / 180);
+        ctx.fillStyle = "gray";
+        ctx.fillRect(-tanker.size / 2, -tanker.size / 2, tanker.size, tanker.size);
+        ctx.restore();
+    }
+}
 function gameLoop() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     if(frameCount % 30 == 0){frameCount=0;generateClouds()}
+    generateObstacles()//nie daję tego za frameCountem, bo może będziemy chcieli by różne obstacles występowały częściej lub rzadziej
     physics();
-    handleCloudCollisions()
+    handleCollisions()
     handleKeyInputs();
     player.move({ x: moveVector.x / fps, y: moveVector.y / fps });
     draw();
