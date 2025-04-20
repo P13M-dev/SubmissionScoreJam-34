@@ -5,6 +5,12 @@ tankTXT =  document.getElementById("tank"),
 fuelBottom =  document.getElementById("fuelBottom"),
 fuelMiddle =  document.getElementById("fuelMiddle"),
 fuelTop =  document.getElementById("fuelTop"),
+button_start =  document.getElementById("button_start"),
+button_authors =  document.getElementById("button_authors"),
+button_settings =  document.getElementById("button_settings"),
+button_exit =  document.getElementById("button_exit"),
+button_resume =  document.getElementById("button_resume"),
+button_controls =  document.getElementById("button_controls"),
 gas = {
     gases: {
         smoke: { name:"Sm", displayName: "Smoke", score: 0, price: 0, color:"black"},
@@ -299,18 +305,7 @@ startScreen = {
         ctx.fillText("Gra z gazami", canvas.width / 2 ,canvas.height / 7,canvas.width/4,  canvas.height / 7);
         for (let i = 0; i < buttons.menu.length; i++) {
             let  button = buttons.menu[i];
-            
-            ctx.fillStyle = "white";
-            ctx.fillRect(button.x, button.y, button.width, button.height);
-            ctx.fill();
-            ctx.fillStyle = "black";
-            ctx.fillRect(button.x + 10, button.y + 10, button.width - 20, button.height - 20);
-            ctx.fill();
-            ctx.fillStyle = "white";
-            ctx.font = "30px Arial";
-            ctx.textAlign = "center";
-            ctx.fillText(button.text, button.x + button.width / 2 , button.y + button.height / 2+10);
-            
+            ctx.drawImage(button.img, button.x, button.y, button.width, button.height);
         }
         ctx.closePath();
     },
@@ -424,25 +419,13 @@ pause = {
         ctx.fillStyle = "rgba(0,0,0, 0.5)";
         ctx.fillRect(0,0,canvas.width,canvas.height)
         ctx.fill();
-        ctx.closePath();
+        
         for (let i = 0; i < buttons.pause.length; i++) {
             let button = buttons.pause.findIndex((button) => button[0] == i);
             button = buttons.pause[button][1];
-            ctx.beginPath();
-            ctx.fillStyle = "white";
-    
-            ctx.fillRect(button.x, button.y, button.width, button.height);
-            ctx.fill();
-            ctx.fillStyle = "black";
-            ctx.fillRect(button.x + 10, button.y + 10, button.width - 20, button.height - 20);
-            ctx.fill();
-            ctx.fillStyle = "white";
-            ctx.font = "30px Arial";
-            ctx.textAlign = "center";
-            ctx.fillText(button.text, button.x + button.width / 2 , button.y + button.height / 2+10);
-            ctx.closePath();
+            ctx.drawImage(button.img, button.x, button.y, button.width, button.height);
         }
-        
+        ctx.closePath();
     },
     
     handleMouseInputs(){
@@ -450,7 +433,6 @@ pause = {
             for (let i = 0; i < buttons.pause.length; i++) {
                 buttons.pause[i][1].checkForClicks(mouseClick.x, mouseClick.y);
             }
-            
             console.log("clicked"+mouseClick.x+" "+mouseClick.y)
             mouseClick = null
         }
@@ -467,12 +449,12 @@ pause = {
 }
 
 class Button {
-    constructor(x,y,width,height,text,func){
+    constructor(x,y,width,height,img,func){
         this.x = x;
         this.y = y;
         this.width = width;
         this.height = height;
-        this.text = text;        
+        this.img = img;        
         this.func = func;
     }
 
@@ -506,7 +488,6 @@ clouds = [],
 // tablica chmur, na razie pusta, później będą się generować w randomowych miejscach 
 // zapisane w formacie {x, y, width, height, composition: [[id, amount], [id, amount]]} gdzie id to id gazu a amount to ilość tego gazu w chmurze
 fuelFrame = 1,
-
 currentLayer = 1, 
 paused = false,
 inStartScreen = true,
@@ -516,16 +497,17 @@ buttons = {
     pause: [],
     end: [],
     menu: [],
-};
+},
+pixelSize = {width: canvas.width / 256, height: canvas.height / 144}
 
-buttons.menu.push(new Button(canvas.width/2-canvas.width/8, canvas.height/7*1.5, canvas.width/4, canvas.height/7,"Start",()=>{startScreen.startGame();}));
-buttons.menu.push(new Button(canvas.width/2-canvas.width/8, canvas.height/7*3, canvas.width/4, canvas.height/7,"Settings",()=>{}));
-buttons.menu.push(new Button(canvas.width/2-canvas.width/8, canvas.height/7*4.5, canvas.width/4, canvas.height/7,"Authors",()=>{}));
+buttons.menu.push(new Button(canvas.width/2-canvas.width/8, canvas.height/7*1.5, canvas.width/4, canvas.height/7,button_start,()=>{startScreen.startGame();}));
+buttons.menu.push(new Button(canvas.width/2-canvas.width/8, canvas.height/7*3, canvas.width/4, canvas.height/7,button_settings,()=>{}));
+buttons.menu.push(new Button(canvas.width/2-canvas.width/8, canvas.height/7*4.5, canvas.width/4, canvas.height/7,button_authors,()=>{}));
 
-buttons.pause.push([buttons.pause.length,new Button(canvas.width/2-canvas.width/8, canvas.height/13*1, canvas.width/4, canvas.height/13*2,"Resume",() => {pause.off();canPause = true;})]);
-buttons.pause.push([buttons.pause.length,new Button(canvas.width/2-canvas.width/8, canvas.height/13*4, canvas.width/4, canvas.height/13*2,"Settings",()=>{})]);
-buttons.pause.push([buttons.pause.length,new Button(canvas.width/2-canvas.width/8, canvas.height/13*7, canvas.width/4, canvas.height/13*2,"Controls",()=>{})]);
-buttons.pause.push([buttons.pause.length,new Button(canvas.width/2-canvas.width/8, canvas.height/13*10, canvas.width/4, canvas.height/13*2,"Exit",()=>{startScreen.restart();})]);
+buttons.pause.push([buttons.pause.length,new Button(canvas.width/2-canvas.width/8, canvas.height/13*1, canvas.width/4, canvas.height/13*2,button_resume,() => {pause.off();canPause = true;})]);
+buttons.pause.push([buttons.pause.length,new Button(canvas.width/2-canvas.width/8, canvas.height/13*4, canvas.width/4, canvas.height/13*2,button_settings,()=>{})]);
+buttons.pause.push([buttons.pause.length,new Button(canvas.width/2-canvas.width/8, canvas.height/13*7, canvas.width/4, canvas.height/13*2,button_controls,()=>{})]);
+buttons.pause.push([buttons.pause.length,new Button(canvas.width/2-canvas.width/8, canvas.height/13*10, canvas.width/4, canvas.height/13*2,button_exit,()=>{startScreen.restart();})]);
 
 buttons.end.push([buttons.end.length,new Button(canvas.width/2-canvas.width/8, canvas.height/13*7, canvas.width/4, canvas.height/13*2,"Restart",()=>{startScreen.restart();})]);
 
@@ -1086,7 +1068,54 @@ window.addEventListener("click", function(event) {
     mouseClick = {x: (event.clientX-rect.left)/mult, y: (event.clientY-rect.top)/mult};
 });
 
+function drawUI() {
+    
 
+    ctx.fillStyle = "green"
+    ctx.fillRect(3 * pixelSize.width, 30 * pixelSize.height - 27 * pixelSize.height * player.fuel / 1000, 7 * pixelSize.width, 27 * pixelSize.height * player.fuel / 1000)
+    
+    let fuelAmount = Math.ceil(27 * player.fuel / 1000)
+
+    if(fuelAmount > 0) {
+        ctx.drawImage(fuelTop, 0, 512 - 64 * fuelFrame, 104, 64, 0, (25 - fuelAmount) * pixelSize.height, 13 * pixelSize.width, 8 * pixelSize.height)
+        
+        if(frameCount % Math.floor(fps / 3) == 0) {
+            fuelFrame++
+            fuelFrame > 8 ? fuelFrame = 1 : null 
+        }
+    
+        if(fuelAmount - 5 > 0) {
+            for (i = fuelAmount - 5; i > 0; i--) {
+                if (i == fuelAmount - 5 && (fuelAmount - 5) % 2 == 1) {
+                    ctx.drawImage(fuelMiddle, 0, (27 - i) * pixelSize.height, 13 * pixelSize.width, 4 * pixelSize.height)
+                }
+                if (i % 2 == 0) {
+                    ctx.drawImage(fuelMiddle, 0, (27 - i) * pixelSize.height, 13 * pixelSize.width, 4 * pixelSize.height)
+                }
+            }
+        }
+
+        
+        ctx.fillStyle = "black"
+        ctx.fillText(`${Math.ceil(player.fuel / 10)}%`, 0, 35 * pixelSize.height)
+    }
+
+    switch (fuelAmount) {
+        case 2:
+            ctx.drawImage(fuelBottom, 0, 28 * pixelSize.height, 13 * pixelSize.width, 3 * pixelSize.height)
+            break
+        case 1:
+            ctx.drawImage(fuelBottom, 0, 29 * pixelSize.height, 13 * pixelSize.width, 3 * pixelSize.height)
+            break
+        case 0:
+            ctx.drawImage(fuelBottom, 0, 29 * pixelSize.height, 13 * pixelSize.width, 3 * pixelSize.height)
+            break
+        default:
+            ctx.drawImage(fuelBottom, 0, 27 * pixelSize.height, 13 * pixelSize.width, 3 * pixelSize.height)
+    }
+ 
+    ctx.drawImage(tankTXT, 0, 0, 13 * pixelSize.width, 33 * pixelSize.height)
+}
 
 // Start the game loop
 
