@@ -22,6 +22,7 @@ button_upgrd1 = document.getElementById("button_upgrd1"),
 button_upgrd2 = document.getElementById("button_upgrd2"),
 button_upgrd3 = document.getElementById("button_upgrd3"),
 button_upgrd4 = document.getElementById("button_upgrd4"),
+boostBar = document.getElementById("boostBar"),
 gas = {
     gases: {
         smoke: { name:"Sm", displayName: "Smoke", score: 0, price: 0, color:"black"},
@@ -288,7 +289,7 @@ player = {
 
     draw(camera) 
     {
-        if(keysPressed[" "] || keysPressed["w"]) {
+        if(moveVector.y < 0) {
             ctx.drawImage(shipOn, 0, 112 * player.flameFrame, 80, 112, this.x-camera.x, this.y-camera.y, 10 * pixelSize.width, 14 * pixelSize.height);
             if(frameCount % 10 == 0) {
                 player.flameFrame++
@@ -1345,6 +1346,8 @@ function drawUI() {
     ctx.drawImage(tankTXT, 0, 0, 13 * pixelSize.width, 33 * pixelSize.height)
 
     ctx.drawImage(altimeter, 0, 97 * pixelSize.height, 13 * pixelSize.width, 47 * pixelSize.height)
+
+    ctx.drawImage(boostBar, 0, (4 - player.jumpCharges) * 104, 264, 104, 0, 35 * pixelSize.height, 33 * pixelSize.width, 13 * pixelSize.height)
 }
 
 // Start the game loop
