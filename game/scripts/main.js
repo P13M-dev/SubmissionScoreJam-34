@@ -191,12 +191,19 @@ player = {
     
     move(vector) 
     {
-        this.x += vector.x * this.speed;
         this.y += vector.y * this.speed;
+        this.x += vector.x * this.speed;
         camera.x = this.x - canvas.width/ 10
         camera.y = this.y - canvas.height / 2 + this.height / 2; 
         
-
+        if (moveVector.x*fps > 60){
+            moveVector.x = Math.max(moveVector.x - 0.25, 60);
+        }
+        if (vector.x*fps > 60){
+            this.y -= Math.sin(vector.x / 25) * 40;
+        }else{
+            this.y += Math.sin(vector.x / 25) * 40;
+        }
 
     },
 
@@ -256,14 +263,28 @@ player = {
         ctx.fillRect(this.x-camera.x, this.y-camera.y, this.width, this.height);
     },
 
-    boost()
+    boost(direction)
     {
-            if (moveVector.y < -15){ // limit
-                moveVector.y -= 5
-            }else{
-                moveVector.y -= 7;
-            }
-            this.fuel = Math.max(this.fuel-5/fps,0);
+        switch (direction){
+            case 1: // góra
+                if (moveVector.y < -15){ // limit
+                    moveVector.y -= 5
+                }else{
+                    moveVector.y -= 7;
+                }
+                this.fuel = Math.max(this.fuel-5/fps,0);
+                break;
+            case 2: // prawo (boost forward)
+                moveVector.x = Math.min(moveVector.x+5, 125);
+                this.fuel = Math.max(this.fuel - 5 / fps, 0);
+                break;
+            case 3: // lewo (decelerate)
+                moveVector.x = Math.max(moveVector.x - 5, 35);
+                this.fuel = Math.max(this.fuel - 5 / fps, 0);
+                break;
+
+        }
+            
     }
 
 },
@@ -518,10 +539,16 @@ function handleKeyInputs() {
             return;
         }
         if(keysPressed[" "]){
-            player.boost();
+            player.boost(1);
         }
         else if(keysPressed["w"]){
-            player.boost();
+            player.boost(1);
+        }
+        if (keysPressed["d"]){
+            player.boost(2)
+        }
+        if (keysPressed["a"]){
+            player.boost(3)
         }
     }
 
