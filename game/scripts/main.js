@@ -981,12 +981,16 @@ function miniMap(){
     ctx.fillStyle = "#000000"
     middleOfTheMap = {x: canvas.width/7.5,y: canvas.height-canvas.width/11}
     ctx.fillRect(middleOfTheMap.x-canvas.width/12,middleOfTheMap.y-canvas.width/12,canvas.width/6,canvas.width/6)
+    ctx.fillStyle = "#00ff00"
+    ctx.fillRect(middleOfTheMap.x,middleOfTheMap.y,5,5)
     for (let i = 0; i < clouds.length; i++) {
         const cloud = clouds[i];
         ctx.fillStyle = "#ff00ff"
         rad = Math.sqrt((cloud.x - camera.x - canvas.width/10)**2 + (cloud.y - camera.y - canvas.height/2)**2)/15
+        
         if( rad < 105
         ){
+
             ctx.fillRect((cloud.x-camera.x)/15 + middleOfTheMap.x-canvas.width/100,(cloud.y-camera.y)/15 + middleOfTheMap.y-canvas.width/50,5,5)
         }
     }
