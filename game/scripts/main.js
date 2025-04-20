@@ -345,7 +345,7 @@ endGameScreen = {
         ctx.fillStyle = "white";
         ctx.font = "50px Arial";
         
-        ctx.fillText("You Scored"+player.score, canvas.width / 7 ,canvas.height / 7+10,canvas.width/4,  canvas.height / 7);
+        ctx.fillText("You Scored", canvas.width / 7 ,canvas.height / 7-50,canvas.width/4,  canvas.height / 7);
         ctx.fillText(player.score, canvas.width / 7 ,canvas.height / 7+10,canvas.width/4,  canvas.height / 7);
         ctx.font = "40px Arial";
         ctx.fillText("You survived for "+getTime(player.time), canvas.width / 7 ,canvas.height / 7+70,canvas.width/4,  canvas.height / 7);
