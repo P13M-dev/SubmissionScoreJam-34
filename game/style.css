@@ -1,22 +1,15 @@
-canvas{
+canvas {
     position: absolute;
     left: 10%;
     display: block;
-    border-top: #000;
-    border-left: #000;
-    border-width: 2;
-    border-style: solid;
+    border: 2px solid #2c0e99; 
+    border-radius: 15px; 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
     width: 80%;
     top: 10%;
     margin: auto;
 }
 html{
-    background: #000000;
-background: linear-gradient(90deg, rgba(0, 0, 0, 1) 0%, rgba(207, 207, 207, 1) 50%, rgba(0, 0, 0, 1) 100%);
-}
-#arcade{
-    width: 99.283854166%;
-    position: absolute;
-    top: 0;
-    left: 0;
+    background-image: url("textures/background.png");
+    
 }

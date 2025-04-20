@@ -188,7 +188,8 @@ player = {
     time: 0,
     kills: 0,
     gasTankSpaceLeft: 1000,
-    gasTankContents: [[],[]], 
+    gasTankContents: [[],[]],
+    amplitude: 0 ,
     // tu są 2 tablice , w jednej będą same id gasów , w drugiej szczegóły (ilość,kolor,nazwa) 
     // później będziemy mogli pozbyć się nazw ale na teraz żeby nie było za bardzo skomplikowane to są.
     
@@ -201,7 +202,15 @@ player = {
         
         if (moveVector.x*fps > 60){
             moveVector.x = Math.max(moveVector.x - 0.25, 60);
+            this.amplitude += moveVector.x*fps/60
+        }else if (moveVector.x*fps < 50){
+            this.amplitude -= moveVector.x*fps/60
         }
+
+        if (this.amplitude > layerThresholds[currentLayer-1]){
+            //cutscenka stacji
+            currentLayer++
+        } 
         
     },
 
@@ -610,6 +619,7 @@ clouds = [],
 // zapisane w formacie {x, y, width, height, composition: [[id, amount], [id, amount]]} gdzie id to id gazu a amount to ilość tego gazu w chmurze
 fuelFrame = 1,
 currentLayer = 1, 
+layerThresholds = [1000,2000,3000,4000,5000],
 paused = false,
 inStartScreen = true,
 canPause = true,
@@ -1078,12 +1088,10 @@ function handleCloudCollisions(){
             playerRect.y + playerRect.height > cloudRect.y &&
             player.gasTankSpaceLeft > 0
         ) {
-            console.log((moveVector.x+15)/50)
-            clouds[i].x += 10*(moveVector.x+15)/50
-            clouds[i].width -= 20*(moveVector.x+15)/50
-            clouds[i].height -= 20*(moveVector.x+15)/50
-            clouds[i].y += 10*(moveVector.x+15)/50
-            gas.get
+            clouds[i].x += 10*(Math.max(moveVector.x,Math.abs(moveVector.y))+15)/50
+            clouds[i].width -= 20*(Math.max(moveVector.x,Math.abs(moveVector.y))+15)/50
+            clouds[i].height -= 20*(Math.max(moveVector.x,Math.abs(moveVector.y))+15)/50
+            clouds[i].y += 10*(Math.max(moveVector.x,Math.abs(moveVector.y))+15)/50
             player.addGasToTank(gas.getName(clouds[i].composition[0][0]),clouds[i].composition[0][1]/100000*clouds[i].width*clouds[i].height)
             if (clouds[i].width <= 0 || clouds[i].height <= 0){
                 clouds.splice(i,1)
