@@ -12,6 +12,8 @@ button_exit =  document.getElementById("button_exit"),
 button_resume =  document.getElementById("button_resume"),
 button_controls =  document.getElementById("button_controls"),
 button_restart =  document.getElementById("button_restart"),
+altimeter =  document.getElementById("altimeter"),
+minimap =  document.getElementById("minimap"),
 gas = {
     gases: {
         smoke: { name:"Sm", displayName: "Smoke", score: 0, price: 0, color:"black"},
@@ -1136,6 +1138,10 @@ function drawUI() {
     }
  
     ctx.drawImage(tankTXT, 0, 0, 13 * pixelSize.width, 33 * pixelSize.height)
+
+    ctx.drawImage(altimeter, 0, 97 * pixelSize.height, 13 * pixelSize.width, 47 * pixelSize.height)
+
+    ctx.drawImage(minimap, 14 * pixelSize.width, 111 * pixelSize.height, 33 * pixelSize.width, 33 * pixelSize.height)
 }
 
 // Start the game loop
