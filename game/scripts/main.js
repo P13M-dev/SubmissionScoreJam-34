@@ -1,6 +1,6 @@
 const canvas = document.getElementById("canvas"),
 ctx = canvas.getContext("2d"),
-fps = 100,
+fps = 60,
 tankTXT =  document.getElementById("tank"),
 fuelBottom =  document.getElementById("fuelBottom"),
 fuelMiddle =  document.getElementById("fuelMiddle"),
@@ -14,6 +14,7 @@ button_controls =  document.getElementById("button_controls"),
 button_restart =  document.getElementById("button_restart"),
 altimeter =  document.getElementById("altimeter"),
 minimap =  document.getElementById("minimap"),
+station = document.getElementById("station"),
 shipOn = document.getElementById("shipOn"),
 shipOff = document.getElementById("shipOff"),
 gas = {
@@ -204,13 +205,13 @@ player = {
         
         if (moveVector.x*fps > 60){
             moveVector.x = Math.max(moveVector.x - 0.25, 60);
-            this.amplitude += moveVector.x*fps/60
+            this.amplitude += moveVector.x/fps
         }else if (moveVector.x*fps < 50){
-            this.amplitude -= moveVector.x*fps/60
+            this.amplitude -= moveVector.x/fps
         }
 
         if (this.amplitude > layerThresholds[currentLayer-1]){
-            //cutscenka stacji
+            cutScene.trigger();
             currentLayer++
         } 
         
@@ -482,6 +483,121 @@ pause = {
         pause.drawGui();
     }
     
+},
+cutScene = {
+    timeLeft: fps*2,
+    playerPosPrior: 0,
+    easeInQuint(x) {
+        return x * x * x * x * x;
+    },
+    easeOutQuint(x) {
+        return 1 - Math.pow(1 - x, 5);
+    },
+    draw(){
+        ctx.beginPath();
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        player.draw(camera);
+        drawTankers();
+        drawClouds();
+        ctx.closePath();
+    },
+    drawWithStation(){
+        ctx.beginPath();
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        player.draw(camera);
+        ctx.drawImage(station,canvas.width/2-(station.width/4),canvas.height/2-station.height/2,station.height,station.height);
+        ctx.closePath();
+    },
+    flickMenu(time,display){
+        console.log(time,display);
+        cutScene.draw();
+        if(time > 0){
+            setTimeout(()=>{cutScene.flickMenu(time-1000/5,!display)}, time-1000/5);
+            if(display){
+                miniMap();
+                drawUI();
+            } 
+        } else {
+            setTimeout(()=>{gameLoopInterval = setInterval(cutScene.loopSpeed , 1000/fps)},100);
+        }
+    },
+    trigger(){
+        clearInterval(gameLoopInterval);
+        cutScene.playerPosPrior = player.x;
+        cutScene.flickMenu(1000,true);
+    },
+    loopSpeed(){
+        cutScene.draw();
+        player.x +=(cutScene.easeInQuint(cutScene.timeLeft/(fps*2))*4000/fps)*2;
+        camera.x += (cutScene.easeInQuint(cutScene.timeLeft/(fps*2))*4000/fps);
+        cutScene.timeLeft -= 1;
+        if(cutScene.timeLeft <= 0){
+            clearInterval(gameLoopInterval);
+            player.x = camera.x;
+            cutScene.timeLeft = fps;
+            gameLoopInterval = setInterval(cutScene.loopFlyToShop , 1000/fps);
+        }
+    },
+    loopFlyToShop(){
+        cutScene.drawWithStation();
+        player.x +=(cutScene.easeOutQuint(cutScene.timeLeft/(fps))*800/fps);
+        cutScene.timeLeft -= 1;
+        if(cutScene.timeLeft <= 0){
+            shop.enter();
+        }
+    },
+    loopFlyFromShop(){
+        cutScene.drawWithStation();
+        player.x +=(cutScene.easeInQuint(cutScene.timeLeft/(fps*2))*2000/fps);
+        cutScene.timeLeft -= 1;
+        if(cutScene.timeLeft <= 0){
+            clearInterval(gameLoopInterval);
+            player.x = 50
+            moveVector.y -= 500
+            moveVector.x += 200
+            gameLoopInterval = setInterval( gameLoop , 1000/fps);
+            canPause = true;
+        }
+    }
+
+},
+shop = {
+    draw(){
+        ctx.beginPath();
+        ctx.drawImage(station,canvas.width/2-(station.width/4),canvas.height/2-station.height/2,station.height,station.height);
+        ctx.fillStyle = "rgba(0,0,0, 0.5)";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        for (let i = 0; i < buttons.shop.length; i++) {
+            let button = buttons.shop.findIndex((button) => button[0] == i);
+            button = buttons.shop[button][1];
+            ctx.drawImage(button.img, button.x, button.y, button.width, button.height);
+        }
+        ctx.closePath();
+    },
+    enter(){
+        
+        clearInterval(gameLoopInterval);
+        gameLoopInterval = setInterval(shop.loop , 1000/fps);
+        canPause = false;
+    },
+    loop(){
+        shop.draw();
+        shop.handleMouseInputs();
+    },
+    handleMouseInputs(){
+        if(mouseClick){
+            for (let i = 0; i < buttons.shop.length; i++) {
+                buttons.shop[i][1].checkForClicks(mouseClick.x, mouseClick.y);
+            }
+            mouseClick = null
+        }
+    },
+    exit(){
+        cutScene.timeLeft = fps*2;
+        clearInterval(gameLoopInterval);
+        gameLoopInterval = setInterval(cutScene.loopFlyFromShop , 1000/fps);
+        
+    }
 }
 
 class Button {
@@ -518,7 +634,7 @@ clouds = [],
 // zapisane w formacie {x, y, width, height, composition: [[id, amount], [id, amount]]} gdzie id to id gazu a amount to ilość tego gazu w chmurze
 fuelFrame = 1,
 currentLayer = 1, 
-layerThresholds = [1000,2000,3000,4000,5000],
+layerThresholds = [3000,6000,9000,12000,15000],
 paused = false,
 inStartScreen = true,
 canPause = true,
@@ -527,6 +643,7 @@ buttons = {
     pause: [],
     end: [],
     menu: [],
+    shop:[]
 },
 pixelSize = {width: canvas.width / 256, height: canvas.height / 144}
 
@@ -1001,7 +1118,7 @@ function handleCloudCollisions(){
 
 function miniMap(){
     ctx.beginPath();
-    ctx.fillStyle = "#000000"
+    ctx.fillStyle = "#000000";
     middleOfTheMap = {x: canvas.width/7.5,y: canvas.height-canvas.width/11}
     ctx.fillRect(middleOfTheMap.x-canvas.width/12,middleOfTheMap.y-canvas.width/12,canvas.width/6,canvas.width/6)
     ctx.fillStyle = "#00ff00"
