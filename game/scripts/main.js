@@ -578,13 +578,12 @@ cutScene = {
 },
 shop = {
     items:[
-        {name:"",description:"",price:500,upgrdId:1},
-        {name:"",description:"",price:1000,upgrdId:2},
-        {name:"",description:"",price:2000,upgrdId:3},
-        {name:"",description:"",price:3000,upgrdId:4}
-    ]
-        
-    ,
+        {name:"Larger Intake",description:["A larger gas collector.","Allows you to collect","more gas."],price:500,upgrdId:0},
+        {name:"Advanced filter",description:["Better filtration system.","Allows you to collect better gases"," from intermediate layers."],price:1000,upgrdId:1},
+        {name:"Armored tank",description:["Upgraded storage system.","Allows you to store more","gases in your tank."],price:2000,upgrdId:2},
+        {name:"Gas attractor",description:["Upgraded gas collection system.","Allows you to collect rare gases"," from higher layers."],price:3000,upgrdId:3}
+    ],
+    selectedItem: -1,
     draw(){
         ctx.beginPath();
         ctx.drawImage(station,canvas.width/2-(station.width/4),canvas.height/2-station.height/2,station.height,station.height);
@@ -595,10 +594,22 @@ shop = {
             button = buttons.shop[button][1];
             ctx.drawImage(button.img, button.x, button.y, button.width, button.height);
         }
+        ctx.font = "25px Arial";
+        ctx.textAlign = "center";
         ctx.fillText("Fuel: "+Math.ceil(player.fuel / 10)+"%", 0, 35 * pixelSize.height);
         ctx.fillText("Score: "+player.score, 0, 35 * pixelSize.height);
         ctx.fillText("Credits: "+player.money, 0, 35 * pixelSize.height);
         ctx.closePath();
+        if(shop.selectedItem != -1){
+            ctx.font = "25px Arial";
+            ctx.textAlign = "center";
+            ctx.fillStyle = "white";
+            ctx.fillText(shop.items[shop.selectedItem].name, canvas.width/6*5, 25);
+            ctx.fillText("Price: "+shop.items[shop.selectedItem].price, canvas.width/6*5, 65);
+            for (let i = 0; i < shop.items[shop.selectedItem].description.length; i++) {
+                ctx.fillText(shop.items[shop.selectedItem].description[i], canvas.width/6*5, 65 + 45 * (i+1));
+            }
+        }
     },
     enter(){
         
@@ -625,7 +636,7 @@ shop = {
         
     },
     click(itemNumber){
-        shop.selectedItem = itemNumber;
+        shop.selectedItem = itemNumber-1;
     }
 }
 
@@ -688,7 +699,7 @@ buttons.pause.push([buttons.pause.length,new Button(canvas.width/2-canvas.width/
 
 buttons.end.push([buttons.end.length,new Button(canvas.width/2-canvas.width/8, canvas.height/13*7, canvas.width/4, canvas.height/13*2,button_restart,()=>{startScreen.restart();})]);
 
-buttons.shop.push([buttons.shop.length,new Button(canvas.width-canvas.width/4, canvas.height-canvas.width/8, canvas.width/4, canvas.width/8,button_buy,()=>{shop.exit();})]);
+buttons.shop.push([buttons.shop.length,new Button(canvas.width/6*5-canvas.width/8, canvas.height-canvas.width/8, canvas.width/4, canvas.width/8,button_leave,()=>{shop.exit();})]);
 buttons.shop.push([buttons.shop.length,new Button(canvas.width/13*2-canvas.width/13, canvas.width/13, canvas.width/13*2, canvas.width/13*2,button_upgrd1,()=>{shop.click(1);})]);
 buttons.shop.push([buttons.shop.length,new Button(canvas.width/13*5-canvas.width/13, canvas.width/13, canvas.width/13*2, canvas.width/13*2,button_upgrd1,()=>{shop.click(2);})]);
 buttons.shop.push([buttons.shop.length,new Button(canvas.width/13*2-canvas.width/13, canvas.width/13*4, canvas.width/13*2, canvas.width/13*2,button_upgrd1,()=>{shop.click(3);})]);
@@ -1153,11 +1164,12 @@ function miniMap(){
     for (let i = 0; i < clouds.length; i++) {
         const cloud = clouds[i];
         ctx.fillStyle = "#ff00ff"
-        rad = Math.sqrt((cloud.x - camera.x - canvas.width/10)**2 + (cloud.y - camera.y - canvas.height/2)**2)/15
-        
-        if( rad < 105
+        if( (cloud.x - camera.x)/150 < middleOfTheMap.x/20-1 &&
+            Math.abs(cloud.y - camera.y)/150 < middleOfTheMap.y/50+2 &&
+            !(cloud.y-camera.y-canvas.height/2 <= 0 && (cloud.y - camera.y)/150 < middleOfTheMap.y/50-20) 
+            
         ){
-            ctx.fillRect((cloud.x-camera.x)/15 + middleOfTheMap.x-canvas.width/100,(cloud.y-camera.y)/15 + middleOfTheMap.y-canvas.width/50,5,5)
+            ctx.fillRect((cloud.x-camera.x)/15 + middleOfTheMap.x-canvas.width/50,(cloud.y-camera.y)/15 + middleOfTheMap.y-canvas.width/50,5,5)
         }
     }
     ctx.fill();
