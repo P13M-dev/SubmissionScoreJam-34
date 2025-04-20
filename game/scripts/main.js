@@ -11,6 +11,7 @@ button_settings =  document.getElementById("button_settings"),
 button_exit =  document.getElementById("button_exit"),
 button_resume =  document.getElementById("button_resume"),
 button_controls =  document.getElementById("button_controls"),
+button_restart =  document.getElementById("button_restart"),
 gas = {
     gases: {
         smoke: { name:"Sm", displayName: "Smoke", score: 0, price: 0, color:"black"},
@@ -302,7 +303,7 @@ startScreen = {
         ctx.fillStyle = "white";  
         ctx.font = "30px Arial";
         ctx.textAlign = "center";
-        ctx.fillText("Gra z gazami", canvas.width / 2 ,canvas.height / 7,canvas.width/4,  canvas.height / 7);
+        ctx.fillText("Ascent from Callisto", canvas.width / 2 ,canvas.height / 7,canvas.width/4,  canvas.height / 7);
         for (let i = 0; i < buttons.menu.length; i++) {
             let  button = buttons.menu[i];
             ctx.drawImage(button.img, button.x, button.y, button.width, button.height);
@@ -358,17 +359,7 @@ endGameScreen = {
 
         for (let i = 0; i < buttons.end.length; i++) {
             let  button = buttons.end[i][1];
-            ctx.fillStyle = "white";
-            ctx.fillRect(button.x, button.y, button.width, button.height);
-            ctx.fill();
-            ctx.fillStyle = "black";
-            ctx.fillRect(button.x + 10, button.y + 10, button.width - 20, button.height - 20);
-            ctx.fill();
-            ctx.fillStyle = "white";
-            ctx.font = "30px Arial";
-            ctx.textAlign = "center";
-            ctx.fillText(button.text, button.x + button.width / 2 , button.y + button.height / 2+10);
-            
+            ctx.drawImage(button.img, button.x, button.y, button.width, button.height);
         }
         ctx.closePath();
     },
@@ -509,7 +500,7 @@ buttons.pause.push([buttons.pause.length,new Button(canvas.width/2-canvas.width/
 buttons.pause.push([buttons.pause.length,new Button(canvas.width/2-canvas.width/8, canvas.height/13*7, canvas.width/4, canvas.height/13*2,button_controls,()=>{})]);
 buttons.pause.push([buttons.pause.length,new Button(canvas.width/2-canvas.width/8, canvas.height/13*10, canvas.width/4, canvas.height/13*2,button_exit,()=>{startScreen.restart();})]);
 
-buttons.end.push([buttons.end.length,new Button(canvas.width/2-canvas.width/8, canvas.height/13*7, canvas.width/4, canvas.height/13*2,"Restart",()=>{startScreen.restart();})]);
+buttons.end.push([buttons.end.length,new Button(canvas.width/2-canvas.width/8, canvas.height/13*7, canvas.width/4, canvas.height/13*2,button_restart,()=>{startScreen.restart();})]);
 
 for (let i =0; i<3;i++){
     generateClouds()
