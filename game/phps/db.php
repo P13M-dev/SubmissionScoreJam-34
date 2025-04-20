@@ -13,7 +13,6 @@ if (!file_exists($dbFile)) {
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             nickname TEXT NOT NULL UNIQUE,
             score INTEGER NOT NULL,
-            lost_score INTEGER NOT NULL,
             kills INTEGER NOT NULL,
             layer INTEGER NOT NULL,
             time_alive INTEGER NOT NULL,
