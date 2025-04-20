@@ -199,11 +199,7 @@ player = {
         if (moveVector.x*fps > 60){
             moveVector.x = Math.max(moveVector.x - 0.25, 60);
         }
-        if (vector.x*fps > 60){
-            this.y -= Math.sin(vector.x / 25) * 40;
-        }else{
-            this.y += Math.sin(vector.x / 25) * 40;
-        }
+        
 
     },
 
