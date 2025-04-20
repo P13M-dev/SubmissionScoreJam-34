@@ -1282,7 +1282,7 @@ window.addEventListener("keyup", function(event) {
         player.jump();
     }
 });
-
+ 
 window.addEventListener("click", function(event) {
     mult = window.innerWidth *0.75 / 1200;
     const rect = canvas.getBoundingClientRect();
@@ -1291,7 +1291,6 @@ window.addEventListener("click", function(event) {
 
 function drawUI() {
     
-
     ctx.fillStyle = "green"
     ctx.fillRect(3 * pixelSize.width, 30 * pixelSize.height - 27 * pixelSize.height * player.fuel / 1000, 7 * pixelSize.width, 27 * pixelSize.height * player.fuel / 1000)
     
@@ -1330,12 +1329,21 @@ function drawUI() {
         default:
             ctx.drawImage(fuelBottom, 0, 27 * pixelSize.height, 13 * pixelSize.width, 3 * pixelSize.height)
     }
- 
+
     ctx.drawImage(tankTXT, 0, 0, 13 * pixelSize.width, 33 * pixelSize.height)
 
     ctx.drawImage(altimeter, 0, 97 * pixelSize.height, 13 * pixelSize.width, 47 * pixelSize.height)
 
+    ctx.beginPath();
+    ctx.strokeStyle = "red";
+    ctx.lineWidth = 6;
+    ctx.moveTo(9 * pixelSize.width, 140 * pixelSize.height -pixelSize.height*40*(player.amplitude/(layerThresholds[0]*6)));
+    ctx.lineTo(13 * pixelSize.width, 140 * pixelSize.height-pixelSize.height*40*(player.amplitude/(layerThresholds[0]*6)));
+    ctx.stroke();
+    ctx.closePath();
+
     ctx.drawImage(boostBar, 0, (4 - player.jumpCharges) * 104, 264, 104, 0, 35 * pixelSize.height, 33 * pixelSize.width, 13 * pixelSize.height)
+
 }
 
 // Start the game loop
