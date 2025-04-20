@@ -613,8 +613,9 @@ function draw(){
     player.draw(camera);
     drawTankers();
     drawClouds();
-    drawUI();
     miniMap();
+    drawUI();
+
 }
 
 function generateRandomPosition(last_chunk){
@@ -978,7 +979,7 @@ function handleCloudCollisions(){
 function miniMap(){
     ctx.beginPath();
     ctx.fillStyle = "#000000"
-    middleOfTheMap = {x: canvas.width/5,y: canvas.height/4*3}
+    middleOfTheMap = {x: canvas.width/7.5,y: canvas.height-canvas.width/11}
     ctx.fillRect(middleOfTheMap.x-canvas.width/12,middleOfTheMap.y-canvas.width/12,canvas.width/6,canvas.width/6)
     for (let i = 0; i < clouds.length; i++) {
         const cloud = clouds[i];
