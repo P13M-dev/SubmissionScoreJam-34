@@ -961,12 +961,10 @@ function handleCloudCollisions(){
             playerRect.y + playerRect.height > cloudRect.y &&
             player.gasTankSpaceLeft > 0
         ) {
-            console.log((moveVector.x+15)/50)
-            clouds[i].x += 10*(moveVector.x+15)/50
-            clouds[i].width -= 20*(moveVector.x+15)/50
-            clouds[i].height -= 20*(moveVector.x+15)/50
-            clouds[i].y += 10*(moveVector.x+15)/50
-            gas.get
+            clouds[i].x += 10*(Math.max(moveVector.x,Math.abs(moveVector.y))+15)/50
+            clouds[i].width -= 20*(Math.max(moveVector.x,Math.abs(moveVector.y))+15)/50
+            clouds[i].height -= 20*(Math.max(moveVector.x,Math.abs(moveVector.y))+15)/50
+            clouds[i].y += 10*(Math.max(moveVector.x,Math.abs(moveVector.y))+15)/50
             player.addGasToTank(gas.getName(clouds[i].composition[0][0]),clouds[i].composition[0][1]/100000*clouds[i].width*clouds[i].height)
             if (clouds[i].width <= 0 || clouds[i].height <= 0){
                 clouds.splice(i,1)
