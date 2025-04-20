@@ -23,6 +23,7 @@ button_upgrd2 = document.getElementById("button_upgrd2"),
 button_upgrd3 = document.getElementById("button_upgrd3"),
 button_upgrd4 = document.getElementById("button_upgrd4"),
 boostBar = document.getElementById("boostBar"),
+button_leave = document.getElementById("button_leave"),
 gas = {
     gases: {
         smoke: { name:"Sm", displayName: "Smoke", score: 0, price: 0, color:"black"},
@@ -590,7 +591,7 @@ shop = {
         ctx.drawImage(station,canvas.width/2-(station.width/4),canvas.height/2-station.height/2,station.height,station.height);
         ctx.fillStyle = "rgba(0,0,0, 0.5)";
         ctx.fillRect(0, 0, canvas.width, canvas.height);
-        for (let i = 0; i < buttons.shop.length; i++) {
+        for (let i = 0; i < buttons.shop.length-1; i++) {
             let button = buttons.shop.findIndex((button) => button[0] == i);
             button = buttons.shop[button][1];
             ctx.drawImage(button.img, button.x, button.y, button.width, button.height);
@@ -605,11 +606,13 @@ shop = {
             ctx.font = "25px Arial";
             ctx.textAlign = "center";
             ctx.fillStyle = "white";
-            ctx.fillText(shop.items[shop.selectedItem].name, canvas.width/6*5, 25);
-            ctx.fillText("Price: "+shop.items[shop.selectedItem].price, canvas.width/6*5, 65);
+            ctx.fillText(shop.items[shop.selectedItem].name, canvas.width/6*5, 25+canvas.height/3);
+            ctx.fillText("Price: "+shop.items[shop.selectedItem].price, canvas.width/6*5, 65+canvas.height/3);
             for (let i = 0; i < shop.items[shop.selectedItem].description.length; i++) {
-                ctx.fillText(shop.items[shop.selectedItem].description[i], canvas.width/6*5, 65 + 45 * (i+1));
+                ctx.fillText(shop.items[shop.selectedItem].description[i], canvas.width/6*5, 65 + 45 * (i+1)+canvas.height/3);
             }
+            let button = buttons.shop[buttons.shop.length-1][1];
+            ctx.drawImage(button.img, button.x, button.y, button.width, button.height);
         }
     },
     enter(){
@@ -638,6 +641,8 @@ shop = {
     },
     click(itemNumber){
         shop.selectedItem = itemNumber-1;
+    },buy(){
+        
     }
 }
 
@@ -700,11 +705,13 @@ buttons.pause.push([buttons.pause.length,new Button(canvas.width/2-canvas.width/
 
 buttons.end.push([buttons.end.length,new Button(canvas.width/2-canvas.width/8, canvas.height/13*7, canvas.width/4, canvas.height/13*2,button_restart,()=>{startScreen.restart();})]);
 
-buttons.shop.push([buttons.shop.length,new Button(canvas.width/6*5-canvas.width/8, canvas.height-canvas.width/8, canvas.width/4, canvas.width/8,button_leave,()=>{shop.exit();})]);
+buttons.shop.push([buttons.shop.length,new Button(canvas.width/6*5-canvas.width/8, canvas.height-canvas.width/12, canvas.width/4, canvas.width/12,button_leave,()=>{shop.exit();})]);
 buttons.shop.push([buttons.shop.length,new Button(canvas.width/13*2-canvas.width/13, canvas.width/13, canvas.width/13*2, canvas.width/13*2,button_upgrd1,()=>{shop.click(1);})]);
-buttons.shop.push([buttons.shop.length,new Button(canvas.width/13*5-canvas.width/13, canvas.width/13, canvas.width/13*2, canvas.width/13*2,button_upgrd1,()=>{shop.click(2);})]);
-buttons.shop.push([buttons.shop.length,new Button(canvas.width/13*2-canvas.width/13, canvas.width/13*4, canvas.width/13*2, canvas.width/13*2,button_upgrd1,()=>{shop.click(3);})]);
-buttons.shop.push([buttons.shop.length,new Button(canvas.width/13*5-canvas.width/13, canvas.width/13*4, canvas.width/13*2, canvas.width/13*2,button_upgrd1,()=>{shop.click(4);})]);
+buttons.shop.push([buttons.shop.length,new Button(canvas.width/13*5-canvas.width/13, canvas.width/13, canvas.width/13*2, canvas.width/13*2,button_upgrd2,()=>{shop.click(2);})]);
+buttons.shop.push([buttons.shop.length,new Button(canvas.width/13*2-canvas.width/13, canvas.width/13*4, canvas.width/13*2, canvas.width/13*2,button_upgrd3,()=>{shop.click(3);})]);
+buttons.shop.push([buttons.shop.length,new Button(canvas.width/13*5-canvas.width/13, canvas.width/13*4, canvas.width/13*2, canvas.width/13*2,button_upgrd4,()=>{shop.click(4);})]);
+buttons.shop.push([buttons.shop.length,new Button(canvas.width/6*5-canvas.width/8, canvas.height-canvas.width/6, canvas.width/4, canvas.width/12,button_buy,()=>{shop.buy();})]);
+
 for (let i =0; i<3;i++){
     generateClouds()
 }
