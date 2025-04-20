@@ -457,13 +457,6 @@ class Button {
 
 }
 
-function getTextWidth(text, font) {
-    const canvas = getTextWidth.canvas || (getTextWidth.canvas = document.createElement("canvas"));
-    const context = canvas.getContext("2d");
-    context.font = font;
-    const metrics = context.measureText(text);
-    return metrics.width;
-}
 function getTime(seconds) {
     let minutes = Math.floor(seconds / 60);
     let remainingSeconds = seconds % 60;
@@ -942,6 +935,9 @@ function handleCloudCollisions(){
     }
 }
 
+function miniMap(){
+
+}
 
 let tankers = [] //w Formacie {x,y,size,rotation}
 
