@@ -921,12 +921,13 @@ function handleCloudCollisions(){
             playerRect.y + playerRect.height > cloudRect.y &&
             player.gasTankSpaceLeft > 0
         ) {
-            clouds[i].x += 10
-            clouds[i].width -= 20
-            clouds[i].height -= 20
-            clouds[i].y += 10
+            console.log((moveVector.x+15)/50)
+            clouds[i].x += 10*(moveVector.x+15)/50
+            clouds[i].width -= 20*(moveVector.x+15)/50
+            clouds[i].height -= 20*(moveVector.x+15)/50
+            clouds[i].y += 10*(moveVector.x+15)/50
             gas.get
-            player.addGasToTank(gas.getName(clouds[i].composition[0][0]),clouds[i].composition[0][1]/10000*clouds[i].width*clouds[i].height)
+            player.addGasToTank(gas.getName(clouds[i].composition[0][0]),clouds[i].composition[0][1]/100000*clouds[i].width*clouds[i].height)
             if (clouds[i].width <= 0 || clouds[i].height <= 0){
                 clouds.splice(i,1)
                 i--
@@ -1039,11 +1040,11 @@ function gameLoop() {
 }
 
 window.addEventListener("keydown", function(event) {
-    keysPressed[event.key] = true;
+    keysPressed[event.key.toLowerCase()] = true;
 });
 
 window.addEventListener("keyup", function(event) {
-    keysPressed[event.key] = false;
+    keysPressed[event.key.toLowerCase()] = false;
     if (event.key == "Escape"){
         canPause = true;
     }
