@@ -187,7 +187,8 @@ player = {
     time: 0,
     kills: 0,
     gasTankSpaceLeft: 1000,
-    gasTankContents: [[],[]], 
+    gasTankContents: [[],[]],
+    amplitude: 0 ,
     // tu są 2 tablice , w jednej będą same id gasów , w drugiej szczegóły (ilość,kolor,nazwa) 
     // później będziemy mogli pozbyć się nazw ale na teraz żeby nie było za bardzo skomplikowane to są.
     
@@ -200,7 +201,15 @@ player = {
         
         if (moveVector.x*fps > 60){
             moveVector.x = Math.max(moveVector.x - 0.25, 60);
+            this.amplitude += moveVector.x*fps/60
+        }else if (moveVector.x*fps < 50){
+            this.amplitude -= moveVector.x*fps/60
         }
+
+        if (this.amplitude > layerThresholds[currentLayer-1]){
+            //cutscenka stacji
+            currentLayer++
+        } 
         
     },
 
@@ -494,6 +503,7 @@ clouds = [],
 // zapisane w formacie {x, y, width, height, composition: [[id, amount], [id, amount]]} gdzie id to id gazu a amount to ilość tego gazu w chmurze
 fuelFrame = 1,
 currentLayer = 1, 
+layerThresholds = [1000,2000,3000,4000,5000],
 paused = false,
 inStartScreen = true,
 canPause = true,
