@@ -556,7 +556,7 @@ function physics() {
 
 function drawClouds(){
     for(let i = 0; i < clouds.length; i++){
-        if (clouds[i].x + clouds[i].width < camera.x){ 
+        if (clouds[i].x + clouds[i].width < camera.x - canvas.width){ 
             clouds.splice(i,1)
             i--
         }else{
@@ -1083,6 +1083,8 @@ function drawTankers(){
 }
 function gameLoop() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.fillStyle = "white"
+    ctx.fillRect(0,0,canvas.width,canvas.height);
     if(frameCount % 30 == 0){frameCount=0;generateClouds()}
     generateObstacles()//nie daję tego za frameCountem, bo może będziemy chcieli by różne obstacles występowały częściej lub rzadziej
     physics();
