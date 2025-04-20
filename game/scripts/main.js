@@ -14,6 +14,8 @@ button_controls =  document.getElementById("button_controls"),
 button_restart =  document.getElementById("button_restart"),
 altimeter =  document.getElementById("altimeter"),
 minimap =  document.getElementById("minimap"),
+shipOn = document.getElementById("shipOn"),
+shipOff = document.getElementById("shipOff"),
 gas = {
     gases: {
         smoke: { name:"Sm", displayName: "Smoke", score: 0, price: 0, color:"black"},
@@ -178,8 +180,8 @@ gas = {
 player = {
     x: 50,
     y: 50,
-    width: 50,
-    height: 50,
+    width: 50, // tylkko do hitboxow :)
+    height: 50, // tylkko do hitboxow :)
     speed: 5,
     score: 0,
     money: 0,
@@ -188,7 +190,8 @@ player = {
     kills: 0,
     gasTankSpaceLeft: 1000,
     gasTankContents: [[],[]],
-    amplitude: 0 ,
+    amplitude: 0,
+    flameFrame: 1,
     // tu są 2 tablice , w jednej będą same id gasów , w drugiej szczegóły (ilość,kolor,nazwa) 
     // później będziemy mogli pozbyć się nazw ale na teraz żeby nie było za bardzo skomplikowane to są.
     
@@ -265,8 +268,17 @@ player = {
 
     draw(camera) 
     {
-        ctx.fillStyle = "red";
-        ctx.fillRect(this.x-camera.x, this.y-camera.y, this.width, this.height);
+        if(keysPressed[" "] || keysPressed["w"]) {
+            ctx.drawImage(shipOn, 0, 112 * player.flameFrame, 80, 112, this.x-camera.x, this.y-camera.y, 10 * pixelSize.width, 14 * pixelSize.height);
+            if(frameCount % 10 == 0) {
+                player.flameFrame++
+                if(player.flameFrame > 3) {
+                    player.flameFrame = 0
+                }
+            }
+        } else {
+            ctx.drawImage(shipOff, this.x-camera.x, this.y-camera.y, 10 * pixelSize.width, 14 * pixelSize.height);
+        }
     },
 
     boost(direction)
@@ -313,6 +325,7 @@ startScreen = {
         moveVector = {x:0,y:0};
         clouds = [];
     },
+
     handleMouseInputs(){
         if(mouseClick){
             for (let i = 0; i < buttons.menu.length; i++) {
@@ -323,6 +336,7 @@ startScreen = {
             mouseClick = null
         }
     },
+
     draw(){
         ctx.beginPath();
         
@@ -338,11 +352,12 @@ startScreen = {
         }
         ctx.closePath();
     },
+
     loop(){
         startScreen.draw();
         startScreen.handleMouseInputs();
-        
     },
+
     startGame(){
         player.time = new Date().getTime();
         clearInterval(gameLoopInterval);
