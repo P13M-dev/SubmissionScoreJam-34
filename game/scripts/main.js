@@ -202,13 +202,13 @@ player = {
         
         if (moveVector.x*fps > 60){
             moveVector.x = Math.max(moveVector.x - 0.25, 60);
-            this.amplitude += moveVector.x*fps/60
+            this.amplitude += moveVector.x/fps
         }else if (moveVector.x*fps < 50){
-            this.amplitude -= moveVector.x*fps/60
+            this.amplitude -= moveVector.x/fps
         }
 
         if (this.amplitude > layerThresholds[currentLayer-1]){
-            //cutscenka stacji
+            cutScene.trigger();
             currentLayer++
         } 
         
@@ -619,7 +619,7 @@ clouds = [],
 // zapisane w formacie {x, y, width, height, composition: [[id, amount], [id, amount]]} gdzie id to id gazu a amount to ilość tego gazu w chmurze
 fuelFrame = 1,
 currentLayer = 1, 
-layerThresholds = [1000,2000,3000,4000,5000],
+layerThresholds = [3000,6000,9000,12000,15000],
 paused = false,
 inStartScreen = true,
 canPause = true,
