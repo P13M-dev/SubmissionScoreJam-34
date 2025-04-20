@@ -17,6 +17,11 @@ minimap =  document.getElementById("minimap"),
 station = document.getElementById("station"),
 shipOn = document.getElementById("shipOn"),
 shipOff = document.getElementById("shipOff"),
+button_buy = document.getElementById("button_buy"),
+button_upgrd1 = document.getElementById("button_upgrd1"),
+button_upgrd2 = document.getElementById("button_upgrd2"),
+button_upgrd3 = document.getElementById("button_upgrd3"),
+button_upgrd4 = document.getElementById("button_upgrd4"),
 gas = {
     gases: {
         smoke: { name:"Sm", displayName: "Smoke", score: 0, price: 0, color:"black"},
@@ -332,8 +337,6 @@ startScreen = {
             for (let i = 0; i < buttons.menu.length; i++) {
                 buttons.menu[i].checkForClicks(mouseClick.x, mouseClick.y);
             }
-            
-            console.log("clicked "+mouseClick.x+" "+mouseClick.y)
             mouseClick = null
         }
     },
@@ -374,7 +377,6 @@ endGameScreen = {
                 buttons.end[i][1].checkForClicks(mouseClick.x, mouseClick.y);
             }
             
-            console.log("clicked "+mouseClick.x+" "+mouseClick.y)
             mouseClick = null
         }
     },
@@ -509,7 +511,6 @@ cutScene = {
         ctx.closePath();
     },
     flickMenu(time,display){
-        console.log(time,display);
         cutScene.draw();
         if(time > 0){
             setTimeout(()=>{cutScene.flickMenu(time-1000/5,!display)}, time-1000/5);
@@ -562,6 +563,14 @@ cutScene = {
 
 },
 shop = {
+    items:[
+        {name:"",description:"",price:500,upgrdId:1},
+        {name:"",description:"",price:1000,upgrdId:2},
+        {name:"",description:"",price:2000,upgrdId:3},
+        {name:"",description:"",price:3000,upgrdId:4}
+    ]
+        
+    ,
     draw(){
         ctx.beginPath();
         ctx.drawImage(station,canvas.width/2-(station.width/4),canvas.height/2-station.height/2,station.height,station.height);
@@ -572,6 +581,9 @@ shop = {
             button = buttons.shop[button][1];
             ctx.drawImage(button.img, button.x, button.y, button.width, button.height);
         }
+        ctx.fillText("Fuel: "+Math.ceil(player.fuel / 10)+"%", 0, 35 * pixelSize.height);
+        ctx.fillText("Score: "+player.score, 0, 35 * pixelSize.height);
+        ctx.fillText("Credits: "+player.money, 0, 35 * pixelSize.height);
         ctx.closePath();
     },
     enter(){
@@ -597,6 +609,9 @@ shop = {
         clearInterval(gameLoopInterval);
         gameLoopInterval = setInterval(cutScene.loopFlyFromShop , 1000/fps);
         
+    },
+    click(itemNumber){
+        shop.selectedItem = itemNumber;
     }
 }
 
@@ -658,6 +673,11 @@ buttons.pause.push([buttons.pause.length,new Button(canvas.width/2-canvas.width/
 
 buttons.end.push([buttons.end.length,new Button(canvas.width/2-canvas.width/8, canvas.height/13*7, canvas.width/4, canvas.height/13*2,button_restart,()=>{startScreen.restart();})]);
 
+buttons.shop.push([buttons.shop.length,new Button(canvas.width-canvas.width/4, canvas.height-canvas.width/8, canvas.width/4, canvas.width/8,button_buy,()=>{shop.exit();})]);
+buttons.shop.push([buttons.shop.length,new Button(canvas.width/13*2-canvas.width/13, canvas.width/13, canvas.width/13*2, canvas.width/13*2,button_upgrd1,()=>{shop.click(1);})]);
+buttons.shop.push([buttons.shop.length,new Button(canvas.width/13*5-canvas.width/13, canvas.width/13, canvas.width/13*2, canvas.width/13*2,button_upgrd1,()=>{shop.click(2);})]);
+buttons.shop.push([buttons.shop.length,new Button(canvas.width/13*2-canvas.width/13, canvas.width/13*4, canvas.width/13*2, canvas.width/13*2,button_upgrd1,()=>{shop.click(3);})]);
+buttons.shop.push([buttons.shop.length,new Button(canvas.width/13*5-canvas.width/13, canvas.width/13*4, canvas.width/13*2, canvas.width/13*2,button_upgrd1,()=>{shop.click(4);})]);
 for (let i =0; i<3;i++){
     generateClouds()
 }
@@ -1284,10 +1304,6 @@ function drawUI() {
                 }
             }
         }
-
-        
-        ctx.fillStyle = "black"
-        ctx.fillText(`${Math.ceil(player.fuel / 10)}%`, 0, 35 * pixelSize.height)
     }
 
     switch (fuelAmount) {
