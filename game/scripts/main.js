@@ -1,24 +1,24 @@
 const canvas = document.getElementById("canvas"),
 ctx = canvas.getContext("2d"),
-fps = 60,
+fps = 100,
 tankTXT =  document.getElementById("tank"),
 fuelBottom =  document.getElementById("fuelBottom"),
 fuelMiddle =  document.getElementById("fuelMiddle"),
 fuelTop =  document.getElementById("fuelTop"),
 gas = {
     gases: {
-        smoke: { name:"Sm", displayName: "Smoke", score: 0, price: 0, color:"a"},
-        tritium: { name:"Tri", displayName: "Tritium", score: 3, price: 1, color:"b"},
-        industrialOxidizer: { name:"IndOxi", displayName: "Industrial oxidizer", score: 5, price: 3, color:"c"},
-        fluxium: { name:"Fl", displayName: "Fluxium", score: 6, price: 2, color:"d"},
-        acidicWaste: { name:"AW", displayName: "Acidic waste", score: 0, price: 0, color:"e"},
-        gasFuel: { name:"GFu", displayName: "Gas fuel", score: 9, price: 4, color:"f"},
-        helium3: { name:"He", displayName: "Helium-3", score: 12, price: 3, color:"g"},
-        gelidVapour: { name:"GeV", displayName: "Gelid vapour", score: 15, price: 5, color:"h"},
-        neonCompound: { name:"NeCo", displayName: "Neonous compound", score: 20, price: 8, color:"i"},
-        xenium: { name:"Xe", displayName: "Xenium", score: 25, price: 10, color:"j"},
-        deuterium: { name:"Deu", displayName: "Deuterium", score: 30, price: 20, color:"k"},
-        argonium: { name:"Arg", displayName: "Argonium", score: 40, price: 0, color:"l"}
+        smoke: { name:"Sm", displayName: "Smoke", score: 0, price: 0, color:"black"},
+        tritium: { name:"Tri", displayName: "Tritium", score: 3, price: 1, color:"lightgreen"},
+        industrialOxidizer: { name:"IndOxi", displayName: "Industrial oxidizer", score: 5, price: 3, color:"lightblue"},
+        fluxium: { name:"Fl", displayName: "Fluxium", score: 6, price: 2, color:"purple"},
+        acidicWaste: { name:"AW", displayName: "Acidic waste", score: 0, price: 0, color:"darkgreen"},
+        gasFuel: { name:"GFu", displayName: "Gas fuel", score: 9, price: 4, color:"orange"},
+        helium3: { name:"He", displayName: "Helium-3", score: 12, price: 3, color:"yellow"},
+        gelidVapour: { name:"GeV", displayName: "Gelid vapour", score: 15, price: 5, color:"cyan"},
+        neonCompound: { name:"NeCo", displayName: "Neonous compound", score: 20, price: 8, color:"pink"},
+        xenium: { name:"Xe", displayName: "Xenium", score: 25, price: 10, color:"blue"},
+        deuterium: { name:"Deu", displayName: "Deuterium", score: 30, price: 20, color:"gold"},
+        argonium: { name:"Arg", displayName: "Argonium", score: 40, price: 0, color:"silver"}
     },
 
     getId(gasName){
@@ -251,14 +251,12 @@ player = {
 
     boost()
     {
-        if (this.fuel >0) {
             if (moveVector.y < -15){ // limit
                 moveVector.y -= 5
             }else{
                 moveVector.y -= 7;
             }
             this.fuel = Math.max(this.fuel-5/fps,0);
-        }
     }
 
 },
@@ -328,7 +326,6 @@ startScreen = {
         inStartScreen = false;
     }
 },
-
 endGameScreen = {
     handleMouseInputs(){
         if(mouseClick){
@@ -349,7 +346,7 @@ endGameScreen = {
         ctx.font = "50px Arial";
         
         ctx.fillText("You Scored"+player.score, canvas.width / 7 ,canvas.height / 7+10,canvas.width/4,  canvas.height / 7);
-        ctx.fillText("You Scored"+player.score, canvas.width / 7 ,canvas.height / 7+10,canvas.width/4,  canvas.height / 7);
+        ctx.fillText(player.score, canvas.width / 7 ,canvas.height / 7+10,canvas.width/4,  canvas.height / 7);
         ctx.font = "40px Arial";
         ctx.fillText("You survived for "+getTime(player.time), canvas.width / 7 ,canvas.height / 7+70,canvas.width/4,  canvas.height / 7);
         ctx.fillText("You got to "+player.level, canvas.width / 7 ,canvas.height / 7+115,canvas.width/4,  canvas.height / 7);
@@ -487,6 +484,13 @@ class Button {
 
 }
 
+function getTextWidth(text, font) {
+    const canvas = getTextWidth.canvas || (getTextWidth.canvas = document.createElement("canvas"));
+    const context = canvas.getContext("2d");
+    context.font = font;
+    const metrics = context.measureText(text);
+    return metrics.width;
+}
 function getTime(seconds) {
     let minutes = Math.floor(seconds / 60);
     let remainingSeconds = seconds % 60;
@@ -559,62 +563,52 @@ function physics() {
 
 function drawClouds(){
     for(let i = 0; i < clouds.length; i++){
-        if (clouds[i].x + clouds[i].width < camera.x){ //usuwanie chmur zbyt po lewej
+        if (clouds[i].x + clouds[i].width < camera.x){ 
             clouds.splice(i,1)
             i--
         }else{
             let splitPoint = 0
             for (let j = 0; j < clouds[i].composition.length;j++){
+                
                 switch (clouds[i].composition[j][0]){
                     case 1:
-                        ctx.fillStyle = "black";
-                        ctx.fillRect(clouds[i].x-camera.x, clouds[i].y-camera.y, clouds[i].width, clouds[i].height);
+                        ctx.fillStyle = gas.gases.smoke.color;
                         break
                     case 2:
-                        ctx.fillStyle = "lightgreen";
-                        ctx.fillRect(clouds[i].x + clouds[i].width*(splitPoint/100)-camera.x, clouds[i].y-camera.y, clouds[i].width*(clouds[i].composition[j][1]/100), clouds[i].height);
+                        ctx.fillStyle = gas.gases.tritium.color;
                         break
                     case 3:
-                        ctx.fillStyle = "lightblue";
-                        ctx.fillRect(clouds[i].x + clouds[i].width*(splitPoint/100)-camera.x, clouds[i].y-camera.y, clouds[i].width*(clouds[i].composition[j][1]/100), clouds[i].height);
+                        ctx.fillStyle = gas.gases.industrialOxidizer.color;
                         break
                     case 4:  
-                        ctx.fillStyle = "purple"; // Fluxium
-                        ctx.fillRect(clouds[i].x + clouds[i].width * (splitPoint / 100) - camera.x, clouds[i].y - camera.y, clouds[i].width * (clouds[i].composition[j][1] / 100), clouds[i].height);
+                        ctx.fillStyle = gas.gases.fluxium.color;
                         break;
                     case 5:
-                        ctx.fillStyle = "darkgreen"; // Acidic Waste
-                        ctx.fillRect(clouds[i].x + clouds[i].width * (splitPoint / 100) - camera.x, clouds[i].y - camera.y, clouds[i].width * (clouds[i].composition[j][1] / 100), clouds[i].height);
+                        ctx.fillStyle = gas.gases.acidicWaste.color;
                         break;
                     case 6:
-                        ctx.fillStyle = "orange"; // Gas Fuel
-                        ctx.fillRect(clouds[i].x + clouds[i].width * (splitPoint / 100) - camera.x, clouds[i].y - camera.y, clouds[i].width * (clouds[i].composition[j][1] / 100), clouds[i].height);
+                        ctx.fillStyle = gas.gases.gasFuel.color;
                         break;
                     case 7:
-                        ctx.fillStyle = "yellow"; // Helium-3
-                        ctx.fillRect(clouds[i].x + clouds[i].width * (splitPoint / 100) - camera.x, clouds[i].y - camera.y, clouds[i].width * (clouds[i].composition[j][1] / 100), clouds[i].height);
+                        ctx.fillStyle = gas.gases.helium3.color;
                         break;
                     case 8:
-                        ctx.fillStyle = "cyan"; // Gelid Vapour
-                        ctx.fillRect(clouds[i].x + clouds[i].width * (splitPoint / 100) - camera.x, clouds[i].y - camera.y, clouds[i].width * (clouds[i].composition[j][1] / 100), clouds[i].height);
+                        ctx.fillStyle = gas.gases.gelidVapour.color;
                         break;
                     case 9:
-                        ctx.fillStyle = "pink"; // Neonous Compound
-                        ctx.fillRect(clouds[i].x + clouds[i].width * (splitPoint / 100) - camera.x, clouds[i].y - camera.y, clouds[i].width * (clouds[i].composition[j][1] / 100), clouds[i].height);
+                        ctx.fillStyle = gas.gases.neonCompound.color;
                         break;
                     case 10:
-                        ctx.fillStyle = "blue"; // Xenium
-                        ctx.fillRect(clouds[i].x + clouds[i].width * (splitPoint / 100) - camera.x, clouds[i].y - camera.y, clouds[i].width * (clouds[i].composition[j][1] / 100), clouds[i].height);
+                        ctx.fillStyle = gas.gases.xenium.color;
                         break;
                     case 11:
-                        ctx.fillStyle = "gold"; // Deuterium
-                        ctx.fillRect(clouds[i].x + clouds[i].width * (splitPoint / 100) - camera.x, clouds[i].y - camera.y, clouds[i].width * (clouds[i].composition[j][1] / 100), clouds[i].height);
+                        ctx.fillStyle = gas.gases.deuterium.color;
                         break;
                     case 12:
-                        ctx.fillStyle = "silver"; // Argonium
-                        ctx.fillRect(clouds[i].x + clouds[i].width * (splitPoint / 100) - camera.x, clouds[i].y - camera.y, clouds[i].width * (clouds[i].composition[j][1] / 100), clouds[i].height);
+                        ctx.fillStyle = gas.gases.argonium.color;
                         break;
                 }
+                ctx.fillRect(clouds[i].x + clouds[i].width*(splitPoint/100)-camera.x, clouds[i].y-camera.y, clouds[i].width*(clouds[i].composition[j][1]/100), clouds[i].height);
                 splitPoint += clouds[i].composition[j][1]
             }
             
@@ -633,8 +627,7 @@ function draw(){
 
 function generateClouds(){
     switch (currentLayer){
-        case 1:
-            if (frameCount % 30 == 0) {
+        case 1:{
                 let ratio = Math.random()
                 if (ratio > 0.9){
                     // IndOxi
@@ -681,12 +674,10 @@ function generateClouds(){
                         ]
                     });
                 }
-                
-                
             }  
-            break
-        case 2:
-            if (frameCount % 30 == 0) {
+                
+        break;
+        case 2:{
             let ratio = Math.random();
             if (ratio < 0.2) {
                 // Acidic Waste cloud
@@ -739,10 +730,9 @@ function generateClouds(){
                     ]
                 });
             }
-            }
+        }
             break;
-        case 3:
-            if (frameCount % 30 == 0) {
+        case 3:{
             let ratio = Math.random();
             if (ratio > 0.9) {
                 //IndOxi
@@ -798,10 +788,9 @@ function generateClouds(){
                     ]
                 });
             }
-            }
+        }
             break;
-        case 4:
-            if (frameCount % 30 == 0) {
+        case 4:{
             let ratio = Math.random();
             if (ratio > 0.95) {
                 // Deuterium
@@ -844,10 +833,9 @@ function generateClouds(){
                     ]
                 });
             }
-            }
+        }
             break;
-        case 5:
-            if (frameCount % 30 == 0) {
+        case 5:{
             let ratio = Math.random();
             if (ratio > 0.85) {
                 // Xenium
@@ -892,10 +880,9 @@ function generateClouds(){
                     ]
                 });
             }
-            }
+        }
             break;
-        case 6:
-            if (frameCount % 30 == 0) {
+        case 6:{
             let ratio = Math.random();
             if (ratio > 0.9) {
                 // Argonium
@@ -940,7 +927,7 @@ function generateClouds(){
                     ]
                 });
             }
-            }
+        }
             break;
 
         
@@ -984,39 +971,26 @@ function handleCloudCollisions(){
     }
 }
 
-// Game loop
 function gameLoop() {
-    // Clear the canvas
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-    //generate clouds
-    generateClouds()
-    //physics
+    if(frameCount % 30 == 0){frameCount=0;generateClouds()}
     physics();
-
-    //collisions with clouds
     handleCloudCollisions()
-
-    //input
     handleKeyInputs();
-
-    //movement
     player.move({ x: moveVector.x / fps, y: moveVector.y / fps });
-
-    //drawing
     draw();
-
-    // Update the frame count
+    if(player.fuel <= 0){
+        endGameScreen.endGame();
+    }
+    
     frameCount++;
+    
 }
 
-// Listen for keydown events
 window.addEventListener("keydown", function(event) {
     keysPressed[event.key] = true;
 });
 
-
-// Listen for keyup events
 window.addEventListener("keyup", function(event) {
     keysPressed[event.key] = false;
     if (event.key == "Escape"){
@@ -1024,7 +998,6 @@ window.addEventListener("keyup", function(event) {
     }
 });
 
-// Listen for mouse events
 window.addEventListener("click", function(event) {
     mult = window.innerWidth *0.75 / 1200;
     const rect = canvas.getBoundingClientRect();
