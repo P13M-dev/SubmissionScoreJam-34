@@ -193,9 +193,23 @@ player = {
     gasTankContents: [[],[]],
     amplitude: 0,
     flameFrame: 1,
+    jumpCharges: 4,
     // tu są 2 tablice , w jednej będą same id gasów , w drugiej szczegóły (ilość,kolor,nazwa) 
     // później będziemy mogli pozbyć się nazw ale na teraz żeby nie było za bardzo skomplikowane to są.
-    
+    jump() {
+        moveVector.y = Math.min(0,moveVector.y)
+        moveVector.y = -150; // Adjust jump height as needed
+        this.jumpCharges--;
+    },
+
+    rechargeJumpCharges() {
+        setInterval(() => {
+            if (this.jumpCharges < 4) {
+                this.jumpCharges++;
+            }
+        }, 1000);
+    },
+
     move(vector) 
     {
         this.y += vector.y * this.speed;
@@ -630,6 +644,7 @@ frameCount = 0,
 gravity = 3,
 moveVector = { x: 30, y: 0 },
 clouds = [],
+jumpInterval = player.rechargeJumpCharges()
 // tablica chmur, na razie pusta, później będą się generować w randomowych miejscach 
 // zapisane w formacie {x, y, width, height, composition: [[id, amount], [id, amount]]} gdzie id to id gazu a amount to ilość tego gazu w chmurze
 fuelFrame = 1,
@@ -672,12 +687,6 @@ function handleKeyInputs() {
         if(keysPressed["escape"] && canPause){
             pause.on();
             return;
-        }
-        if(keysPressed[" "]){
-            player.boost(1);
-        }
-        else if(keysPressed["w"]){
-            player.boost(1);
         }
         if (keysPressed["d"]){
             player.boost(2)
@@ -1243,12 +1252,15 @@ function gameLoop() {
 
 window.addEventListener("keydown", function(event) {
     keysPressed[event.key.toLowerCase()] = true;
+
 });
 
 window.addEventListener("keyup", function(event) {
     keysPressed[event.key.toLowerCase()] = false;
     if (event.key == "Escape"){
         canPause = true;
+    }if ((event.key === " " || event.key.toLowerCase() === "w") && player.jumpCharges > 0) {
+        player.jump();
     }
 });
 
