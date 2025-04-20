@@ -7,9 +7,16 @@ canvas{
     border-width: 2;
     border-style: solid;
     width: 80%;
-    margin: 0 auto 3px auto;
+    top: 10%;
+    margin: auto;
 }
 html{
     background: #000000;
 background: linear-gradient(90deg, rgba(0, 0, 0, 1) 0%, rgba(207, 207, 207, 1) 50%, rgba(0, 0, 0, 1) 100%);
+}
+#arcade{
+    width: 99.283854166%;
+    position: absolute;
+    top: 0;
+    left: 0;
 }
