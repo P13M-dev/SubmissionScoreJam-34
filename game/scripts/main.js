@@ -288,7 +288,7 @@ player = {
 
     draw(camera) 
     {
-        if(keysPressed[" "] || keysPressed["w"]) {
+        if(moveVector.y < 0) {
             ctx.drawImage(shipOn, 0, 112 * player.flameFrame, 80, 112, this.x-camera.x, this.y-camera.y, 10 * pixelSize.width, 14 * pixelSize.height);
             if(frameCount % 10 == 0) {
                 player.flameFrame++
