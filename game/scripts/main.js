@@ -279,6 +279,7 @@ startScreen = {
         player.gasTankSpaceLeft = 1000;
         player.gasTankContents = [[],[]];
         player.score = 0;
+        player.time = new Date().getTime();
         player.money = 0;
         camera.x = 0;
         camera.y = 0;
@@ -316,6 +317,7 @@ startScreen = {
         
     },
     startGame(){
+        player.time = new Date().getTime();
         clearInterval(gameLoopInterval);
         gameLoopInterval = setInterval(gameLoop , 1000/fps);
         canPause = true;
@@ -344,7 +346,7 @@ endGameScreen = {
         ctx.fillText("You Scored", canvas.width / 7 ,canvas.height / 7-50,canvas.width/4,  canvas.height / 7);
         ctx.fillText(player.score, canvas.width / 7 ,canvas.height / 7+10,canvas.width/4,  canvas.height / 7);
         ctx.font = "40px Arial";
-        ctx.fillText("You survived for "+getTime(player.time), canvas.width / 7 ,canvas.height / 7+70,canvas.width/4,  canvas.height / 7);
+        ctx.fillText("You survived for "+getTimeMinSec(player.time), canvas.width / 7 ,canvas.height / 7+70,canvas.width/4,  canvas.height / 7);
         ctx.fillText("You got to "+player.level, canvas.width / 7 ,canvas.height / 7+115,canvas.width/4,  canvas.height / 7);
         ctx.fillText("You eliminated "+player.kills+" enemies", canvas.width / 7 ,canvas.height / 7+160,canvas.width/4,  canvas.height / 7);
         ctx.font = "30px Arial";
@@ -371,9 +373,10 @@ endGameScreen = {
         
     },
     endGame(){
+        player.time = (new Date().getTime() - player.time)/1000;
         clearInterval(gameLoopInterval);
         gameLoopInterval = setInterval(endGameScreen.loop , 1000/fps);
-        canPause = true;
+        canPause = false;
         
     },
     goToStartScreen(){
@@ -457,9 +460,9 @@ class Button {
 
 }
 
-function getTime(seconds) {
+function getTimeMinSec(seconds) {
     let minutes = Math.floor(seconds / 60);
-    let remainingSeconds = seconds % 60;
+    let remainingSeconds = Math.round(seconds % 60);
     return `${minutes}:${remainingSeconds < 10 ? '0' : ''}${remainingSeconds}`;
 }
 
@@ -501,12 +504,12 @@ for (let i =0; i<3;i++){
 
 function handleKeyInputs() {
     if(paused){
-        if(keysPressed["Escape"] && canPause){
+        if(keysPressed["escape"] && canPause){
             pause.off();
             return;
         }
     } else {
-        if(keysPressed["Escape"] && canPause){
+        if(keysPressed["escape"] && canPause){
             pause.on();
             return;
         }
@@ -587,6 +590,7 @@ function draw(){
     drawTankers();
     drawClouds();
     drawUI();
+    miniMap();
 }
 
 function generateClouds(){
@@ -937,8 +941,23 @@ function handleCloudCollisions(){
 }
 
 function miniMap(){
-
+    ctx.beginPath();
+    ctx.fillStyle = "#000000"
+    middleOfTheMap = {x: canvas.width/5,y: canvas.height/4*3}
+    ctx.fillRect(middleOfTheMap.x-canvas.width/12,middleOfTheMap.y-canvas.width/12,canvas.width/6,canvas.width/6)
+    for (let i = 0; i < clouds.length; i++) {
+        const cloud = clouds[i];
+        ctx.fillStyle = "#ff00ff"
+        rad = Math.sqrt((cloud.x - camera.x - canvas.width/10)**2 + (cloud.y - camera.y - canvas.height/2)**2)/15
+        if( rad < 105
+        ){
+            ctx.fillRect((cloud.x-camera.x)/15 + middleOfTheMap.x-canvas.width/100,(cloud.y-camera.y)/15 + middleOfTheMap.y-canvas.width/50,5,5)
+        }
+    }
+    ctx.fill();
+    ctx.closePath();
 }
+
 
 let tankers = [] //w Formacie {x,y,size,rotation}
 
@@ -1031,6 +1050,7 @@ function gameLoop() {
     handleKeyInputs();
     player.move({ x: moveVector.x / fps, y: moveVector.y / fps });
     draw();
+    
     if(player.fuel <= 0){
         endGameScreen.endGame();
     }
