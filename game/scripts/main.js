@@ -1118,11 +1118,9 @@ function handleCloudCollisions(){
 
 function miniMap(){
     ctx.beginPath();
-    ctx.fillStyle = "#000000";
-    middleOfTheMap = {x: canvas.width/7.5,y: canvas.height-canvas.width/11}
-    ctx.fillRect(middleOfTheMap.x-canvas.width/12,middleOfTheMap.y-canvas.width/12,canvas.width/6,canvas.width/6)
-    ctx.fillStyle = "#00ff00"
-    ctx.fillRect(middleOfTheMap.x,middleOfTheMap.y,5,5)
+    ctx.fillStyle = "#292929";
+    middleOfTheMap = {x: (38.5 * pixelSize.width), y: canvas.height - (24.5 * pixelSize.height)}
+    ctx.fillRect(middleOfTheMap.x - 21.5 * pixelSize.width, middleOfTheMap.y - 21.5 * pixelSize.width, 43 * pixelSize.width, 43 * pixelSize.height)
     for (let i = 0; i < clouds.length; i++) {
         const cloud = clouds[i];
         ctx.fillStyle = "#ff00ff"
@@ -1130,11 +1128,11 @@ function miniMap(){
         
         if( rad < 105
         ){
-
             ctx.fillRect((cloud.x-camera.x)/15 + middleOfTheMap.x-canvas.width/100,(cloud.y-camera.y)/15 + middleOfTheMap.y-canvas.width/50,5,5)
         }
     }
     ctx.fill();
+    ctx.drawImage(minimap, 14 * pixelSize.width, 95 * pixelSize.height, 49 * pixelSize.width, 49 * pixelSize.height)
     ctx.closePath();
 }
 
@@ -1307,8 +1305,6 @@ function drawUI() {
     ctx.drawImage(tankTXT, 0, 0, 13 * pixelSize.width, 33 * pixelSize.height)
 
     ctx.drawImage(altimeter, 0, 97 * pixelSize.height, 13 * pixelSize.width, 47 * pixelSize.height)
-
-    ctx.drawImage(minimap, 14 * pixelSize.width, 111 * pixelSize.height, 33 * pixelSize.width, 33 * pixelSize.height)
 }
 
 // Start the game loop
