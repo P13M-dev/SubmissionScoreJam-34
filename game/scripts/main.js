@@ -12,6 +12,8 @@ button_exit =  document.getElementById("button_exit"),
 button_resume =  document.getElementById("button_resume"),
 button_controls =  document.getElementById("button_controls"),
 button_restart =  document.getElementById("button_restart"),
+altimeter =  document.getElementById("altimeter"),
+minimap =  document.getElementById("minimap"),
 gas = {
     gases: {
         smoke: { name:"Sm", displayName: "Smoke", score: 0, price: 0, color:"black"},
@@ -191,13 +193,15 @@ player = {
     
     move(vector) 
     {
-        this.x += vector.x * this.speed;
         this.y += vector.y * this.speed;
+        this.x += vector.x * this.speed;
         camera.x = this.x - canvas.width/ 10
         camera.y = this.y - canvas.height / 2 + this.height / 2; 
         
-
-
+        if (moveVector.x*fps > 60){
+            moveVector.x = Math.max(moveVector.x - 0.25, 60);
+        }
+        
     },
 
     addGasToTank(gasName,amount)
@@ -256,14 +260,28 @@ player = {
         ctx.fillRect(this.x-camera.x, this.y-camera.y, this.width, this.height);
     },
 
-    boost()
+    boost(direction)
     {
-            if (moveVector.y < -15){ // limit
-                moveVector.y -= 5
-            }else{
-                moveVector.y -= 7;
-            }
-            this.fuel = Math.max(this.fuel-5/fps,0);
+        switch (direction){
+            case 1: // góra
+                if (moveVector.y < -15){ // limit
+                    moveVector.y -= 5
+                }else{
+                    moveVector.y -= 7;
+                }
+                this.fuel = Math.max(this.fuel-5/fps,0);
+                break;
+            case 2: // prawo (boost forward)
+                moveVector.x = Math.min(moveVector.x+5, 125);
+                this.fuel = Math.max(this.fuel - 5 / fps, 0);
+                break;
+            case 3: // lewo (decelerate)
+                moveVector.x = Math.max(moveVector.x - 5, 35);
+                this.fuel = Math.max(this.fuel - 5 / fps, 0);
+                break;
+
+        }
+            
     }
 
 },
@@ -514,10 +532,16 @@ function handleKeyInputs() {
             return;
         }
         if(keysPressed[" "]){
-            player.boost();
+            player.boost(1);
         }
         else if(keysPressed["w"]){
-            player.boost();
+            player.boost(1);
+        }
+        if (keysPressed["d"]){
+            player.boost(2)
+        }
+        if (keysPressed["a"]){
+            player.boost(3)
         }
     }
 
@@ -593,7 +617,18 @@ function draw(){
     miniMap();
 }
 
+function generateRandomPosition(last_chunk){
+    x = Math.random() * canvas.width*1.5 + camera.x
+    y = Math.random() * canvas.height * 2.5 + camera.y - canvas.height
+    chunk = Math.floor((x - camera.x)/(canvas.width/3))
+    if ((x < camera.x + canvas.width && y < camera.y + canvas.height && y+150 > camera.y) || chunk == last_chunk){
+        return generateRandomPosition(last_chunk)
+    }
+    return chunk, {x: x,y: y};
+}
+let last_chunk = -1
 function generateClouds(){
+    let last_chunk, cloud_position = generateRandomPosition(last_chunk)
     switch (currentLayer){
         case 1:{
                 let ratio = Math.random()
@@ -602,8 +637,8 @@ function generateClouds(){
                     if (ratio > 0.97) {
                         // duża chmura
                         clouds.push({
-                            x: Math.random() * canvas.width + canvas.width + camera.x,
-                            y: Math.random() * canvas.height * 2 + camera.y - canvas.height / 2,
+                            x: cloud_position.x,
+                            y: cloud_position.y,
                             width: Math.random() * 200 + 50,
                             height: Math.random() * 200 + 50,
                             composition: [[gas.getId("IndOxi"), 100]]
@@ -611,8 +646,8 @@ function generateClouds(){
                     } else {
                         // mała chmura
                         clouds.push({
-                            x: Math.random() * canvas.width + canvas.width + camera.x,
-                            y: Math.random() * canvas.height * 2 + camera.y - canvas.height / 2,
+                            x: cloud_position.x,
+                            y: cloud_position.y,
                             width: Math.random() * 100 + 30,
                             height: Math.random() * 100 + 30,
                             composition: [[gas.getId("IndOxi"), 100]]
@@ -621,8 +656,8 @@ function generateClouds(){
                 }else if(ratio < 0.2){
                     // Smog
                     clouds.push({
-                        x: Math.random() * canvas.width + canvas.width + camera.x,
-                        y: Math.random() * canvas.height * 2 + camera.y - canvas.height / 2,
+                        x: cloud_position.x,
+                        y: cloud_position.y,
                         width: Math.random() * 150 + 20,
                         height: Math.random() * 150 + 20,
                         composition: [[gas.getId("Sm"), 100]]
@@ -632,8 +667,8 @@ function generateClouds(){
                     let tritiumAmount = Math.floor(Math.random() * 70) + 40; // Przynajmniej 40% Tritium
                     let indOxiAmount = 100 - tritiumAmount;
                     clouds.push({
-                        x: Math.random() * canvas.width + canvas.width + camera.x,
-                        y: Math.random() * canvas.height * 2 + camera.y - canvas.height / 2,
+                        x: cloud_position.x,
+                        y: cloud_position.y,
                         width: Math.random() * 150 + 40,
                         height: Math.random() * 150 + 40,
                         composition: [
@@ -650,8 +685,8 @@ function generateClouds(){
             if (ratio < 0.2) {
                 // Acidic Waste cloud
                 clouds.push({
-                x: Math.random() * canvas.width + canvas.width + camera.x,
-                y: Math.random() * canvas.height * 2 + camera.y - canvas.height / 2,
+                x: cloud_position.x,
+                y: cloud_position.y,
                 width: Math.random() * 100 + 30,
                 height: Math.random() * 100 + 30,
                 composition: [[gas.getId("AW"), 100]]
@@ -659,8 +694,8 @@ function generateClouds(){
             } else if (ratio > 0.9) {
                 //IndOxi
                 clouds.push({
-                    x: Math.random() * canvas.width + canvas.width + camera.x,
-                    y: Math.random() * canvas.height * 2 + camera.y - canvas.height / 2,
+                    x: cloud_position.x,
+                    y: cloud_position.y,
                     width: Math.random() * 200 + 50,
                     height: Math.random() * 200 + 50,
                     composition: [[gas.getId("IndOxi"), 100]]
@@ -669,8 +704,8 @@ function generateClouds(){
             } else if (ratio > 0.75){
                 // Tritium
                 clouds.push({
-                x: Math.random() * canvas.width + canvas.width + camera.x,
-                y: Math.random() * canvas.height * 2 + camera.y - canvas.height / 2,
+                x: cloud_position.x,
+                y: cloud_position.y,
                 width: Math.random() * 150 + 40,
                 height: Math.random() * 150 + 40,
                 composition: [[gas.getId("Tri"), 100]]
@@ -678,8 +713,8 @@ function generateClouds(){
             }else if(ratio < 35){
                 // Fluxium
                 clouds.push({
-                    x: Math.random() * canvas.width + canvas.width + camera.x,
-                    y: Math.random() * canvas.height * 2 + camera.y - canvas.height / 2,
+                    x: cloud_position.x,
+                    y: cloud_position.y,
                     width: Math.random() * 150 + 40,
                     height: Math.random() * 150 + 40,
                     composition: [[gas.getId("Fl"), 100]]
@@ -688,8 +723,8 @@ function generateClouds(){
                 let tritiumAmount = Math.floor(Math.random() * 100);
                 let fluxiumAmount = 100 - tritiumAmount;
                 clouds.push({
-                    x: Math.random() * canvas.width + canvas.width + camera.x,
-                    y: Math.random() * canvas.height * 2 + camera.y - canvas.height / 2,
+                    x: cloud_position.x,
+                    y: cloud_position.y,
                     width: Math.random() * 150 + 40,
                     height: Math.random() * 150 + 40,
                     composition: [
@@ -705,8 +740,8 @@ function generateClouds(){
             if (ratio > 0.9) {
                 //IndOxi
                 clouds.push({
-                    x: Math.random() * canvas.width + canvas.width + camera.x,
-                    y: Math.random() * canvas.height * 2 + camera.y - canvas.height / 2,
+                    x: cloud_position.x,
+                    y: cloud_position.y,
                     width: Math.random() * 200 + 50,
                     height: Math.random() * 200 + 50,
                     composition: [[gas.getId("IndOxi"), 100]]
@@ -715,8 +750,8 @@ function generateClouds(){
             else if (ratio > 0.7) {
                 // Gas Fuel
                 clouds.push({
-                x: Math.random() * canvas.width + canvas.width + camera.x,
-                y: Math.random() * canvas.height * 2 + camera.y - canvas.height / 2,
+                x: cloud_position.x,
+                y: cloud_position.y,
                 width: Math.random() * 150 + 50,
                 height: Math.random() * 150 + 50,
                 composition: [[gas.getId("GFu"), 100]]
@@ -724,8 +759,8 @@ function generateClouds(){
             } else if (ratio > 0.5) {
                 // Helium-3
                 clouds.push({
-                x: Math.random() * canvas.width + canvas.width + camera.x,
-                y: Math.random() * canvas.height * 2 + camera.y - canvas.height / 2,
+                x: cloud_position.x,
+                y: cloud_position.y,
                 width: Math.random() * 150 + 50,
                 height: Math.random() * 150 + 50,
                 composition: [[gas.getId("He"), 100]]
@@ -733,8 +768,8 @@ function generateClouds(){
             } else if (ratio > 0.25) {
                 // Fluxium
                 clouds.push({
-                x: Math.random() * canvas.width + canvas.width + camera.x,
-                y: Math.random() * canvas.height * 2 + camera.y - canvas.height / 2,
+                x: cloud_position.x,
+                y: cloud_position.y,
                 width: Math.random() * 150 + 50,
                 height: Math.random() * 150 + 50,
                 composition: [[gas.getId("Fl"), 100]]
@@ -744,8 +779,8 @@ function generateClouds(){
                 let heliumAmount = Math.floor(Math.random() * (100 - gasFuelAmount));
                 let fluxiumAmount = 100 - gasFuelAmount - heliumAmount;
                 clouds.push({
-                    x: Math.random() * canvas.width + canvas.width + camera.x,
-                    y: Math.random() * canvas.height * 2 + camera.y - canvas.height / 2,
+                    x: cloud_position.x,
+                    y: cloud_position.y,
                     width: Math.random() * 150 + 40,
                     height: Math.random() * 150 + 40,
                     composition: [
@@ -763,8 +798,8 @@ function generateClouds(){
             if (ratio > 0.95) {
                 // Deuterium
                 clouds.push({
-                x: Math.random() * canvas.width + canvas.width + camera.x,
-                y: Math.random() * canvas.height * 2 + camera.y - canvas.height / 2,
+                x: cloud_position.x,
+                y: cloud_position.y,
                 width: Math.random() * 150 + 50,
                 height: Math.random() * 150 + 50,
                 composition: [[gas.getId("Deu"), 100]]
@@ -772,8 +807,8 @@ function generateClouds(){
             } else if (ratio > 0.6) {
                 // Gelid Vapour
                 clouds.push({
-                x: Math.random() * canvas.width + canvas.width + camera.x,
-                y: Math.random() * canvas.height * 2 + camera.y - canvas.height / 2,
+                x: cloud_position.x,
+                y: cloud_position.y,
                 width: Math.random() * 150 + 50,
                 height: Math.random() * 150 + 50,
                 composition: [[gas.getId("GeV"), 100]]
@@ -781,8 +816,8 @@ function generateClouds(){
             } else if (ratio > 0.3){
                 // Fluxium
                 clouds.push({
-                x: Math.random() * canvas.width + canvas.width + camera.x,
-                y: Math.random() * canvas.height * 2 + camera.y - canvas.height / 2,
+                x: cloud_position.x,
+                y: cloud_position.y,
                 width: Math.random() * 150 + 50,
                 height: Math.random() * 150 + 50,
                 composition: [[gas.getId("Fl"), 100]]
@@ -791,8 +826,8 @@ function generateClouds(){
                 let gelidVapourAmount = Math.floor(Math.random() * 100) ;
                 let fluxiumAmount = 100 - gelidVapourAmount;
                 clouds.push({
-                    x: Math.random() * canvas.width + canvas.width + camera.x,
-                    y: Math.random() * canvas.height * 2 + camera.y - canvas.height / 2,
+                    x: cloud_position.x,
+                    y: cloud_position.y,
                     width: Math.random() * 150 + 40,
                     height: Math.random() * 150 + 40,
                     composition: [
@@ -808,8 +843,8 @@ function generateClouds(){
             if (ratio > 0.85) {
                 // Xenium
                 clouds.push({
-                x: Math.random() * canvas.width + canvas.width + camera.x,
-                y: Math.random() * canvas.height * 2 + camera.y - canvas.height / 2,
+                x: cloud_position.x,
+                y: cloud_position.y,
                 width: Math.random() * 150 + 50,
                 height: Math.random() * 150 + 50,
                 composition: [[gas.getId("Xe"), 100]]
@@ -817,8 +852,8 @@ function generateClouds(){
             } else if (ratio > 0.5) {
                 // Neonous Compounds
                 clouds.push({
-                x: Math.random() * canvas.width + canvas.width + camera.x,
-                y: Math.random() * canvas.height * 2 + camera.y - canvas.height / 2,
+                x: cloud_position.x,
+                y: cloud_position.y,
                 width: Math.random() * 150 + 50,
                 height: Math.random() * 150 + 50,
                 composition: [[gas.getId("NeCo"), 100]]
@@ -826,8 +861,8 @@ function generateClouds(){
             } else if (ratio > 0.15){
                 // Gelid Vapour
                 clouds.push({
-                x: Math.random() * canvas.width + canvas.width + camera.x,
-                y: Math.random() * canvas.height * 2 + camera.y - canvas.height / 2,
+                x: cloud_position.x,
+                y: cloud_position.y,
                 width: Math.random() * 150 + 50,
                 height: Math.random() * 150 + 50,
                 composition: [[gas.getId("GeV"), 100]]
@@ -837,8 +872,8 @@ function generateClouds(){
                 let neonousCompoundAmount = Math.floor(Math.random() * (100 - gelidVapourAmount - 10)) + 10; 
                 let xeniumAmount = 100 - gelidVapourAmount - neonousCompoundAmount;
                 clouds.push({
-                    x: Math.random() * canvas.width + canvas.width + camera.x,
-                    y: Math.random() * canvas.height * 2 + camera.y - canvas.height / 2,
+                    x: cloud_position.x,
+                    y: cloud_position.y,
                     width: Math.random() * 150 + 40,
                     height: Math.random() * 150 + 40,
                     composition: [
@@ -855,8 +890,8 @@ function generateClouds(){
             if (ratio > 0.9) {
                 // Argonium
                 clouds.push({
-                x: Math.random() * canvas.width + canvas.width + camera.x,
-                y: Math.random() * canvas.height * 2 + camera.y - canvas.height / 2,
+                x: cloud_position.x,
+                y: cloud_position.y,
                 width: Math.random() * 150 + 50,
                 height: Math.random() * 150 + 50,
                 composition: [[gas.getId("Arg"), 100]]
@@ -864,8 +899,8 @@ function generateClouds(){
             } else if (ratio > 0.6) {
                 // Deuterium
                 clouds.push({
-                x: Math.random() * canvas.width + canvas.width + camera.x,
-                y: Math.random() * canvas.height * 2 + camera.y - canvas.height / 2,
+                x: cloud_position.x,
+                y: cloud_position.y,
                 width: Math.random() * 150 + 50,
                 height: Math.random() * 150 + 50,
                 composition: [[gas.getId("Deu"), 100]]
@@ -873,8 +908,8 @@ function generateClouds(){
             } else if (ratio > 0.2){
                 // Xenium
                 clouds.push({
-                x: Math.random() * canvas.width + canvas.width + camera.x,
-                y: Math.random() * canvas.height * 2 + camera.y - canvas.height / 2,
+                x: cloud_position.x,
+                y: cloud_position.y,
                 width: Math.random() * 150 + 50,
                 height: Math.random() * 150 + 50,
                 composition: [[gas.getId("Xe"), 100]]
@@ -884,8 +919,8 @@ function generateClouds(){
                 let deuteriumAmount = Math.floor(Math.random() * (100 - xeniumAmount - 10)) + 10; 
                 let argoniumAmount = 100 - xeniumAmount - deuteriumAmount; 
                 clouds.push({
-                    x: Math.random() * canvas.width + canvas.width + camera.x,
-                    y: Math.random() * canvas.height * 2 + camera.y - canvas.height / 2,
+                    x: cloud_position.x,
+                    y: cloud_position.y,
                     width: Math.random() * 150 + 40,
                     height: Math.random() * 150 + 40,
                     composition: [
@@ -1123,6 +1158,10 @@ function drawUI() {
     }
  
     ctx.drawImage(tankTXT, 0, 0, 13 * pixelSize.width, 33 * pixelSize.height)
+
+    ctx.drawImage(altimeter, 0, 97 * pixelSize.height, 13 * pixelSize.width, 47 * pixelSize.height)
+
+    ctx.drawImage(minimap, 14 * pixelSize.width, 111 * pixelSize.height, 33 * pixelSize.width, 33 * pixelSize.height)
 }
 
 // Start the game loop
