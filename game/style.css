@@ -9,3 +9,7 @@ canvas{
     width: 80%;
     margin: 0 auto 3px auto;
 }
+html{
+    background: #000000;
+background: linear-gradient(90deg, rgba(0, 0, 0, 1) 0%, rgba(207, 207, 207, 1) 50%, rgba(0, 0, 0, 1) 100%);
+}

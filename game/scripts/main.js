@@ -556,7 +556,7 @@ function physics() {
 
 function drawClouds(){
     for(let i = 0; i < clouds.length; i++){
-        if (clouds[i].x + clouds[i].width < camera.x){ 
+        if (clouds[i].x + clouds[i].width < camera.x - canvas.width){ 
             clouds.splice(i,1)
             i--
         }else{
