@@ -247,7 +247,6 @@ player = {
 
         if (this.amplitude > layerThresholds[currentLayer-1]){
             cutScene.trigger();
-            currentLayer++
         } 
         
     },
@@ -673,6 +672,7 @@ shop = {
         cutScene.timeLeft = fps*2;
         clearInterval(gameLoopInterval);
         gameLoopInterval = setInterval(cutScene.loopFlyFromShop , 1000/fps);
+        currentLayer++
         
     },
     click(itemNumber){
@@ -1457,8 +1457,8 @@ function drawUI() {
     ctx.beginPath();
     ctx.strokeStyle = "red";
     ctx.lineWidth = 6;
-    ctx.moveTo(9 * pixelSize.width, 140 * pixelSize.height -pixelSize.height*41*(player.amplitude/(layerThresholds[0]*6)));
-    ctx.lineTo(13 * pixelSize.width, 140 * pixelSize.height-pixelSize.height*41*(player.amplitude/(layerThresholds[0]*6)));
+    ctx.moveTo(9 * pixelSize.width, 141 * pixelSize.height -pixelSize.height*40*(player.amplitude/(layerThresholds[0]*6)));
+    ctx.lineTo(13 * pixelSize.width, 141 * pixelSize.height-pixelSize.height*40*(player.amplitude/(layerThresholds[0]*6)));
     ctx.stroke();
     ctx.closePath();
 
