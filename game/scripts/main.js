@@ -1,6 +1,6 @@
 const canvas = document.getElementById("canvas"),
 ctx = canvas.getContext("2d"),
-fps = 60,
+fps =100,
 tankTXT =  document.getElementById("tank"),
 fuelBottom =  document.getElementById("fuelBottom"),
 fuelMiddle =  document.getElementById("fuelMiddle"),
@@ -45,9 +45,12 @@ audio = {
     purchase: new Audio('./sfx/purchase.mp3'),
     vacuum_l: new Audio('./sfx/vacuum_loop.mp3'),
     vacuum_e: new Audio('./sfx/vacuum_end.mp3'),
-    dock: new Audio('./sfx/dock.mp3'),
+    dock: new Audio('./sfx/station_dock.mp3'),
     station_music: new Audio('./station_music.mp3.mp3'),
-   
+    pause(audio) {
+        audio.pause();
+    },
+
     toggleMusic() {
         if (!audio) {
           // Initialize audio
@@ -253,6 +256,7 @@ player = {
     amplitude: 0,
     flameFrame: 1,
     jumpCharges: 4,
+    gasTankCapacity: 1000,
     gasColletionSpeed: 10,
     unavailableGases: [6,7,8,9,10,11,12], // tablica z id gazów które są niedostępne do zebrania
     // tu są 2 tablice , w jednej będą same id gasów , w drugiej szczegóły (ilość,kolor,nazwa) 
@@ -337,7 +341,7 @@ player = {
 
     emptyGasTank()
     {
-        this.gasTankSpaceLeft = 1000;
+        this.gasTankSpaceLeft = player.gasTankCapacity;
         let totalScore = 0,
         totalMoney = 0;
         for(let i = 0; i < this.gasTankContents[0].length; i++){
@@ -391,7 +395,7 @@ player = {
                 break;
             case 2:
                 // tank dostaje upgrade z 1000 na 1500
-                this.gasTankSpaceLeft += 500;
+                this.gasTankCapacity += 500;
                 break;
             case 3:
                 // gracz zbiera gazy z l5,6
@@ -512,6 +516,8 @@ endGameScreen = {
         
     },
     endGame(){
+        let temp = player.emptyGasTank();
+        player.score += temp;
         saveScoreToLocalStorage(player.score,prompt("Enter your nickname: "));
         endGameScreen.scores = JSON.parse(localStorage.getItem("highscores"));
         player.time = (new Date().getTime() - player.time)/1000;
@@ -689,7 +695,7 @@ cutScene = {
             cutScene.drawWithGround(false);
         } else if(cutScene.timeLeft==fps*2){
             audio.playLoop(audio.engine);
-            audio.engine.volume = 0.1;
+            audio.engine.volume = 0.4;
         }else if(cutScene.timeLeft>0){
             cutScene.drawWithGround(true);
             player.x+=cutScene.easeInQuint(cutScene.timeLeft/(fps*2))*5400/fps;
@@ -774,8 +780,10 @@ shop = {
         shop.fuelToAdd = Math.min(200,Math.floor(1000-player.fuel))
         shop.addTime = fps;
         clearInterval(gameLoopInterval);
+        audio.playOneOf(audio.dock);
         gameLoopInterval = setInterval(shop.loop , 1000/fps);
         canPause = false;
+        audio.pause(audio.engine);
     },
     loop(){
         shop.draw();
@@ -800,13 +808,15 @@ shop = {
         cutScene.timeLeft = fps*2;
         clearInterval(gameLoopInterval);
         gameLoopInterval = setInterval(cutScene.loopFlyFromShop , 1000/fps);
-        
+        audio.playOneOf(audio.dock),
+        player.gasTankSpaceLeft = player.gasTankCapacity;
     },
     click(itemNumber){
         shop.selectedItem = itemNumber-1;
     },
     buy(){
         if(shop.selectedItem != -1   && player.money >= shop.items[shop.selectedItem].price && shop.allowBuing){
+            audio.playOneOf(audio.purchase);
             player.buyUpgrade(shop.items[shop.selectedItem].upgrdId);
             player.money -= shop.items[shop.selectedItem].price;
             shop.items[shop.selectedItem].bought = true;
