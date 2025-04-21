@@ -1,12 +1,11 @@
 canvas {
     position: absolute;
-    left: -0.25%;
-    top:0;
     display: block;
     border: 2px solid #2c0e99; 
     border-radius: 15px; 
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
-    width: 100%;
+    width: 99%;
+    top: -0.25%;
 
     margin: auto;
 }

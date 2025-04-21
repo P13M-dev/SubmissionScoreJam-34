@@ -24,6 +24,11 @@ button_upgrd3 = document.getElementById("button_upgrd3"),
 button_upgrd4 = document.getElementById("button_upgrd4"),
 boostBar = document.getElementById("boostBar"),
 button_leave = document.getElementById("button_leave"),
+layer1_bg = document.getElementById("layer1_bg"),
+layer1_bg1 = document.getElementById("layer1_bg1"),
+layer1_bg2 = document.getElementById("layer1_bg2"),
+layer1_bg3 = document.getElementById("layer1_bg3"),
+
 gas = {
     gases: {
         smoke: { name:"Sm", displayName: "Smoke", score: 0, price: 0, color:"black"},
@@ -222,13 +227,17 @@ player = {
         this.y += vector.y * this.speed;
         this.x += vector.x * this.speed;
         camera.x = this.x - canvas.width/ 10
-        camera.y = this.y - canvas.height / 2 + this.height / 2; 
+        if (this.y  + this.height / 2 > 0){
+            camera.y = -canvas.height/2 
+        }else{
+            camera.y = this.y - canvas.height / 2 + this.height / 2; 
+        }
         
         if (moveVector.x*fps > 60){
             moveVector.x = Math.max(moveVector.x - 0.25, 60);
             this.amplitude += moveVector.x/fps
-        }else if (moveVector.x*fps < 50){
-            this.amplitude -= moveVector.x/fps
+        }if (moveVector.y > 0){
+            this.amplitude -= moveVector.y/fps
         }
 
         if (this.amplitude > layerThresholds[currentLayer-1]){
@@ -289,7 +298,6 @@ player = {
         }
         this.gasTankContents = [[],[]];
         return [totalScore,totalMoney];
-
     },
 
     draw(camera,playAnim) 
@@ -517,22 +525,19 @@ cutScene = {
         return 1 - Math.pow(1 - x, 5);
     },
     draw(){
-        
         ctx.beginPath();
         ctx.clearRect(0, 0, canvas.width, canvas.height);
-        player.draw(camera,true);
+        player.draw(camera);
         drawTankers();
         drawClouds();
         ctx.closePath();
-        frameCount++;
     },
     drawWithStation(){
         ctx.beginPath();
         ctx.clearRect(0, 0, canvas.width, canvas.height);
-        player.draw(camera,true);
+        player.draw(camera);
         ctx.drawImage(station,canvas.width/2-(station.width/4),canvas.height/2-station.height/2,station.height,station.height);
         ctx.closePath();
-        frameCount++;
     },
     flickMenu(time,display){
         cutScene.draw();
@@ -612,18 +617,16 @@ shop = {
         }
         ctx.font = "25px silkscreen";
         ctx.textAlign = "center";
-        ctx.fillStyle = "white";
-        ctx.fillText("Fuel: "+Math.ceil(player.fuel)/10+"%",canvas.width/6*5, 25);
-        ctx.fillText("Score: "+Math.floor(player.score), canvas.width/6*5, 50);
-        ctx.fillText("Credits: "+Math.floor(player.money)+"C", canvas.width/6*5, 75);
-        ctx.font = "20px silkscreen";
+        ctx.fillText("Fuel: "+Math.ceil(player.fuel / 10)+"%", 0, 35 * pixelSize.height);
+        ctx.fillText("Score: "+player.score, 0, 35 * pixelSize.height);
+        ctx.fillText("Credits: "+player.money, 0, 35 * pixelSize.height);
+        ctx.font = "20px silkscreen";ctx.closePath();
         if(shop.selectedItem != -1){
-            
-
-            ctx.fillText(shop.items[shop.selectedItem].name, canvas.width/6*5, 25+canvas.height/3);
-            ctx.fillStyle = shop.priceColor;
-            ctx.fillText("Price: "+shop.items[shop.selectedItem].price, canvas.width/6*5, 65+canvas.height/3);
+            ctx.font = "25px Arial";
+            ctx.textAlign = "center";
             ctx.fillStyle = "white";
+            ctx.fillText(shop.items[shop.selectedItem].name, canvas.width/6*5, 25+canvas.height/3);
+            ctx.fillText("Price: "+shop.items[shop.selectedItem].price, canvas.width/6*5, 65+canvas.height/3);
             for (let i = 0; i < shop.items[shop.selectedItem].description.length; i++) {
                 ctx.fillText(shop.items[shop.selectedItem].description[i], canvas.width/6*5, 65 + 45 * (i+1)+canvas.height/3);
             }
@@ -653,7 +656,6 @@ shop = {
         }
     },
     handleMouseInputs(){
-        
         if(mouseClick){
             console.log(mouseClick.x,mouseClick.y);
             for (let i = 0; i < buttons.shop.length; i++) {
@@ -845,7 +847,38 @@ function drawClouds(){
     }
 }
 
+function drawBackground(){
+    switch (currentLayer){
+        case 1:
+            // Draw the furthest background layer (layer1_bg)
+            ctx.drawImage(layer1_bg, 0, 0, canvas.width, canvas.height);
+
+            // Draw the second furthest background layer (layer1_bg1)
+            ctx.drawImage(layer1_bg1, (-camera.x / 5) % canvas.width, -camera.y/10, canvas.width, canvas.height);
+            ctx.drawImage(layer1_bg1, (-camera.x / 5) % canvas.width + canvas.width, -camera.y/10, canvas.width, canvas.height);
+            if ((-camera.x / 5) % canvas.width + canvas.width < canvas.width) {
+                ctx.drawImage(layer1_bg1, (-camera.x / 5) % canvas.width + 2 * canvas.width, -camera.y/10, canvas.width, canvas.height);
+            }
+
+            // Draw the second closest background layer (layer1_bg2)
+            ctx.drawImage(layer1_bg2, (-camera.x / 3.5) % canvas.width, -camera.y/7, canvas.width, canvas.height);
+            ctx.drawImage(layer1_bg2, (-camera.x / 3.5) % canvas.width + canvas.width, -camera.y/7, canvas.width, canvas.height);
+            if ((-camera.x / 3.5) % canvas.width + canvas.width < canvas.width) {
+                ctx.drawImage(layer1_bg2, (-camera.x / 3.5) % canvas.width + 2 * canvas.width, -camera.y/7, canvas.width, canvas.height);
+            }
+
+            // Draw the closest background layer (layer1_bg3)
+            ctx.drawImage(layer1_bg3, (-camera.x / 2) % canvas.width, -camera.y/4, canvas.width, canvas.height);
+            ctx.drawImage(layer1_bg3, (-camera.x / 2) % canvas.width + canvas.width, -camera.y/4, canvas.width, canvas.height);
+            if ((-camera.x / 2) % canvas.width + canvas.width < canvas.width) {
+                ctx.drawImage(layer1_bg3, (-camera.x / 2) % canvas.width + 2 * canvas.width, -camera.y/4, canvas.width, canvas.height);
+            }
+
+    }
+}
+
 function draw(){
+    drawBackground()
     player.draw(camera);
     drawTankers();
     drawClouds();
@@ -1197,10 +1230,10 @@ function handleCloudCollisions(){
             playerRect.y + playerRect.height > cloudRect.y &&
             player.gasTankSpaceLeft > 0
         ) {
-            clouds[i].x += 10*(Math.max(moveVector.x,Math.abs(moveVector.y))+15)/50
-            clouds[i].width -= 20*(Math.max(moveVector.x,Math.abs(moveVector.y))+15)/50
-            clouds[i].height -= 20*(Math.max(moveVector.x,Math.abs(moveVector.y))+15)/50
-            clouds[i].y += 10*(Math.max(moveVector.x,Math.abs(moveVector.y))+15)/50
+            clouds[i].x += 10*(Math.max(moveVector.x,Math.abs(moveVector.y))+15)/25
+            clouds[i].width -= 20*(Math.max(moveVector.x,Math.abs(moveVector.y))+15)/25
+            clouds[i].height -= 20*(Math.max(moveVector.x,Math.abs(moveVector.y))+15)/25
+            clouds[i].y += 10*(Math.max(moveVector.x,Math.abs(moveVector.y))+15)/25
             player.addGasToTank(gas.getName(clouds[i].composition[0][0]),clouds[i].composition[0][1]/100000*clouds[i].width*clouds[i].height)
             if (clouds[i].width <= 0 || clouds[i].height <= 0){
                 clouds.splice(i,1)
@@ -1302,7 +1335,6 @@ function handleCollisions(){
             break;
     }
 }
-
 function drawTankers(){
     //dominek zmień to w wolnym czasie pls
     for (let i = 0; i < tankers.length; i++) {
@@ -1315,7 +1347,6 @@ function drawTankers(){
         ctx.restore();
     }
 }
-
 function gameLoop() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.fillStyle = "white"
@@ -1345,7 +1376,8 @@ window.addEventListener("keyup", function(event) {
     keysPressed[event.key.toLowerCase()] = false;
     if (event.key == "Escape"){
         canPause = true;
-    }if ((event.key === " " || event.key.toLowerCase() === "w") && player.jumpCharges > 0) {
+    }if ((event.key === " " || event.key.toLowerCase() === "w") && player.jumpCharges > 0 && player.fuel > 0) {
+        player.fuel = Math.max(0,player.fuel - 5)
         player.jump();
     }
 });
@@ -1405,8 +1437,8 @@ function drawUI() {
     ctx.beginPath();
     ctx.strokeStyle = "red";
     ctx.lineWidth = 6;
-    ctx.moveTo(9 * pixelSize.width, 140 * pixelSize.height -pixelSize.height*40*(player.amplitude/(layerThresholds[0]*6)));
-    ctx.lineTo(13 * pixelSize.width, 140 * pixelSize.height-pixelSize.height*40*(player.amplitude/(layerThresholds[0]*6)));
+    ctx.moveTo(9 * pixelSize.width, 140 * pixelSize.height -pixelSize.height*41*(player.amplitude/(layerThresholds[0]*6)));
+    ctx.lineTo(13 * pixelSize.width, 140 * pixelSize.height-pixelSize.height*41*(player.amplitude/(layerThresholds[0]*6)));
     ctx.stroke();
     ctx.closePath();
 
