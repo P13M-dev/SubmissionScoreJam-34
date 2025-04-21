@@ -958,7 +958,7 @@ function drawBackground(){
             break
         }
 }
-currentLayer = 3
+currentLayer = 1
 
 function draw(){
     drawBackground()
