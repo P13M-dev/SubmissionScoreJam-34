@@ -48,6 +48,18 @@ layer6_bg3 = document.getElementById("layer6_bg3"),
 ground = document.getElementById("ground"),
 button_buy_off = document.getElementById("button_buy_off"),
 tutorialGraphics = document.getElementById("tutorialGraphics"),
+gasSmog = document.getElementById("gasSmog"),
+gasArg = document.getElementById("gasArg"),
+gasAW = document.getElementById("gasAW"),
+gasDeu = document.getElementById("gasDeu"),
+gasFl = document.getElementById("gasFl"),
+gasGeV = document.getElementById("gasGeV"),
+gasGFu = document.getElementById("gasGFu"),
+gasHe = document.getElementById("gasHe"),
+gasIndOxi = document.getElementById("gasIndOxi"),
+gasNeCo = document.getElementById("gasNeCo"),
+gasTri = document.getElementById("gasTri"),
+gasXe = document.getElementById("gasXe"),
 audio = {
     engine: new Audio('./sfx/engine.mp3'),
     purchase: new Audio('./sfx/purchase.mp3'),
@@ -248,7 +260,7 @@ player = {
     y: 50,
     width: 50, // tylkko do hitboxow :)
     height: 50, // tylkko do hitboxow :)
-    speed: 5,
+    speed: 1,
     score: 0,
     money: 0,
     fuel: 1000,
@@ -993,7 +1005,8 @@ buttons = {
     credits:[]
 },
 pixelSize = {width: canvas.width / 256, height: canvas.height / 144},
-totalFrame = 0
+totalFrame = 0,
+particles = []
 
 buttons.credits.push(new Button(canvas.width/2-canvas.width/8, canvas.height/7*6, canvas.width/4, canvas.height/7,button_leave,()=>{credits.end()}));
 
@@ -1056,53 +1069,86 @@ function drawClouds(){
             clouds.splice(i,1)
             i--
         }else{
-            let splitPoint = 0
             for (let j = 0; j < clouds[i].composition.length;j++){
-                
                 switch (clouds[i].composition[j][0]){
                     case 1:
-                        ctx.fillStyle = gas.gases.smoke.color;
+                        if (Math.floor(Math.random() * 100) < clouds[i].composition[j][1]) {
+                            particles.push([Math.floor((Math.random() * clouds[i].width) + clouds[i].x),Math.floor((Math.random() * clouds[i].height) + clouds[i].y), gasSmog, 0, Math.floor((Math.random() * 11) - 5), Math.floor((Math.random() * 11) + -5)])
+                        }
                         break
                     case 2:
-                        ctx.fillStyle = gas.gases.tritium.color;
+                        if (Math.floor(Math.random() * 100) < clouds[i].composition[j][1]) {
+                            particles.push([Math.floor((Math.random() * clouds[i].width) + clouds[i].x),Math.floor((Math.random() * clouds[i].height) + clouds[i].y), gasTri, 0, Math.floor((Math.random() * 11) - 5), Math.floor((Math.random() * 11) + -5)])
+                        }
                         break
                     case 3:
-                        ctx.fillStyle = gas.gases.industrialOxidizer.color;
+                        if (Math.floor(Math.random() * 100) < clouds[i].composition[j][1]) {
+                            particles.push([Math.floor((Math.random() * clouds[i].width) + clouds[i].x),Math.floor((Math.random() * clouds[i].height) + clouds[i].y), gasIndOxi, 0, Math.floor((Math.random() * 11) - 5), Math.floor((Math.random() * 11) + -5)])
+                        }
                         break
-                    case 4:  
-                        ctx.fillStyle = gas.gases.fluxium.color;
+                    case 4:
+                        if (Math.floor(Math.random() * 100) < clouds[i].composition[j][1]) {
+                            particles.push([Math.floor((Math.random() * clouds[i].width) + clouds[i].x),Math.floor((Math.random() * clouds[i].height) + clouds[i].y), gasFl, 0, Math.floor((Math.random() * 11) - 5), Math.floor((Math.random() * 11) + -5)])
+                        }
                         break;
                     case 5:
-                        ctx.fillStyle = gas.gases.acidicWaste.color;
+                        if (Math.floor(Math.random() * 100) < clouds[i].composition[j][1]) {
+                            particles.push([Math.floor((Math.random() * clouds[i].width) + clouds[i].x),Math.floor((Math.random() * clouds[i].height) + clouds[i].y), gasAW, 0, Math.floor((Math.random() * 11) - 5), Math.floor((Math.random() * 11) + -5)])
+                        }
                         break;
                     case 6:
-                        ctx.fillStyle = gas.gases.gasFuel.color;
+                        if (Math.floor(Math.random() * 100) < clouds[i].composition[j][1]) {
+                            particles.push([Math.floor((Math.random() * clouds[i].width) + clouds[i].x),Math.floor((Math.random() * clouds[i].height) + clouds[i].y), gasGFu, 0, Math.floor((Math.random() * 11) - 5), Math.floor((Math.random() * 11) + -5)])
+                        }
                         break;
                     case 7:
-                        ctx.fillStyle = gas.gases.helium3.color;
+                        if (Math.floor(Math.random() * 100) < clouds[i].composition[j][1]) {
+                            particles.push([Math.floor((Math.random() * clouds[i].width) + clouds[i].x),Math.floor((Math.random() * clouds[i].height) + clouds[i].y), gasHe, 0, Math.floor((Math.random() * 11) - 5), Math.floor((Math.random() * 11) + -5)])
+                        }
                         break;
                     case 8:
-                        ctx.fillStyle = gas.gases.gelidVapour.color;
+                        if (Math.floor(Math.random() * 100) < clouds[i].composition[j][1]) {
+                            particles.push([Math.floor((Math.random() * clouds[i].width) + clouds[i].x),Math.floor((Math.random() * clouds[i].height) + clouds[i].y), gasGeV, 0, Math.floor((Math.random() * 11) - 5), Math.floor((Math.random() * 11) + -5)])
+                        }
                         break;
                     case 9:
-                        ctx.fillStyle = gas.gases.neonCompound.color;
+                        if (Math.floor(Math.random() * 100) < clouds[i].composition[j][1]) {
+                            particles.push([Math.floor((Math.random() * clouds[i].width) + clouds[i].x),Math.floor((Math.random() * clouds[i].height) + clouds[i].y), gasNeCo, 0, Math.floor((Math.random() * 11) - 5), Math.floor((Math.random() * 11) + -5)])
+                        }
                         break;
                     case 10:
-                        ctx.fillStyle = gas.gases.xenium.color;
+                        if (Math.floor(Math.random() * 100) < clouds[i].composition[j][1]) {
+                            particles.push([Math.floor((Math.random() * clouds[i].width) + clouds[i].x),Math.floor((Math.random() * clouds[i].height) + clouds[i].y), gasXe, 0, Math.floor((Math.random() * 11) - 5), Math.floor((Math.random() * 11) + -5)])
+                        }
                         break;
                     case 11:
-                        ctx.fillStyle = gas.gases.deuterium.color;
+                        if (Math.floor(Math.random() * 100) < clouds[i].composition[j][1]) {
+                            particles.push([Math.floor((Math.random() * clouds[i].width) + clouds[i].x),Math.floor((Math.random() * clouds[i].height) + clouds[i].y), gasDeu, 0, Math.floor((Math.random() * 11) - 5), Math.floor((Math.random() * 11) + -5)])
+                        }
                         break;
                     case 12:
-                        ctx.fillStyle = gas.gases.argonium.color;
+                        if (Math.floor(Math.random() * 100) < clouds[i].composition[j][1]) {
+                            particles.push([Math.floor((Math.random() * clouds[i].width) + clouds[i].x),Math.floor((Math.random() * clouds[i].height) + clouds[i].y), gasArg, 0, Math.floor((Math.random() * 11) - 5), Math.floor((Math.random() * 11) + -5)])
+                        }
                         break;
                 }
-                ctx.fillRect(clouds[i].x + clouds[i].width*(splitPoint/100)-camera.x, clouds[i].y-camera.y, clouds[i].width*(clouds[i].composition[j][1]/100), clouds[i].height);
-                splitPoint += clouds[i].composition[j][1]
             }
-            
         }
     }
+}
+
+function drawParticles() {
+    for (i = 0; i < particles.length; i++) {
+        ctx.drawImage(particles[i][2], particles[i][0] - 5 * pixelSize.width - camera.x, particles[i][1] - 5 * pixelSize.height - camera.y, 10 * pixelSize.width, 10 * pixelSize.height)
+        particles[i][0] += particles[i][4] / 50
+        particles[i][1] += particles[i][5] / 50
+        particles[i][3]++
+
+        if (particles[i][3] > 100) {
+            particles.splice(i,1)
+        }
+    }
+
 }
 
 function drawBackground(){
@@ -1216,7 +1262,10 @@ function draw(){
     drawBackground()
     player.draw(camera);
     drawspaceTrashs();
-    drawClouds();
+    if(frameCount % 5 == 0) {
+        drawClouds();// more like GenerateClouds now but sure
+    }
+    drawParticles();
     miniMap();
     drawUI();
 
