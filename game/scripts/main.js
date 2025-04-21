@@ -227,8 +227,8 @@ player = {
         if (moveVector.x*fps > 60){
             moveVector.x = Math.max(moveVector.x - 0.25, 60);
             this.amplitude += moveVector.x/fps
-        }else if (moveVector.x*fps < 50){
-            this.amplitude -= moveVector.x/fps
+        }if (moveVector.y > 0){
+            this.amplitude -= moveVector.y/fps
         }
 
         if (this.amplitude > layerThresholds[currentLayer-1]){
@@ -1151,10 +1151,10 @@ function handleCloudCollisions(){
             playerRect.y + playerRect.height > cloudRect.y &&
             player.gasTankSpaceLeft > 0
         ) {
-            clouds[i].x += 10*(Math.max(moveVector.x,Math.abs(moveVector.y))+15)/50
-            clouds[i].width -= 20*(Math.max(moveVector.x,Math.abs(moveVector.y))+15)/50
-            clouds[i].height -= 20*(Math.max(moveVector.x,Math.abs(moveVector.y))+15)/50
-            clouds[i].y += 10*(Math.max(moveVector.x,Math.abs(moveVector.y))+15)/50
+            clouds[i].x += 10*(Math.max(moveVector.x,Math.abs(moveVector.y))+15)/25
+            clouds[i].width -= 20*(Math.max(moveVector.x,Math.abs(moveVector.y))+15)/25
+            clouds[i].height -= 20*(Math.max(moveVector.x,Math.abs(moveVector.y))+15)/25
+            clouds[i].y += 10*(Math.max(moveVector.x,Math.abs(moveVector.y))+15)/25
             player.addGasToTank(gas.getName(clouds[i].composition[0][0]),clouds[i].composition[0][1]/100000*clouds[i].width*clouds[i].height)
             if (clouds[i].width <= 0 || clouds[i].height <= 0){
                 clouds.splice(i,1)
@@ -1356,8 +1356,8 @@ function drawUI() {
     ctx.beginPath();
     ctx.strokeStyle = "red";
     ctx.lineWidth = 6;
-    ctx.moveTo(9 * pixelSize.width, 140 * pixelSize.height -pixelSize.height*40*(player.amplitude/(layerThresholds[0]*6)));
-    ctx.lineTo(13 * pixelSize.width, 140 * pixelSize.height-pixelSize.height*40*(player.amplitude/(layerThresholds[0]*6)));
+    ctx.moveTo(9 * pixelSize.width, 140 * pixelSize.height -pixelSize.height*41*(player.amplitude/(layerThresholds[0]*6)));
+    ctx.lineTo(13 * pixelSize.width, 140 * pixelSize.height-pixelSize.height*41*(player.amplitude/(layerThresholds[0]*6)));
     ctx.stroke();
     ctx.closePath();
 
