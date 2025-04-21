@@ -67,7 +67,7 @@ audio = {
           audio.pause();
           console.log("Music stopped.");
         }
-      },
+    },
     playOneOf(audio){
         audio.loop = false;
         audio.play();
@@ -620,7 +620,7 @@ cutScene = {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         drawBackground();
         player.draw(camera);
-        drawTankers();
+        drawspaceTrashs();
         drawClouds();
         ctx.closePath();
     },
@@ -1194,12 +1194,11 @@ function drawBackground(){
             break
         }
 }
-currentLayer = 5
 
 function draw(){
     drawBackground()
     player.draw(camera);
-    drawTankers();
+    drawspaceTrashs();
     drawClouds();
     miniMap();
     drawUI();
@@ -1585,18 +1584,18 @@ function miniMap(){
     ctx.closePath();
 }
 
-let tankers = [] //w Formacie {x,y,size,rotation}
+let spaceTrashs = [] //w Formacie {x,y,size,rotation}
 
 function generateObstacles(){
     // Warstwy:
-    // 3. Tanker crash site (szczątki zabierające hp na kolizji) Fioletowa warstwa , dużo szczątków kawałek zniszczonego statku widoczny
+    // 3. spaceTrash crash site (szczątki zabierające hp na kolizji) Fioletowa warstwa , dużo szczątków kawałek zniszczonego statku widoczny
     // 4. Misty bramble ( nieprzyjazna fauna, wjebuje się w ciebie celowo )
     // 5. Neon battlezone  (drony z pociskami), fioletowo różowa warstwa widać bitwę w tle
     // 6. Space (drony z laserami (górnicze, nie atakują aktywnie gracza, zagradzają mu drogę) ) widać satelity i asteroidy w tle
     switch (currentLayer){
         case 3:
             if (frameCount % (1000/moveVector.x) == 0){ // do zmiany, jak wpadnę na lepszy pomysł
-                tankers.push({
+                spaceTrashs.push({
                     x: Math.random() * canvas.width + canvas.width + camera.x,
                     y: Math.random() * canvas.height * 2 + camera.y - canvas.height / 2,
                     size: Math.random() * 100 + 30,
@@ -1613,27 +1612,27 @@ function generateObstacles(){
     }
 }
 
-function handleTankerCollisions(){
-    for (let i = 0; i < tankers.length; i++) {
-        const tanker = tankers[i];
+function handlespaceTrashCollisions(){
+    for (let i = 0; i < spaceTrashs.length; i++) {
+        const spaceTrash = spaceTrashs[i];
         const playerRect = {
             x: player.x,
             y: player.y,
             width: player.width,
             height: player.height
         };
-        const tankerRect = {
-            x: tanker.x,
-            y: tanker.y,
-            width: tanker.size,
-            height: tanker.size
+        const spaceTrashRect = {
+            x: spaceTrash.x,
+            y: spaceTrash.y,
+            width: spaceTrash.size,
+            height: spaceTrash.size
         };
 
         if (
-            playerRect.x < tankerRect.x + tankerRect.width &&
-            playerRect.x + playerRect.width > tankerRect.x &&
-            playerRect.y < tankerRect.y + tankerRect.height &&
-            playerRect.y + playerRect.height > tankerRect.y
+            playerRect.x < spaceTrashRect.x + spaceTrashRect.width &&
+            playerRect.x + playerRect.width > spaceTrashRect.x &&
+            playerRect.y < spaceTrashRect.y + spaceTrashRect.height &&
+            playerRect.y + playerRect.height > spaceTrashRect.y
         ) {
 
             moveVector.x = Math.max(moveVector.x - 15, 30);
@@ -1641,8 +1640,8 @@ function handleTankerCollisions(){
 
             player.hp = Math.max(player.hp - 1, 0)
 
-            tanker.x += 20; // do zmiany później
-            tanker.y += 20;
+            spaceTrash.x += 20; // do zmiany później
+            spaceTrash.y += 20;
         }
     }
 }
@@ -1651,19 +1650,19 @@ function handleCollisions(){
     handleCloudCollisions()
     switch (currentLayer){
         case 3:
-            handleTankerCollisions()
+            handlespaceTrashCollisions()
             break;
     }
 }
-function drawTankers(){
+function drawspaceTrashs(){
     //dominek zmień to w wolnym czasie pls
-    for (let i = 0; i < tankers.length; i++) {
-        const tanker = tankers[i];
+    for (let i = 0; i < spaceTrashs.length; i++) {
+        const spaceTrash = spaceTrashs[i];
         ctx.save();
-        ctx.translate(tanker.x - camera.x + tanker.size / 2, tanker.y - camera.y + tanker.size / 2);
-        ctx.rotate((tanker.rotation * Math.PI) / 180);
+        ctx.translate(spaceTrash.x - camera.x + spaceTrash.size / 2, spaceTrash.y - camera.y + spaceTrash.size / 2);
+        ctx.rotate((spaceTrash.rotation * Math.PI) / 180);
         ctx.fillStyle = "gray";
-        ctx.fillRect(-tanker.size / 2, -tanker.size / 2, tanker.size, tanker.size);
+        ctx.fillRect(-spaceTrash.size / 2, -spaceTrash.size / 2, spaceTrash.size, spaceTrash.size);
         ctx.restore();
     }
 }
@@ -1679,7 +1678,8 @@ function gameLoop() {
     player.move({ x: moveVector.x / fps, y: moveVector.y / fps });
     draw();
     
-    if(player.fuel <= 0){
+    if(player.amplitude > layerThresholds[currentLayer-1]-layerThresholds[0] || player.y < camera.y - canvas.height/2){
+        animation_pos = {player.x, player.y}
         endGameScreen.endGame();
     }
     
@@ -1727,6 +1727,7 @@ function drawUI() {
         if(fuelAmount - 5 > 0) {
             for (i = fuelAmount - 5; i > 0; i--) {
                 if (i == fuelAmount - 5 && (fuelAmount - 5) % 2 == 1) {
+
                     ctx.drawImage(fuelMiddle, 0, (27 - i) * pixelSize.height, 13 * pixelSize.width, 4 * pixelSize.height)
                 }
                 if (i % 2 == 0) {
