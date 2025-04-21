@@ -1347,14 +1347,23 @@ function generateClouds(){
         case 3:{
             let ratio = Math.random();
             if (ratio > 0.9) {
-                //IndOxi
+                // Smog
                 clouds.push({
                     x: cloud_position.x,
                     y: cloud_position.y,
-                    width: Math.random() * 200 + 50,
-                    height: Math.random() * 200 + 50,
-                    composition: [[gas.getId("IndOxi"), 100]]
-                });                
+                    width: Math.random() * 150 + 20,
+                    height: Math.random() * 150 + 20,
+                    composition: [[gas.getId("Sm"), 100]]
+                });        
+            }else if (ratio > 0.8) {
+                // Acidic Waste cloud
+                clouds.push({
+                    x: cloud_position.x,
+                    y: cloud_position.y,
+                    width: Math.random() * 100 + 30,
+                    height: Math.random() * 100 + 30,
+                    composition: [[gas.getId("AW"), 100]]
+                    });
             }
             else if (ratio > 0.7) {
                 // Gas Fuel
@@ -1722,7 +1731,6 @@ function gameLoop() {
     frameCount++;
     
 }
-currentLayer = 6
 
 window.addEventListener("keydown", function(event) {
     keysPressed[event.key.toLowerCase()] = true;
