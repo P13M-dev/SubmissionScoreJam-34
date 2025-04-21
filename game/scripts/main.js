@@ -1202,67 +1202,67 @@ function drawBackground(){
             }
             break
         case 2:
-            ctx.drawImage(layer2_bg, 0, 0, canvas.width, canvas.height);
+            ctx.drawImage(layer2_bg, 0, 0, canvas.width*2, canvas.height);
 
-            ctx.drawImage(layer2_bg1, (-camera.x / 5) % canvas.width, (-camera.y / 10) % canvas.height, canvas.width, canvas.height);
-            ctx.drawImage(layer2_bg1, (-camera.x / 5) % canvas.width + canvas.width, (-camera.y / 10) % canvas.height, canvas.width, canvas.height);
-            ctx.drawImage(layer2_bg1, (-camera.x / 5) % canvas.width, (-camera.y / 10) % canvas.height - canvas.height, canvas.width, canvas.height);
-            ctx.drawImage(layer2_bg1, (-camera.x / 5) % canvas.width + canvas.width, (-camera.y / 10) % canvas.height - canvas.height, canvas.width, canvas.height);
+            ctx.drawImage(layer2_bg1, (-camera.x / 5) % canvas.width*2, (-camera.y / 10) % canvas.height, canvas.width*2, canvas.height);
+            ctx.drawImage(layer2_bg1, (-camera.x / 5) % canvas.width*2 + canvas.width*2, (-camera.y / 10) % canvas.height, canvas.width*2, canvas.height);
+            ctx.drawImage(layer2_bg1, (-camera.x / 5) % canvas.width*2, (-camera.y / 10) % canvas.height - canvas.height, canvas.width*2, canvas.height);
+            ctx.drawImage(layer2_bg1, (-camera.x / 5) % canvas.width*2 + canvas.width*2, (-camera.y / 10) % canvas.height - canvas.height, canvas.width*2, canvas.height);
 
-            ctx.drawImage(layer2_bg2, (-camera.x / 3.5) % canvas.width, (-camera.y / 7) % canvas.height, canvas.width, canvas.height);
-            ctx.drawImage(layer2_bg2, (-camera.x / 3.5) % canvas.width + canvas.width, (-camera.y / 7) % canvas.height, canvas.width, canvas.height);
-            ctx.drawImage(layer2_bg2, (-camera.x / 3.5) % canvas.width, (-camera.y / 7) % canvas.height - canvas.height, canvas.width, canvas.height);
-            ctx.drawImage(layer2_bg2, (-camera.x / 3.5) % canvas.width + canvas.width, (-camera.y / 7) % canvas.height - canvas.height, canvas.width, canvas.height);
+            ctx.drawImage(layer2_bg2, (-camera.x / 3.5) % canvas.width*2, (-camera.y / 7) % canvas.height, canvas.width*2, canvas.height);
+            ctx.drawImage(layer2_bg2, (-camera.x / 3.5) % canvas.width*2 + canvas.width*2, (-camera.y / 7) % canvas.height, canvas.width*2, canvas.height);
+            ctx.drawImage(layer2_bg2, (-camera.x / 3.5) % canvas.width*2, (-camera.y / 7) % canvas.height - canvas.height, canvas.width*2, canvas.height);
+            ctx.drawImage(layer2_bg2, (-camera.x / 3.5) % canvas.width*2 + canvas.width*2, (-camera.y / 7) % canvas.height - canvas.height, canvas.width*2, canvas.height);
 
-            ctx.drawImage(layer2_bg3, (-camera.x / 2) % canvas.width, (-camera.y / 4) % canvas.height, canvas.width, canvas.height);
-            ctx.drawImage(layer2_bg3, (-camera.x / 2) % canvas.width + canvas.width, (-camera.y / 4) % canvas.height, canvas.width, canvas.height);
-            ctx.drawImage(layer2_bg3, (-camera.x / 2) % canvas.width, (-camera.y / 4) % canvas.height - canvas.height, canvas.width, canvas.height);
-            ctx.drawImage(layer2_bg3, (-camera.x / 2) % canvas.width + canvas.width, (-camera.y / 4) % canvas.height - canvas.height, canvas.width, canvas.height);
+            ctx.drawImage(layer2_bg3, (-camera.x / 2) % canvas.width*2, (-camera.y / 4) % canvas.height, canvas.width*2, canvas.height);
+            ctx.drawImage(layer2_bg3, (-camera.x / 2) % canvas.width*2 + canvas.width*2, (-camera.y / 4) % canvas.height, canvas.width*2, canvas.height);
+            ctx.drawImage(layer2_bg3, (-camera.x / 2) % canvas.width*2, (-camera.y / 4) % canvas.height - canvas.height, canvas.width*2, canvas.height);
+            ctx.drawImage(layer2_bg3, (-camera.x / 2) % canvas.width*2 + canvas.width*2, (-camera.y / 4) % canvas.height - canvas.height, canvas.width*2, canvas.height);
             
             break
         case 3:
-            ctx.drawImage(layer3_bg, 0, 0, canvas.width, canvas.height);
+            ctx.drawImage(layer3_bg, 0, 0, canvas.width*2, canvas.height);
 
-            ctx.drawImage(layer3_bg1, (-camera.x / 5) % canvas.width, (-camera.y / 10) % canvas.height, canvas.width, canvas.height);
-            ctx.drawImage(layer3_bg1, (-camera.x / 5) % canvas.width + canvas.width, (-camera.y / 10) % canvas.height, canvas.width, canvas.height);
-            ctx.drawImage(layer3_bg1, (-camera.x / 5) % canvas.width, (-camera.y / 10) % canvas.height - canvas.height, canvas.width, canvas.height);
-            ctx.drawImage(layer3_bg1, (-camera.x / 5) % canvas.width + canvas.width, (-camera.y / 10) % canvas.height - canvas.height, canvas.width, canvas.height);
+            ctx.drawImage(layer3_bg1, (-camera.x / 5) % canvas.width*2, (-camera.y / 10) % canvas.height, canvas.width*2, canvas.height);
+            ctx.drawImage(layer3_bg1, (-camera.x / 5) % canvas.width*2 + canvas.width*2, (-camera.y / 10) % canvas.height, canvas.width*2, canvas.height);
+            ctx.drawImage(layer3_bg1, (-camera.x / 5) % canvas.width*2, (-camera.y / 10) % canvas.height - canvas.height, canvas.width*2, canvas.height);
+            ctx.drawImage(layer3_bg1, (-camera.x / 5) % canvas.width*2 + canvas.width*2, (-camera.y / 10) % canvas.height - canvas.height, canvas.width*2, canvas.height);
 
-            ctx.drawImage(layer3_bg2, (-camera.x / 3.5) % canvas.width, (-camera.y / 7) % canvas.height, canvas.width, canvas.height);
-            ctx.drawImage(layer3_bg2, (-camera.x / 3.5) % canvas.width + canvas.width, (-camera.y / 7) % canvas.height, canvas.width, canvas.height);
-            ctx.drawImage(layer3_bg2, (-camera.x / 3.5) % canvas.width, (-camera.y / 7) % canvas.height - canvas.height, canvas.width, canvas.height);
-            ctx.drawImage(layer3_bg2, (-camera.x / 3.5) % canvas.width + canvas.width, (-camera.y / 7) % canvas.height - canvas.height, canvas.width, canvas.height);
+            ctx.drawImage(layer3_bg2, (-camera.x / 3.5) % canvas.width*2, (-camera.y / 7) % canvas.height, canvas.width*2, canvas.height);
+            ctx.drawImage(layer3_bg2, (-camera.x / 3.5) % canvas.width*2 + canvas.width*2, (-camera.y / 7) % canvas.height, canvas.width*2, canvas.height);
+            ctx.drawImage(layer3_bg2, (-camera.x / 3.5) % canvas.width*2, (-camera.y / 7) % canvas.height - canvas.height, canvas.width*2, canvas.height);
+            ctx.drawImage(layer3_bg2, (-camera.x / 3.5) % canvas.width*2 + canvas.width*2, (-camera.y / 7) % canvas.height - canvas.height, canvas.width*2, canvas.height);
 
             
             break
         case 4:
-            ctx.drawImage(layer4_bg, 0, 0, canvas.width, canvas.height);
+            ctx.drawImage(layer4_bg, 0, 0, canvas.width*2, canvas.height);
 
-            ctx.drawImage(layer4_bg1, (-camera.x / 5) % canvas.width, 0, canvas.width, canvas.height);
-            ctx.drawImage(layer4_bg1, (-camera.x / 5) % canvas.width + canvas.width, 0, canvas.width, canvas.height);
-            ctx.drawImage(layer4_bg1, (-camera.x / 5) % canvas.width, 0 - canvas.height, canvas.width, canvas.height);
-            ctx.drawImage(layer4_bg1, (-camera.x / 5) % canvas.width + canvas.width, 0 - canvas.height, canvas.width, canvas.height);
+            ctx.drawImage(layer4_bg1, (-camera.x / 5) % canvas.width*2, 0, canvas.width*2, canvas.height);
+            ctx.drawImage(layer4_bg1, (-camera.x / 5) % canvas.width*2 + canvas.width*2, 0, canvas.width*2, canvas.height);
+            ctx.drawImage(layer4_bg1, (-camera.x / 5) % canvas.width*2, 0 - canvas.height, canvas.width*2, canvas.height);
+            ctx.drawImage(layer4_bg1, (-camera.x / 5) % canvas.width*2 + canvas.width*2, 0 - canvas.height, canvas.width*2, canvas.height);
 
-            ctx.drawImage(layer4_bg2, (-camera.x / 3.5) % canvas.width, 0, canvas.width, canvas.height);
-            ctx.drawImage(layer4_bg2, (-camera.x / 3.5) % canvas.width + canvas.width, 0, canvas.width, canvas.height);
-            ctx.drawImage(layer4_bg2, (-camera.x / 3.5) % canvas.width+canvas.width/2, 0 - canvas.height, canvas.width, canvas.height);
-            ctx.drawImage(layer4_bg2, (-camera.x / 3.5) % canvas.width + canvas.width*1.5, 0 - canvas.height, canvas.width, canvas.height);
+            ctx.drawImage(layer4_bg2, (-camera.x / 3.5) % canvas.width*2, 0, canvas.width*2, canvas.height);
+            ctx.drawImage(layer4_bg2, (-camera.x / 3.5) % canvas.width*2 + canvas.width*2, 0, canvas.width*2, canvas.height);
+            ctx.drawImage(layer4_bg2, (-camera.x / 3.5) % canvas.width*2+canvas.width/2, 0 - canvas.height, canvas.width*2, canvas.height);
+            ctx.drawImage(layer4_bg2, (-camera.x / 3.5) % canvas.width*2 + canvas.width*2*1.5, 0 - canvas.height, canvas.width*2, canvas.height);
 
             
             break
         
         case 5:
-            ctx.drawImage(layer5_bg, 0, 0, canvas.width, canvas.height);
+            ctx.drawImage(layer5_bg, 0, 0, canvas.width*2, canvas.height);
 
-            ctx.drawImage(layer5_bg1, (-camera.x / 5) % canvas.width, 0, canvas.width, canvas.height);
-            ctx.drawImage(layer5_bg1, (-camera.x / 5) % canvas.width + canvas.width, 0, canvas.width, canvas.height);
-            ctx.drawImage(layer5_bg1, (-camera.x / 5) % canvas.width, 0 - canvas.height, canvas.width, canvas.height);
-            ctx.drawImage(layer5_bg1, (-camera.x / 5) % canvas.width + canvas.width, 0 - canvas.height, canvas.width, canvas.height);
+            ctx.drawImage(layer5_bg1, (-camera.x / 5) % canvas.width*2, 0, canvas.width*2, canvas.height);
+            ctx.drawImage(layer5_bg1, (-camera.x / 5) % canvas.width*2 + canvas.width*2, 0, canvas.width*2, canvas.height);
+            ctx.drawImage(layer5_bg1, (-camera.x / 5) % canvas.width*2, 0 - canvas.height, canvas.width*2, canvas.height);
+            ctx.drawImage(layer5_bg1, (-camera.x / 5) % canvas.width*2 + canvas.width*2, 0 - canvas.height, canvas.width*2, canvas.height);
 
-            ctx.drawImage(layer5_bg2, (-camera.x / 3.5) % canvas.width, 0, canvas.width, canvas.height);
-            ctx.drawImage(layer5_bg2, (-camera.x / 3.5) % canvas.width + canvas.width, 0, canvas.width, canvas.height);
-            ctx.drawImage(layer5_bg2, (-camera.x / 3.5) % canvas.width+canvas.width/2, 0 - canvas.height, canvas.width, canvas.height);
-            ctx.drawImage(layer5_bg2, (-camera.x / 3.5) % canvas.width + canvas.width*1.5, 0 - canvas.height, canvas.width, canvas.height);
+            ctx.drawImage(layer5_bg2, (-camera.x / 3.5) % canvas.width*2, 0, canvas.width*2, canvas.height);
+            ctx.drawImage(layer5_bg2, (-camera.x / 3.5) % canvas.width*2 + canvas.width*2, 0, canvas.width*2, canvas.height);
+            ctx.drawImage(layer5_bg2, (-camera.x / 3.5) % canvas.width*2+canvas.width/2, 0 - canvas.height, canvas.width*2, canvas.height);
+            ctx.drawImage(layer5_bg2, (-camera.x / 3.5) % canvas.width*2 + canvas.width*2*1.5, 0 - canvas.height, canvas.width*2, canvas.height);
             
             break
         case 6:
