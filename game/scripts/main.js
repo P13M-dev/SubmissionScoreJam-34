@@ -1683,6 +1683,8 @@ function gameLoop() {
     }else if(player.y < camera.y - canvas.height/2){
         animation_pos = {x: player.x,y:  player.y}
         endGameScreen.endGame("Pressure crushed your hull"); // piotrze dodaj jakiś fajny napis
+    }else if(player.hp <= 0){
+        endGameScreen.endGame("Pressure crushed your hull");
     }
     
     frameCount++;
