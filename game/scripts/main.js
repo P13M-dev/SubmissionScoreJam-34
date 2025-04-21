@@ -28,6 +28,11 @@ layer1_bg = document.getElementById("layer1_bg"),
 layer1_bg1 = document.getElementById("layer1_bg1"),
 layer1_bg2 = document.getElementById("layer1_bg2"),
 layer1_bg3 = document.getElementById("layer1_bg3"),
+layer2_bg = document.getElementById("layer2_bg"),
+layer2_bg1 = document.getElementById("layer2_bg1"),
+layer2_bg2 = document.getElementById("layer2_bg2"),
+layer2_bg3 = document.getElementById("layer2_bg3"),
+
 
 gas = {
     gases: {
@@ -811,30 +816,45 @@ function drawClouds(){
 function drawBackground(){
     switch (currentLayer){
         case 1:
-            // Draw the furthest background layer (layer1_bg)
+            
             ctx.drawImage(layer1_bg, 0, 0, canvas.width, canvas.height);
 
-            // Draw the second furthest background layer (layer1_bg1)
             ctx.drawImage(layer1_bg1, (-camera.x / 5) % canvas.width, -camera.y/10, canvas.width, canvas.height);
             ctx.drawImage(layer1_bg1, (-camera.x / 5) % canvas.width + canvas.width, -camera.y/10, canvas.width, canvas.height);
             if ((-camera.x / 5) % canvas.width + canvas.width < canvas.width) {
                 ctx.drawImage(layer1_bg1, (-camera.x / 5) % canvas.width + 2 * canvas.width, -camera.y/10, canvas.width, canvas.height);
             }
 
-            // Draw the second closest background layer (layer1_bg2)
             ctx.drawImage(layer1_bg2, (-camera.x / 3.5) % canvas.width, -camera.y/7, canvas.width, canvas.height);
             ctx.drawImage(layer1_bg2, (-camera.x / 3.5) % canvas.width + canvas.width, -camera.y/7, canvas.width, canvas.height);
             if ((-camera.x / 3.5) % canvas.width + canvas.width < canvas.width) {
                 ctx.drawImage(layer1_bg2, (-camera.x / 3.5) % canvas.width + 2 * canvas.width, -camera.y/7, canvas.width, canvas.height);
             }
 
-            // Draw the closest background layer (layer1_bg3)
             ctx.drawImage(layer1_bg3, (-camera.x / 2) % canvas.width, -camera.y/4, canvas.width, canvas.height);
             ctx.drawImage(layer1_bg3, (-camera.x / 2) % canvas.width + canvas.width, -camera.y/4, canvas.width, canvas.height);
             if ((-camera.x / 2) % canvas.width + canvas.width < canvas.width) {
                 ctx.drawImage(layer1_bg3, (-camera.x / 2) % canvas.width + 2 * canvas.width, -camera.y/4, canvas.width, canvas.height);
             }
+            break
+        case 2:
+            ctx.drawImage(layer2_bg, 0, 0, canvas.width, canvas.height);
+            ctx.drawImage(layer2_bg1, (-camera.x / 5) % canvas.width, (-camera.y / 10) % canvas.height, canvas.width, canvas.height);
+            ctx.drawImage(layer2_bg1, (-camera.x / 5) % canvas.width + canvas.width, (-camera.y / 10) % canvas.height, canvas.width, canvas.height);
+            ctx.drawImage(layer2_bg1, (-camera.x / 5) % canvas.width, (-camera.y / 10) % canvas.height + canvas.height, canvas.width, canvas.height);
+            ctx.drawImage(layer2_bg1, (-camera.x / 5) % canvas.width + canvas.width, (-camera.y / 10) % canvas.height + canvas.height, canvas.width, canvas.height);
 
+            ctx.drawImage(layer2_bg2, (-camera.x / 3.5) % canvas.width, (-camera.y / 7) % canvas.height, canvas.width, canvas.height);
+            ctx.drawImage(layer2_bg2, (-camera.x / 3.5) % canvas.width + canvas.width, (-camera.y / 7) % canvas.height, canvas.width, canvas.height);
+            ctx.drawImage(layer2_bg2, (-camera.x / 3.5) % canvas.width, (-camera.y / 7) % canvas.height + canvas.height, canvas.width, canvas.height);
+            ctx.drawImage(layer2_bg2, (-camera.x / 3.5) % canvas.width + canvas.width, (-camera.y / 7) % canvas.height + canvas.height, canvas.width, canvas.height);
+
+            ctx.drawImage(layer2_bg3, (-camera.x / 2) % canvas.width, (-camera.y / 4) % canvas.height, canvas.width, canvas.height);
+            ctx.drawImage(layer2_bg3, (-camera.x / 2) % canvas.width + canvas.width, (-camera.y / 4) % canvas.height, canvas.width, canvas.height);
+            ctx.drawImage(layer2_bg3, (-camera.x / 2) % canvas.width, (-camera.y / 4) % canvas.height + canvas.height, canvas.width, canvas.height);
+            ctx.drawImage(layer2_bg3, (-camera.x / 2) % canvas.width + canvas.width, (-camera.y / 4) % canvas.height + canvas.height, canvas.width, canvas.height);
+            
+            break
     }
 }
 
