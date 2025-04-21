@@ -45,6 +45,7 @@ layer6_bg = document.getElementById("layer6_bg"),
 layer6_bg1 = document.getElementById("layer6_bg1"),
 layer6_bg2 = document.getElementById("layer6_bg2"),
 layer6_bg3 = document.getElementById("layer6_bg3"),
+spaceTrashImg = document.getElementById("spaceTrash"),
 ground = document.getElementById("ground"),
 button_buy_off = document.getElementById("button_buy_off"),
 tutorialGraphics = document.getElementById("tutorialGraphics"),
@@ -1628,8 +1629,8 @@ function generateObstacles(){
     // 5. Neon battlezone  (drony z pociskami), fioletowo różowa warstwa widać bitwę w tle
     // 6. Space (drony z laserami (górnicze, nie atakują aktywnie gracza, zagradzają mu drogę) ) widać satelity i asteroidy w tle
     switch (currentLayer){
-        case 3:
-            if (frameCount % (1000/moveVector.x) == 0){ // do zmiany, jak wpadnę na lepszy pomysł
+        case 4:
+            if (frameCount % 40 == 0){ 
                 spaceTrashs.push({
                     x: Math.random() * canvas.width + canvas.width + camera.x,
                     y: Math.random() * canvas.height * 2 + camera.y - canvas.height / 2,
@@ -1684,7 +1685,7 @@ function handlespaceTrashCollisions(){
 function handleCollisions(){
     handleCloudCollisions()
     switch (currentLayer){
-        case 3:
+        case 4:
             handlespaceTrashCollisions()
             break;
     }
@@ -1696,11 +1697,11 @@ function drawspaceTrashs(){
         ctx.save();
         ctx.translate(spaceTrash.x - camera.x + spaceTrash.size / 2, spaceTrash.y - camera.y + spaceTrash.size / 2);
         ctx.rotate((spaceTrash.rotation * Math.PI) / 180);
-        ctx.fillStyle = "gray";
-        ctx.fillRect(-spaceTrash.size / 2, -spaceTrash.size / 2, spaceTrash.size, spaceTrash.size);
+        ctx.drawImage(spaceTrashImg, -spaceTrash.size / 2, -spaceTrash.size / 2, spaceTrash.size, spaceTrash.size);
         ctx.restore();
     }
 }
+currentLayer = 4
 
 function gameLoop() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -1714,10 +1715,8 @@ function gameLoop() {
     player.move({ x: moveVector.x / fps, y: moveVector.y / fps });
     draw();
     if(totalFrame>=200){
-        if(player.amplitude < layerThresholds[currentLayer-1]-layerThresholds[0]){
-            animation_pos = {x: player.x,y:  player.y}
-            endGameScreen.endGame("Pressure crushed your hull"); // piotrze dodaj jakiś fajny napis
-        }else if(player.y > camera.y + canvas.height/2){
+
+        if(player.y > camera.y + canvas.height/2){
             animation_pos = {x: player.x,y:  player.y}
             endGameScreen.endGame("Pressure crushed your hull"); // piotrze dodaj jakiś fajny napis
         }else if(player.hp <= 0){
