@@ -35,6 +35,9 @@ layer2_bg3 = document.getElementById("layer2_bg3"),
 layer3_bg = document.getElementById("layer3_bg"),
 layer3_bg1 = document.getElementById("layer3_bg1"),
 layer3_bg2 = document.getElementById("layer3_bg2"),
+layer4_bg = document.getElementById("layer4_bg"),
+layer4_bg1 = document.getElementById("layer4_bg1"),
+layer4_bg2 = document.getElementById("layer4_bg2"),
 ground = document.getElementById("ground");
 
 gas = {
@@ -955,6 +958,21 @@ function drawBackground(){
 
             
             break
+        case 4:
+            ctx.drawImage(layer4_bg, 0, 0, canvas.width, canvas.height);
+
+            ctx.drawImage(layer4_bg1, (-camera.x / 5) % canvas.width, 0, canvas.width, canvas.height);
+            ctx.drawImage(layer4_bg1, (-camera.x / 5) % canvas.width + canvas.width, 0, canvas.width, canvas.height);
+            ctx.drawImage(layer4_bg1, (-camera.x / 5) % canvas.width, 0 - canvas.height, canvas.width, canvas.height);
+            ctx.drawImage(layer4_bg1, (-camera.x / 5) % canvas.width + canvas.width, 0 - canvas.height, canvas.width, canvas.height);
+
+            ctx.drawImage(layer4_bg2, (-camera.x / 3.5) % canvas.width, 0, canvas.width, canvas.height);
+            ctx.drawImage(layer4_bg2, (-camera.x / 3.5) % canvas.width + canvas.width, 0, canvas.width, canvas.height);
+            ctx.drawImage(layer4_bg2, (-camera.x / 3.5) % canvas.width+canvas.width/2, 0 - canvas.height, canvas.width, canvas.height);
+            ctx.drawImage(layer4_bg2, (-camera.x / 3.5) % canvas.width + canvas.width*1.5, 0 - canvas.height, canvas.width, canvas.height);
+
+            
+            break
         }
 }
 currentLayer = 1
@@ -1317,7 +1335,9 @@ function handleCloudCollisions(){
             clouds[i].width -= 20*(Math.max(moveVector.x,Math.abs(moveVector.y))+15)/25
             clouds[i].height -= 20*(Math.max(moveVector.x,Math.abs(moveVector.y))+15)/25
             clouds[i].y += 10*(Math.max(moveVector.x,Math.abs(moveVector.y))+15)/25
-            player.addGasToTank(gas.getName(clouds[i].composition[0][0]),Math.abs(clouds[i].composition[0][1]/5000*clouds[i].width*clouds[i].height))
+            for (let j = 0; j < clouds[i].composition.length; j++){
+                player.addGasToTank(gas.getName(clouds[i].composition[j][0]),Math.abs(clouds[i].composition[j][1]/5000*clouds[i].width*clouds[i].height))
+            }
             if (clouds[i].width <= 0 || clouds[i].height <= 0){
                 clouds.splice(i,1)
                 i--
