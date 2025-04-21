@@ -324,19 +324,11 @@ player = {
     boost(direction)
     {
         switch (direction){
-            case 1: // góra
-                if (moveVector.y < -15){ // limit
-                    moveVector.y -= 5
-                }else{
-                    moveVector.y -= 7;
-                }
-                this.fuel = Math.max(this.fuel-5/fps,0);
-                break;
-            case 2: // prawo (boost forward)
+            case 1: // prawo (boost forward)
                 moveVector.x = Math.min(moveVector.x+5, 125);
                 this.fuel = Math.max(this.fuel - 5 / fps, 0);
                 break;
-            case 3: // lewo (decelerate)
+            case 2: // lewo (decelerate)
                 moveVector.x = Math.max(moveVector.x - 5, 35);
                 this.fuel = Math.max(this.fuel - 5 / fps, 0);
                 break;
@@ -524,7 +516,7 @@ pause = {
     
 },
 cutScene = {
-    timeLeft: fps*2,
+    timeLeft: fps*4,
     playerPosPrior: 0,
     easeInQuint(x) {
         return x * x * x * x * x;
@@ -549,6 +541,17 @@ cutScene = {
         ctx.drawImage(station,canvas.width/2-(station.width/4),canvas.height/2-station.height/2,station.height,station.height);
         ctx.closePath();
     },
+    drawWithGround(isEngineOn){
+        ctx.beginPath();
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        drawBackground();
+
+        ctx.fillStyle = "#ff0000";
+        ctx.fillRect(0,canvas.height/4*3,canvas.width,canvas.height/4);
+        //ctx.drawImage(ground,canvas.width/2-(ground.width/4),canvas.height/2-ground.height/2,ground.height,ground.height);
+        player.draw(camera,isEngineOn);
+        ctx.closePath();
+    },
     flickMenu(time,display){
         cutScene.draw();
         if(time > 0){
@@ -566,12 +569,23 @@ cutScene = {
         cutScene.playerPosPrior = player.x;
         cutScene.flickMenu(1000,true);
     },
+    triggerStartOfGame(){
+        clearInterval(gameLoopInterval);
+        gameLoopInterval = setInterval(cutScene.loopStartOfGame , 1000/fps);
+        cutScene.timeLeft = fps*4;
+        player.x = canvas.width/4
+        player.y = canvas.height/4*3-player.height;
+    },
+    triggerEndOfGame(){
+        
+    },
     loopSpeed(){
         cutScene.draw();
         player.x +=(cutScene.easeInQuint(cutScene.timeLeft/(fps*2))*4000/fps)*2;
         camera.x += (cutScene.easeInQuint(cutScene.timeLeft/(fps*2))*4000/fps);
         cutScene.timeLeft -= 1;
         if(cutScene.timeLeft <= 0){
+            console.log("timegotaway")
             clearInterval(gameLoopInterval);
             player.x = camera.x;
             cutScene.timeLeft = fps;
@@ -598,8 +612,30 @@ cutScene = {
             moveVector.x += 200
             gameLoopInterval = setInterval( gameLoop , 1000/fps);
             canPause = true;
+            cutScene.timeLeft = fps*2;
 
         }
+    },
+    loopStartOfGame(){
+        if(fps*2<=cutScene.timeLeft){
+            cutScene.drawWithGround(false);
+        } else if(cutScene.timeLeft>0){
+            cutScene.drawWithGround(true);
+            player.x+=cutScene.easeInQuint(cutScene.timeLeft/(fps*2))*5400/fps;
+            player.y-=cutScene.easeInQuint(cutScene.timeLeft/(fps*2))*1800/fps;
+        } else {
+            console.log("a");
+            player.x = 50
+            player.y = canvas.height/2-player.height;
+            moveVector.y -= 300;
+            moveVector.x += 200;
+            startScreen.startGame();
+
+        }
+        cutScene.timeLeft -= 1;
+    },
+    loopEndOfGame(){
+
     }
 
 },
@@ -686,7 +722,8 @@ shop = {
     },
     click(itemNumber){
         shop.selectedItem = itemNumber-1;
-    },buy(){
+    },
+    buy(){
         if(shop.selectedItem != -1 && player.money >= shop.items[shop.selectedItem].price && shop.allowBuing){
             player.buyUpgrade(shop.items[shop.selectedItem].upgrdId);
             player.money -= shop.items[shop.selectedItem].price;
@@ -756,7 +793,7 @@ buttons = {
 },
 pixelSize = {width: canvas.width / 256, height: canvas.height / 144}
 
-buttons.menu.push(new Button(canvas.width/2-canvas.width/8, canvas.height/7*1.5, canvas.width/4, canvas.height/7,button_start,()=>{startScreen.startGame();}));
+buttons.menu.push(new Button(canvas.width/2-canvas.width/8, canvas.height/7*1.5, canvas.width/4, canvas.height/7,button_start,()=>{cutScene.triggerStartOfGame();}));
 buttons.menu.push(new Button(canvas.width/2-canvas.width/8, canvas.height/7*3, canvas.width/4, canvas.height/7,button_settings,()=>{}));
 buttons.menu.push(new Button(canvas.width/2-canvas.width/8, canvas.height/7*4.5, canvas.width/4, canvas.height/7,button_authors,()=>{}));
 
@@ -790,10 +827,10 @@ function handleKeyInputs() {
             return;
         }
         if (keysPressed["d"]){
-            player.boost(2)
+            player.boost(1)
         }
         if (keysPressed["a"]){
-            player.boost(3)
+            player.boost(2)
         }
     }
 
@@ -1415,16 +1452,16 @@ function gameLoop() {
 
 window.addEventListener("keydown", function(event) {
     keysPressed[event.key.toLowerCase()] = true;
-
+    if ((event.key === " " || event.key.toLowerCase() === "w") && player.jumpCharges > 0 && player.fuel > 0) {
+        player.fuel = Math.max(0,player.fuel - 3)
+        player.jump();
+    }
 });
 
 window.addEventListener("keyup", function(event) {
     keysPressed[event.key.toLowerCase()] = false;
     if (event.key == "Escape"){
         canPause = true;
-    }if ((event.key === " " || event.key.toLowerCase() === "w") && player.jumpCharges > 0 && player.fuel > 0) {
-        player.fuel = Math.max(0,player.fuel - 5)
-        player.jump();
     }
 });
  
