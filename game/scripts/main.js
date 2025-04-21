@@ -63,6 +63,7 @@ gasIndOxi = document.getElementById("gasIndOxi"),
 gasNeCo = document.getElementById("gasNeCo"),
 gasTri = document.getElementById("gasTri"),
 gasXe = document.getElementById("gasXe"),
+gasTank = document.getElementById("gasTank")
 audio = {
     engine: new Audio('./sfx/engine.mp3'),
     purchase: new Audio('./sfx/purchase.mp3'),
@@ -1935,6 +1936,15 @@ function drawUI() {
 
     ctx.drawImage(boostBar, 0, (4 - player.jumpCharges) * 104, 264, 104, 0, 35 * pixelSize.height, 33 * pixelSize.width, 13 * pixelSize.height)
 
+    let tankContentsDrawnAmount = 0
+
+    for(i = 0; i < player.gasTankContents[1].length; i++) {
+        ctx.fillStyle = player.gasTankContents[1][i][1]
+        ctx.fillRect(17 * pixelSize.width, 30 * pixelSize.height - (player.gasTankContents[1][i][0] / player.gasTankCapacity * 27 * pixelSize.height) - (tankContentsDrawnAmount / player.gasTankCapacity * 27 * pixelSize.height), 12 * pixelSize.width, player.gasTankContents[1][i][0] / player.gasTankCapacity * 27 * pixelSize.height)
+        tankContentsDrawnAmount += player.gasTankContents[1][i][0]
+    }
+
+    ctx.drawImage(gasTank, 14 * pixelSize.width, 0, 18 * pixelSize.width, 33 * pixelSize.height)
 }
 
 // Start the game loop
