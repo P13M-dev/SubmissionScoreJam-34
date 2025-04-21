@@ -490,7 +490,7 @@ endGameScreen = {
         ctx.font = "50px silkscreen";
         
         ctx.fillText("You Scored", canvas.width / 7 ,canvas.height / 7-50,canvas.width/4,  canvas.height / 7);
-        ctx.fillText(player.score, canvas.width / 7 ,canvas.height / 7+10,canvas.width/4,  canvas.height / 7);
+        ctx.fillText(Math.round(player.score), canvas.width / 7 ,canvas.height / 7+10,canvas.width/4,  canvas.height / 7);
         ctx.font = "40px silkscreen";
         ctx.fillText("You survived for "+getTimeMinSec(player.time), canvas.width / 7 ,canvas.height / 7+70,canvas.width/4,  canvas.height / 7);
         ctx.fillText("You got to "+getLayerName(currentLayer), canvas.width / 7 ,canvas.height / 7+115,canvas.width/4,  canvas.height / 7);
@@ -520,7 +520,7 @@ endGameScreen = {
     },
     endGame(deathReason){
         let temp = player.emptyGasTank();
-        player.score += temp;
+        player.score += temp[0];
         saveScoreToLocalStorage(player.score,prompt("Enter your nickname: "));
         endGameScreen.scores = JSON.parse(localStorage.getItem("highscores"));
         player.time = (new Date().getTime() - player.time)/1000;
@@ -951,7 +951,9 @@ function getLayerName(layer) {
             return "the High orbit";
     }
 }
+
 function saveScoreToLocalStorage(score,name) {
+    score = Math.round(score);
     if(localStorage.getItem('highscores') == null) localStorage.setItem('highscores', JSON.stringify([]));
     highscores = JSON.parse(localStorage.getItem('highscores'));
     last = true
@@ -1035,7 +1037,9 @@ function handleKeyInputs() {
         if (keysPressed["a"]){
             player.boost(2)
         }
-        if (keysPressed[" "] || keysPressed["w"] && player.jumpCharges > 0 && player.fuel > 0) {
+        if ((keysPressed[" "] || keysPressed["w"]) && player.jumpCharges > 0 && player.fuel > 0) {
+            keysPressed[" "] = false;
+            keysPressed["w"] = false;
             player.fuel = Math.max(0,player.fuel - 3)
             player.jump();
         }
@@ -1702,7 +1706,7 @@ function gameLoop() {
     player.move({ x: moveVector.x / fps, y: moveVector.y / fps });
     draw();
     if(totalFrame>=200){
-        if(player.amplitude > layerThresholds[currentLayer-1]-layerThresholds[0]){
+        if(player.amplitude < layerThresholds[currentLayer-1]-layerThresholds[0]){
             animation_pos = {x: player.x,y:  player.y}
             endGameScreen.endGame("Pressure crushed your hull"); // piotrze dodaj jakiś fajny napis
         }else if(player.y < camera.y - canvas.height/2){
