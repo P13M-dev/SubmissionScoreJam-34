@@ -1843,7 +1843,7 @@ function gameLoop() {
     physics();
     handleCollisions()
     handleKeyInputs();
-    player.move({ x: moveVector.x / fps, y: moveVector.y / fps });
+    player.move({ x: moveVector.x / fps , y: moveVector.y / fps });
     draw();
     if(totalFrame>=200){
 
