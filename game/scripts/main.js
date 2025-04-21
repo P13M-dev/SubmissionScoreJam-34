@@ -46,6 +46,7 @@ layer6_bg1 = document.getElementById("layer6_bg1"),
 layer6_bg2 = document.getElementById("layer6_bg2"),
 layer6_bg3 = document.getElementById("layer6_bg3"),
 spaceTrashImg = document.getElementById("spaceTrash"),
+asteroidImg = document.getElementById("asteroid"),
 ground = document.getElementById("ground"),
 button_buy_off = document.getElementById("button_buy_off"),
 tutorialGraphics = document.getElementById("tutorialGraphics"),
@@ -1240,12 +1241,12 @@ function draw(){
     drawBackground()
     player.draw(camera);
     drawspaceTrashs();
+    drawAsteroids();
     drawClouds();
     miniMap();
     drawUI();
 
 }
-
 function generateRandomPosition(last_chunk){
     x = Math.random() * canvas.width*1.5 + camera.x
     y = Math.random() * canvas.height * 2.5 + camera.y - canvas.height
@@ -1641,13 +1642,10 @@ function miniMap(){
 }
 
 let spaceTrashs = [] //w Formacie {x,y,size,rotation}
+let asteroids = [] //w Formacie {x,y,size,rotation}
 
 function generateObstacles(){
-    // Warstwy:
-    // 3. spaceTrash crash site (szczątki zabierające hp na kolizji) Fioletowa warstwa , dużo szczątków kawałek zniszczonego statku widoczny
-    // 4. Misty bramble ( nieprzyjazna fauna, wjebuje się w ciebie celowo )
-    // 5. Neon battlezone  (drony z pociskami), fioletowo różowa warstwa widać bitwę w tle
-    // 6. Space (drony z laserami (górnicze, nie atakują aktywnie gracza, zagradzają mu drogę) ) widać satelity i asteroidy w tle
+
     switch (currentLayer){
         case 4:
             if (frameCount % 40 == 0){ 
@@ -1659,15 +1657,60 @@ function generateObstacles(){
                 })
             }
             break
-        case 4:
-            break
         case 5:
+            if (frameCount % 40 == 0){
+                asteroids.push({
+                    x: Math.random() * canvas.width + canvas.width + camera.x,
+                    y: Math.random() * canvas.height * 2 + camera.y - canvas.height / 2,
+                    size: Math.random() * 100 + 20,
+                    rotation: Math.random() * 360
+                }
+                )
+            }
             break
         case 6:
+            if (frameCount % 40 == 0){
+                asteroids.push({
+                    x: Math.random() * canvas.width + canvas.width + camera.x,
+                    y: Math.random() * canvas.height * 2 + camera.y - canvas.height / 2,
+                    size: Math.random() * 100 + 20,
+                    rotation: Math.random() * 360
+                }
+                )
+            }
             break
     }
 }
+function handleAsteroidCollisions(){
+    for (let i = 0; i < asteroids.length; i++) {
+        const asteroid = asteroids[i];
+        const playerRect = {
+            x: player.x,
+            y: player.y,
+            width: player.width,
+            height: player.height
+        };
+        const asteroidRect = {
+            x: asteroid.x,
+            y: asteroid.y,
+            width: asteroid.size,
+            height: asteroid.size
+        };
 
+        if (
+            playerRect.x < asteroidRect.x + asteroidRect.width &&
+            playerRect.x + playerRect.width > asteroidRect.x &&
+            playerRect.y < asteroidRect.y + asteroidRect.height &&
+            playerRect.y + playerRect.height > asteroidRect.y
+        ) {
+
+            moveVector.x = Math.max(moveVector.x - 15, 30);
+            moveVector.y = Math.max(moveVector.y - 15, 0);
+
+            player.hp = 0
+        }
+    }
+}
 function handlespaceTrashCollisions(){
     for (let i = 0; i < spaceTrashs.length; i++) {
         const spaceTrash = spaceTrashs[i];
@@ -1709,8 +1752,11 @@ function handleCollisions(){
         case 4:
             handlespaceTrashCollisions()
             break;
+        case 5 || 6:
+            handleAsteroidCollisions();
     }
 }
+
 function drawspaceTrashs(){
     //dominek zmień to w wolnym czasie pls
     if (currentLayer == 4){
@@ -1724,6 +1770,19 @@ function drawspaceTrashs(){
         }
     }
 }
+function drawAsteroids(){
+
+        for (let i = 0; i < asteroids.length; i++) {
+            const asteroid = asteroids[i];
+            ctx.save();
+            ctx.translate(asteroid.x - camera.x + asteroid.size / 2, asteroid.y - camera.y + asteroid.size / 2);
+            ctx.rotate((asteroid.rotation * Math.PI) / 180);
+            ctx.drawImage(asteroidImg, -asteroid.size / 2, -asteroid.size / 2, asteroid.size, asteroid.size);
+            ctx.restore();
+        
+    }
+}
+
 
 function gameLoop() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
