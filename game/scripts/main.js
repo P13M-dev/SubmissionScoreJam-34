@@ -262,6 +262,7 @@ player = {
     gasTankCapacity: 1000,
     gasColletionSpeed: 10,
     canDie: false,
+    hp: 2,
     unavailableGases: [6,7,8,9,10,11,12], // tablica z id gazów które są niedostępne do zebrania
     // tu są 2 tablice , w jednej będą same id gasów , w drugiej szczegóły (ilość,kolor,nazwa) 
     // później będziemy mogli pozbyć się nazw ale na teraz żeby nie było za bardzo skomplikowane to są.
