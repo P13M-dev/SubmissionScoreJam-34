@@ -253,7 +253,6 @@ player = {
     money: 0,
     fuel: 1000,
     time: 0,
-    kills: 0,
     gasTankSpaceLeft: 1000,
     gasTankContents: [[],[]],
     amplitude: 0,
@@ -413,7 +412,7 @@ startScreen = {
     restart(){
         pause.off();
         clearInterval(gameLoopInterval);
-        
+        totalFrame = 0;
         gameLoopInterval = setInterval(startScreen.loop , 1000/fps);
         inStartScreen = true;
         canPause = true;
@@ -495,7 +494,6 @@ endGameScreen = {
         ctx.font = "40px silkscreen";
         ctx.fillText("You survived for "+getTimeMinSec(player.time), canvas.width / 7 ,canvas.height / 7+70,canvas.width/4,  canvas.height / 7);
         ctx.fillText("You got to "+getLayerName(currentLayer), canvas.width / 7 ,canvas.height / 7+115,canvas.width/4,  canvas.height / 7);
-        ctx.fillText("You eliminated "+player.kills+" enemies", canvas.width / 7 ,canvas.height / 7+160,canvas.width/4,  canvas.height / 7);
         ctx.font = "30px silkscreen";
         ctx.fillText(endGameScreen.deathReason, canvas.width / 2 ,canvas.height / 7-30,canvas.width/4,  canvas.height / 7);
         ctx.fillText("Score Board", canvas.width / 2 ,canvas.height / 7+50,canvas.width/4,  canvas.height / 7);
@@ -994,7 +992,8 @@ buttons = {
     shop:[],
     credits:[]
 },
-pixelSize = {width: canvas.width / 256, height: canvas.height / 144}
+pixelSize = {width: canvas.width / 256, height: canvas.height / 144},
+totalFrame = 0
 
 buttons.credits.push(new Button(canvas.width/2-canvas.width/8, canvas.height/7*6, canvas.width/4, canvas.height/7,button_leave,()=>{credits.end()}));
 
@@ -1686,15 +1685,19 @@ function gameLoop() {
     handleKeyInputs();
     player.move({ x: moveVector.x / fps, y: moveVector.y / fps });
     draw();
-    
-    if(player.amplitude > layerThresholds[currentLayer-1]-layerThresholds[0]){
-        animation_pos = {x: player.x,y:  player.y}
-        endGameScreen.endGame("Pressure crushed your hull"); // piotrze dodaj jakiś fajny napis
-    }else if(player.y < camera.y - canvas.height/2){
-        animation_pos = {x: player.x,y:  player.y}
-        endGameScreen.endGame("Pressure crushed your hull"); // piotrze dodaj jakiś fajny napis
-    }else if(player.hp <= 0){
-        endGameScreen.endGame("Pressure crushed your hull");
+    if(totalFrame>=200){
+        if(player.amplitude > layerThresholds[currentLayer-1]-layerThresholds[0]){
+            animation_pos = {x: player.x,y:  player.y}
+            endGameScreen.endGame("Pressure crushed your hull"); // piotrze dodaj jakiś fajny napis
+        }else if(player.y < camera.y - canvas.height/2){
+            animation_pos = {x: player.x,y:  player.y}
+            endGameScreen.endGame("Pressure crushed your hull"); // piotrze dodaj jakiś fajny napis
+        }else if(player.hp <= 0){
+            endGameScreen.endGame("Pressure crushed your hull");
+        }
+
+    } else {
+        totalFrame++;
     }
     
     frameCount++;
