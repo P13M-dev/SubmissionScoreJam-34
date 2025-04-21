@@ -376,9 +376,9 @@ startScreen = {
         ctx.fillStyle = "Black";    
         ctx.fillRect(0,0,canvas.width,canvas.height)
         ctx.fillStyle = "white";  
-        ctx.font = "30px silkscreen";
+        ctx.font = "100px silkscreen";
         ctx.textAlign = "center";
-        ctx.fillText("Ascent from Callisto", canvas.width / 2 ,canvas.height / 7,canvas.width/4,  canvas.height / 7);
+        ctx.fillText("Ascend from Callisto", canvas.width / 2 ,canvas.height / 7-10,canvas.width/3*2,  canvas.height / 7);
         for (let i = 0; i < buttons.menu.length; i++) {
             let  button = buttons.menu[i];
             ctx.drawImage(button.img, button.x, button.y, button.width, button.height);
@@ -573,8 +573,10 @@ cutScene = {
         clearInterval(gameLoopInterval);
         gameLoopInterval = setInterval(cutScene.loopStartOfGame , 1000/fps);
         cutScene.timeLeft = fps*4;
+
+        camera.y= 720;
         player.x = canvas.width/4
-        player.y = canvas.height/4*3-player.height;
+        player.y = canvas.height/4*3-player.height+730;
     },
     triggerEndOfGame(){
         
@@ -793,14 +795,11 @@ buttons = {
 },
 pixelSize = {width: canvas.width / 256, height: canvas.height / 144}
 
-buttons.menu.push(new Button(canvas.width/2-canvas.width/8, canvas.height/7*1.5, canvas.width/4, canvas.height/7,button_start,()=>{cutScene.triggerStartOfGame();}));
-buttons.menu.push(new Button(canvas.width/2-canvas.width/8, canvas.height/7*3, canvas.width/4, canvas.height/7,button_settings,()=>{}));
-buttons.menu.push(new Button(canvas.width/2-canvas.width/8, canvas.height/7*4.5, canvas.width/4, canvas.height/7,button_authors,()=>{}));
+buttons.menu.push(new Button(canvas.width/2-canvas.width/4, canvas.height/7, canvas.width/2, canvas.height/7*2,button_start,()=>{cutScene.triggerStartOfGame();}));
+buttons.menu.push(new Button(canvas.width/2-canvas.width/4, canvas.height/7*4, canvas.width/2, canvas.height/7*2,button_authors,()=>{}));
 
-buttons.pause.push([buttons.pause.length,new Button(canvas.width/2-canvas.width/8, canvas.height/13*1, canvas.width/4, canvas.height/13*2,button_resume,() => {pause.off();canPause = true;})]);
-buttons.pause.push([buttons.pause.length,new Button(canvas.width/2-canvas.width/8, canvas.height/13*4, canvas.width/4, canvas.height/13*2,button_settings,()=>{})]);
-buttons.pause.push([buttons.pause.length,new Button(canvas.width/2-canvas.width/8, canvas.height/13*7, canvas.width/4, canvas.height/13*2,button_controls,()=>{})]);
-buttons.pause.push([buttons.pause.length,new Button(canvas.width/2-canvas.width/8, canvas.height/13*10, canvas.width/4, canvas.height/13*2,button_exit,()=>{startScreen.restart();})]);
+buttons.pause.push([buttons.pause.length,new Button(canvas.width/2-canvas.width/8, canvas.height/7*2.25, canvas.width/4, canvas.height/7,button_resume,() => {pause.off();canPause = true;})]);
+buttons.pause.push([buttons.pause.length,new Button(canvas.width/2-canvas.width/8, canvas.height/7*3.75, canvas.width/4, canvas.height/7,button_exit,()=>{startScreen.restart();})]);
 
 buttons.end.push([buttons.end.length,new Button(canvas.width/2-canvas.width/8, canvas.height/13*7, canvas.width/4, canvas.height/13*2,button_restart,()=>{startScreen.restart();})]);
 
