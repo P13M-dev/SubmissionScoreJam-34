@@ -1,5 +1,3 @@
-const { start } = require("prompt");
-
 const canvas = document.getElementById("canvas"),
 ctx = canvas.getContext("2d"),
 fps = 60,
@@ -338,7 +336,23 @@ player = {
 
         }
             
-    }
+    },
+    buyUpgrade(upgrdId){
+        switch(upgrdId){
+            case 0:
+                // gracz zbiera 1.75 więcej gazu
+                break;
+            case 1:
+                // gracz zbiera gazy z l3,4
+                break;
+            case 2:
+                // tank dostaje upgrade z 1000 na 1500
+                break;
+            case 3:
+                // gracz zbiera gazy z l5,6
+                break;
+        }
+    },
 
 },
 startScreen = {
@@ -745,6 +759,7 @@ shop = {
         if(shop.selectedItem != -1 && player.money >= shop.items[shop.selectedItem].price && shop.allowBuing){
             player.buyUpgrade(shop.items[shop.selectedItem].upgrdId);
             player.money -= shop.items[shop.selectedItem].price;
+            shop.items[shop.selectedItem].bought = true;
             shop.selectedItem = -1;
         } else if(shop.allowBuing  && shop.selectedItem != -1){ 
             shop.allowBuing = false;
