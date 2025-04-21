@@ -531,8 +531,11 @@ endGameScreen = {
         ctx.drawImage(explosion, 0, (314*endGameScreen.frame)%1884, 220,314,canvas.width/2-explosion.width/2,canvas.height-314/2, 220,314);
         if(endGameScreen.timeLeft < 0){
             endGameScreen.timeLeft = fps*2;
+            saveScoreToLocalStorage(player.score,prompt("Enter your nickname: "));
+            endGameScreen.scores = JSON.parse(localStorage.getItem("highscores"));
             clearInterval(gameLoopInterval);
             gameLoopInterval = setInterval(endGameScreen.loop , 1000/fps);
+
         }
         endGameScreen.timeLeft--;
     },
@@ -540,8 +543,7 @@ endGameScreen = {
     endGame(deathReason){
         let temp = player.emptyGasTank();
         player.score += temp[0];
-        saveScoreToLocalStorage(player.score,prompt("Enter your nickname: "));
-        endGameScreen.scores = JSON.parse(localStorage.getItem("highscores"));
+
         player.time = (new Date().getTime() - player.time)/1000;
         clearInterval(gameLoopInterval);
         gameLoopInterval = setInterval(endGameScreen.cinematic , 1000/fps);
