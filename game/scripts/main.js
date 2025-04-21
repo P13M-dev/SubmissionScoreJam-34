@@ -45,9 +45,12 @@ layer6_bg = document.getElementById("layer6_bg"),
 layer6_bg1 = document.getElementById("layer6_bg1"),
 layer6_bg2 = document.getElementById("layer6_bg2"),
 layer6_bg3 = document.getElementById("layer6_bg3"),
+spaceTrashImg = document.getElementById("spaceTrash"),
+asteroidImg = document.getElementById("asteroid"),
 ground = document.getElementById("ground"),
 button_buy_off = document.getElementById("button_buy_off"),
 tutorialGraphics = document.getElementById("tutorialGraphics"),
+explosion = document.getElementById("explosion"),
 gasSmog = document.getElementById("gasSmog"),
 gasArg = document.getElementById("gasArg"),
 gasAW = document.getElementById("gasAW"),
@@ -273,6 +276,7 @@ player = {
     gasTankCapacity: 1000,
     gasColletionSpeed: 10,
     canDie: false,
+    hp: 2,
     unavailableGases: [6,7,8,9,10,11,12], // tablica z id gazów które są niedostępne do zebrania
     // tu są 2 tablice , w jednej będą same id gasów , w drugiej szczegóły (ilość,kolor,nazwa) 
     // później będziemy mogli pozbyć się nazw ale na teraz żeby nie było za bardzo skomplikowane to są.
@@ -484,6 +488,8 @@ startScreen = {
 endGameScreen = {
     scores:0,
     deathReason:"",
+    timeLeft:fps*2,
+    frame:0,
     handleMouseInputs(){
         if(mouseClick){
             for (let i = 0; i < buttons.end.length; i++) {
@@ -493,7 +499,7 @@ endGameScreen = {
             mouseClick = null
         }
     },
-    draw(){
+    drawUI(){
         ctx.beginPath();
         
         ctx.fillStyle = "rgba(0,0,0, 0.5)";    
@@ -502,7 +508,7 @@ endGameScreen = {
         ctx.font = "50px silkscreen";
         
         ctx.fillText("You Scored", canvas.width / 7 ,canvas.height / 7-50,canvas.width/4,  canvas.height / 7);
-        ctx.fillText(player.score, canvas.width / 7 ,canvas.height / 7+10,canvas.width/4,  canvas.height / 7);
+        ctx.fillText(Math.round(player.score), canvas.width / 7 ,canvas.height / 7+10,canvas.width/4,  canvas.height / 7);
         ctx.font = "40px silkscreen";
         ctx.fillText("You survived for "+getTimeMinSec(player.time), canvas.width / 7 ,canvas.height / 7+70,canvas.width/4,  canvas.height / 7);
         ctx.fillText("You got to "+getLayerName(currentLayer), canvas.width / 7 ,canvas.height / 7+115,canvas.width/4,  canvas.height / 7);
@@ -526,18 +532,34 @@ endGameScreen = {
     loop(){
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         draw();
-        endGameScreen.draw();
+        endGameScreen.drawUI();
         endGameScreen.handleMouseInputs();
         
     },
+    cinematic(){
+        draw();
+        if(endGameScreen.timeLeft%10==0){
+            endGameScreen.frame++;
+        }
+        ctx.drawImage(explosion, 0, (314*endGameScreen.frame)%1884, 220,314,canvas.width/2-explosion.width/2,canvas.height-314/2, 220,314);
+        if(endGameScreen.timeLeft < 0){
+            endGameScreen.timeLeft = fps*2;
+            saveScoreToLocalStorage(player.score,prompt("Enter your nickname: "));
+            endGameScreen.scores = JSON.parse(localStorage.getItem("highscores"));
+            clearInterval(gameLoopInterval);
+            gameLoopInterval = setInterval(endGameScreen.loop , 1000/fps);
+
+        }
+        endGameScreen.timeLeft--;
+    },
+
     endGame(deathReason){
         let temp = player.emptyGasTank();
-        player.score += temp;
-        saveScoreToLocalStorage(player.score,prompt("Enter your nickname: "));
-        endGameScreen.scores = JSON.parse(localStorage.getItem("highscores"));
+        player.score += temp[0];
+
         player.time = (new Date().getTime() - player.time)/1000;
         clearInterval(gameLoopInterval);
-        gameLoopInterval = setInterval(endGameScreen.loop , 1000/fps);
+        gameLoopInterval = setInterval(endGameScreen.cinematic , 1000/fps);
         canPause = false;
         endGameScreen.deathReason = deathReason;
         
@@ -963,7 +985,9 @@ function getLayerName(layer) {
             return "the High orbit";
     }
 }
+
 function saveScoreToLocalStorage(score,name) {
+    score = Math.round(score);
     if(localStorage.getItem('highscores') == null) localStorage.setItem('highscores', JSON.stringify([]));
     highscores = JSON.parse(localStorage.getItem('highscores'));
     last = true
@@ -1048,7 +1072,9 @@ function handleKeyInputs() {
         if (keysPressed["a"]){
             player.boost(2)
         }
-        if (keysPressed[" "] || keysPressed["w"] && player.jumpCharges > 0 && player.fuel > 0) {
+        if ((keysPressed[" "] || keysPressed["w"]) && player.jumpCharges > 0 && player.fuel > 0) {
+            keysPressed[" "] = false;
+            keysPressed["w"] = false;
             player.fuel = Math.max(0,player.fuel - 3)
             player.jump();
         }
@@ -1239,29 +1265,29 @@ function drawBackground(){
             ctx.drawImage(layer5_bg2, (-camera.x / 3.5) % canvas.width + canvas.width*1.5, 0 - canvas.height, canvas.width, canvas.height);
             
             break
-        case 5:
+        case 6:
             ctx.drawImage(layer6_bg, 0, 0, canvas.width, canvas.height);
 
-            ctx.drawImage(layer6_bg1, (-camera.x / 5) % canvas.width, 0, canvas.width, canvas.height);
-            ctx.drawImage(layer6_bg1, (-camera.x / 5) % canvas.width + canvas.width, 0, canvas.width, canvas.height);
-            ctx.drawImage(layer6_bg1, (-camera.x / 5) % canvas.width, 0 - canvas.height, canvas.width, canvas.height);
-            ctx.drawImage(layer6_bg1, (-camera.x / 5) % canvas.width + canvas.width, 0 - canvas.height, canvas.width, canvas.height);
+            ctx.drawImage(layer6_bg1, (-camera.x / 5) % canvas.width*2, 0, canvas.width*2, canvas.height);
+            ctx.drawImage(layer6_bg1, (-camera.x / 5) % canvas.width*2 + canvas.width*2, 0, canvas.width*2, canvas.height);
+            ctx.drawImage(layer6_bg1, (-camera.x / 5) % canvas.width*2, 0 - canvas.height, canvas.width*2, canvas.height);
+            ctx.drawImage(layer6_bg1, (-camera.x / 5) % canvas.width*2 + canvas.width*2, 0 - canvas.height, canvas.width*2, canvas.height);
 
-            ctx.drawImage(layer6_bg2, (-camera.x / 3.5) % canvas.width, 0, canvas.width, canvas.height);
-            ctx.drawImage(layer6_bg2, (-camera.x / 3.5) % canvas.width + canvas.width, 0, canvas.width, canvas.height);
-            ctx.drawImage(layer6_bg2, (-camera.x / 3.5) % canvas.width+canvas.width/2, 0 - canvas.height, canvas.width, canvas.height);
-            ctx.drawImage(layer6_bg2, (-camera.x / 3.5) % canvas.width + canvas.width*1.5, 0 - canvas.height, canvas.width, canvas.height);
+            ctx.drawImage(layer6_bg2, (-camera.x / 3.5) % canvas.width*2, 0, canvas.width*2, canvas.height);
+            ctx.drawImage(layer6_bg2, (-camera.x / 3.5) % canvas.width*2 + canvas.width*2, 0, canvas.width*2, canvas.height);
+            ctx.drawImage(layer6_bg2, (-camera.x / 3.5) % canvas.width*2+canvas.width*2/2, 0 - canvas.height, canvas.width*2, canvas.height);
+            ctx.drawImage(layer6_bg2, (-camera.x / 3.5) % canvas.width*2 + canvas.width*2*1.5, 0 - canvas.height, canvas.width*2, canvas.height);
             
             ctx.drawImage(layer6_bg3, 0, 0, canvas.width, canvas.height);
 
             break
         }
 }
-
 function draw(){
     drawBackground()
     player.draw(camera);
     drawspaceTrashs();
+    drawAsteroids();
     if(frameCount % 5 == 0) {
         drawClouds();// more like GenerateClouds now but sure
     }
@@ -1270,7 +1296,6 @@ function draw(){
     drawUI();
 
 }
-
 function generateRandomPosition(last_chunk){
     x = Math.random() * canvas.width*1.5 + camera.x
     y = Math.random() * canvas.height * 2.5 + camera.y - canvas.height
@@ -1393,14 +1418,23 @@ function generateClouds(){
         case 3:{
             let ratio = Math.random();
             if (ratio > 0.9) {
-                //IndOxi
+                // Smog
                 clouds.push({
                     x: cloud_position.x,
                     y: cloud_position.y,
-                    width: Math.random() * 200 + 50,
-                    height: Math.random() * 200 + 50,
-                    composition: [[gas.getId("IndOxi"), 100]]
-                });                
+                    width: Math.random() * 150 + 20,
+                    height: Math.random() * 150 + 20,
+                    composition: [[gas.getId("Sm"), 100]]
+                });        
+            }else if (ratio > 0.8) {
+                // Acidic Waste cloud
+                clouds.push({
+                    x: cloud_position.x,
+                    y: cloud_position.y,
+                    width: Math.random() * 100 + 30,
+                    height: Math.random() * 100 + 30,
+                    composition: [[gas.getId("AW"), 100]]
+                    });
             }
             else if (ratio > 0.7) {
                 // Gas Fuel
@@ -1657,16 +1691,13 @@ function miniMap(){
 }
 
 let spaceTrashs = [] //w Formacie {x,y,size,rotation}
+let asteroids = [] //w Formacie {x,y,size,rotation}
 
 function generateObstacles(){
-    // Warstwy:
-    // 3. spaceTrash crash site (szczątki zabierające hp na kolizji) Fioletowa warstwa , dużo szczątków kawałek zniszczonego statku widoczny
-    // 4. Misty bramble ( nieprzyjazna fauna, wjebuje się w ciebie celowo )
-    // 5. Neon battlezone  (drony z pociskami), fioletowo różowa warstwa widać bitwę w tle
-    // 6. Space (drony z laserami (górnicze, nie atakują aktywnie gracza, zagradzają mu drogę) ) widać satelity i asteroidy w tle
+
     switch (currentLayer){
-        case 3:
-            if (frameCount % (1000/moveVector.x) == 0){ // do zmiany, jak wpadnę na lepszy pomysł
+        case 4:
+            if (frameCount % 40 == 0){ 
                 spaceTrashs.push({
                     x: Math.random() * canvas.width + canvas.width + camera.x,
                     y: Math.random() * canvas.height * 2 + camera.y - canvas.height / 2,
@@ -1675,15 +1706,60 @@ function generateObstacles(){
                 })
             }
             break
-        case 4:
-            break
         case 5:
+            if (frameCount % 40 == 0){
+                asteroids.push({
+                    x: Math.random() * canvas.width + canvas.width + camera.x,
+                    y: Math.random() * canvas.height * 2 + camera.y - canvas.height / 2,
+                    size: Math.random() * 100 + 20,
+                    rotation: Math.random() * 360
+                }
+                )
+            }
             break
         case 6:
+            if (frameCount % 40 == 0){
+                asteroids.push({
+                    x: Math.random() * canvas.width + canvas.width + camera.x,
+                    y: Math.random() * canvas.height * 2 + camera.y - canvas.height / 2,
+                    size: Math.random() * 100 + 20,
+                    rotation: Math.random() * 360
+                }
+                )
+            }
             break
     }
 }
+function handleAsteroidCollisions(){
+    for (let i = 0; i < asteroids.length; i++) {
+        const asteroid = asteroids[i];
+        const playerRect = {
+            x: player.x,
+            y: player.y,
+            width: player.width,
+            height: player.height
+        };
+        const asteroidRect = {
+            x: asteroid.x,
+            y: asteroid.y,
+            width: asteroid.size,
+            height: asteroid.size
+        };
 
+        if (
+            playerRect.x < asteroidRect.x + asteroidRect.width &&
+            playerRect.x + playerRect.width > asteroidRect.x &&
+            playerRect.y < asteroidRect.y + asteroidRect.height &&
+            playerRect.y + playerRect.height > asteroidRect.y
+        ) {
+
+            moveVector.x = Math.max(moveVector.x - 15, 30);
+            moveVector.y = Math.max(moveVector.y - 15, 0);
+
+            player.hp = 0
+        }
+    }
+}
 function handlespaceTrashCollisions(){
     for (let i = 0; i < spaceTrashs.length; i++) {
         const spaceTrash = spaceTrashs[i];
@@ -1711,6 +1787,7 @@ function handlespaceTrashCollisions(){
             moveVector.y = Math.max(moveVector.y - 15, 0);
 
             player.hp = Math.max(player.hp - 1, 0)
+            console.log(player.hp)
 
             spaceTrash.x += 20; // do zmiany później
             spaceTrash.y += 20;
@@ -1721,23 +1798,40 @@ function handlespaceTrashCollisions(){
 function handleCollisions(){
     handleCloudCollisions()
     switch (currentLayer){
-        case 3:
+        case 4:
             handlespaceTrashCollisions()
             break;
+        case 5 || 6:
+            handleAsteroidCollisions();
     }
 }
+
 function drawspaceTrashs(){
     //dominek zmień to w wolnym czasie pls
-    for (let i = 0; i < spaceTrashs.length; i++) {
-        const spaceTrash = spaceTrashs[i];
-        ctx.save();
-        ctx.translate(spaceTrash.x - camera.x + spaceTrash.size / 2, spaceTrash.y - camera.y + spaceTrash.size / 2);
-        ctx.rotate((spaceTrash.rotation * Math.PI) / 180);
-        ctx.fillStyle = "gray";
-        ctx.fillRect(-spaceTrash.size / 2, -spaceTrash.size / 2, spaceTrash.size, spaceTrash.size);
-        ctx.restore();
+    if (currentLayer == 4){
+        for (let i = 0; i < spaceTrashs.length; i++) {
+            const spaceTrash = spaceTrashs[i];
+            ctx.save();
+            ctx.translate(spaceTrash.x - camera.x + spaceTrash.size / 2, spaceTrash.y - camera.y + spaceTrash.size / 2);
+            ctx.rotate((spaceTrash.rotation * Math.PI) / 180);
+            ctx.drawImage(spaceTrashImg, -spaceTrash.size / 2, -spaceTrash.size / 2, spaceTrash.size, spaceTrash.size);
+            ctx.restore();
+        }
     }
 }
+function drawAsteroids(){
+
+        for (let i = 0; i < asteroids.length; i++) {
+            const asteroid = asteroids[i];
+            ctx.save();
+            ctx.translate(asteroid.x - camera.x + asteroid.size / 2, asteroid.y - camera.y + asteroid.size / 2);
+            ctx.rotate((asteroid.rotation * Math.PI) / 180);
+            ctx.drawImage(asteroidImg, -asteroid.size / 2, -asteroid.size / 2, asteroid.size, asteroid.size);
+            ctx.restore();
+        
+    }
+}
+
 
 function gameLoop() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -1751,10 +1845,8 @@ function gameLoop() {
     player.move({ x: moveVector.x / fps, y: moveVector.y / fps });
     draw();
     if(totalFrame>=200){
-        if(player.amplitude < layerThresholds[currentLayer-1]-layerThresholds[0]){
-            animation_pos = {x: player.x,y:  player.y}
-            endGameScreen.endGame("Pressure crushed your hull"); // piotrze dodaj jakiś fajny napis
-        }else if(player.y > camera.y + canvas.height/2){
+
+        if(player.y > camera.y + canvas.height){
             animation_pos = {x: player.x,y:  player.y}
             endGameScreen.endGame("Pressure crushed your hull"); // piotrze dodaj jakiś fajny napis
         }else if(player.hp <= 0){
