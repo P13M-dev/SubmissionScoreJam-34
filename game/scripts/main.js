@@ -519,9 +519,8 @@ endGameScreen = {
         
         
         ctx.textAlign = "center";
-        console.log(endGameScreen.scores.length+1)
         for(let i = 1;i<Math.min(6,endGameScreen.scores.length+1);i++){
-            ctx.fillText(i+". "+endGameScreen.scores[i-1].name+" "+endGameScreen.scores[i-1].score, canvas.width / 2 ,canvas.height / 7+70+(35*i),canvas.width/4,  canvas.height / 7);
+            ctx.fillText(i+". "+endGameScreen.scores[i-1].name+" "+Math.round(endGameScreen.scores[i-1].score), canvas.width / 2 ,canvas.height / 7+70+(35*i),canvas.width/4,  canvas.height / 7);
         }
 
         for (let i = 0; i < buttons.end.length; i++) {
