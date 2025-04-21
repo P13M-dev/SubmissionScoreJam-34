@@ -217,6 +217,8 @@ player = {
     amplitude: 0,
     flameFrame: 1,
     jumpCharges: 4,
+    gasColletionSpeed: 10,
+    unavailableGases: [6,7,8,9,10,11,12], // tablica z id gazów które są niedostępne do zebrania
     // tu są 2 tablice , w jednej będą same id gasów , w drugiej szczegóły (ilość,kolor,nazwa) 
     // później będziemy mogli pozbyć się nazw ale na teraz żeby nie było za bardzo skomplikowane to są.
     jump() {
@@ -343,16 +345,19 @@ player = {
     buyUpgrade(upgrdId){
         switch(upgrdId){
             case 0:
-                // gracz zbiera 1.75 więcej gazu
+                player.gasColletionSpeed = 17.5
                 break;
             case 1:
                 // gracz zbiera gazy z l3,4
+                player.unavailableGases = player.unavailableGases.filter((gasId) => gasId !== 6 && gasId !== 7 && gasId !== 8 && gasId !== 11);
                 break;
             case 2:
                 // tank dostaje upgrade z 1000 na 1500
+                this.gasTankSpaceLeft += 500;
                 break;
             case 3:
                 // gracz zbiera gazy z l5,6
+                player.unavailableGases = [];
                 break;
         }
     },
@@ -1306,16 +1311,14 @@ function generateClouds(){
                 composition: [[gas.getId("GeV"), 100]]
                 });
             }else{
-                let gelidVapourAmount = Math.floor(Math.random() * 60) + 30; 
-                let neonousCompoundAmount = Math.floor(Math.random() * (100 - gelidVapourAmount - 10)) + 10; 
-                let xeniumAmount = 100 - gelidVapourAmount - neonousCompoundAmount;
+                let neonousCompoundAmount = Math.floor(Math.random() * (100 - 10)) + 10; 
+                let xeniumAmount = 100 -  neonousCompoundAmount;
                 clouds.push({
                     x: cloud_position.x,
                     y: cloud_position.y,
                     width: Math.random() * 150 + 40,
                     height: Math.random() * 150 + 40,
                     composition: [
-                        [gas.getId("GeV"), gelidVapourAmount],
                         [gas.getId("NeCo"), neonousCompoundAmount],
                         [gas.getId("Xe"), xeniumAmount]
                     ]
@@ -1354,8 +1357,7 @@ function generateClouds(){
                 });
             }else{
                 let xeniumAmount = Math.floor(Math.random() * 70) + 50; 
-                let deuteriumAmount = Math.floor(Math.random() * (100 - xeniumAmount - 10)) + 10; 
-                let argoniumAmount = 100 - xeniumAmount - deuteriumAmount; 
+                let argoniumAmount = 100 - xeniumAmount; 
                 clouds.push({
                     x: cloud_position.x,
                     y: cloud_position.y,
@@ -1363,7 +1365,6 @@ function generateClouds(){
                     height: Math.random() * 150 + 40,
                     composition: [
                         [gas.getId("Xe"), xeniumAmount],
-                        [gas.getId("Deu"), deuteriumAmount],
                         [gas.getId("Arg"), argoniumAmount]
                     ]
                 });
@@ -1396,14 +1397,17 @@ function handleCloudCollisions(){
             playerRect.x + playerRect.width > cloudRect.x &&
             playerRect.y < cloudRect.y + cloudRect.height &&
             playerRect.y + playerRect.height > cloudRect.y &&
-            player.gasTankSpaceLeft > 0
+            player.gasTankSpaceLeft > 0 &&
+            player.unavailableGases.includes(cloud.composition[0][0]) == false
+            
         ) {
-            clouds[i].x += 10*(Math.max(moveVector.x,Math.abs(moveVector.y))+15)/25
-            clouds[i].width -= 20*(Math.max(moveVector.x,Math.abs(moveVector.y))+15)/25
-            clouds[i].height -= 20*(Math.max(moveVector.x,Math.abs(moveVector.y))+15)/25
-            clouds[i].y += 10*(Math.max(moveVector.x,Math.abs(moveVector.y))+15)/25
+            console.log(Math.max(clouds[i].width,clouds[i].height) / Math.max(moveVector.x,Math.abs(moveVector.y)) )
+            clouds[i].x += Math.max(clouds[i].width,clouds[i].height) / Math.max(moveVector.x,Math.abs(moveVector.y))*player.gasColletionSpeed 
+            clouds[i].width -=  Math.max(clouds[i].width,clouds[i].height) / Math.max(moveVector.x,Math.abs(moveVector.y)) *2*player.gasColletionSpeed
+            clouds[i].height -=  Math.max(clouds[i].width,clouds[i].height) / Math.max(moveVector.x,Math.abs(moveVector.y)) *2*player.gasColletionSpeed
+            clouds[i].y +=  Math.max(clouds[i].width,clouds[i].height) / Math.max(moveVector.x,Math.abs(moveVector.y)) *player.gasColletionSpeed
             for (let j = 0; j < clouds[i].composition.length; j++){
-                player.addGasToTank(gas.getName(clouds[i].composition[j][0]),Math.abs(clouds[i].composition[j][1]/5000*clouds[i].width*clouds[i].height))
+                player.addGasToTank(gas.getName(clouds[i].composition[j][0]),Math.abs(clouds[i].composition[j][1]/25000*clouds[i].width*clouds[i].height))
             }
             if (clouds[i].width <= 0 || clouds[i].height <= 0){
                 clouds.splice(i,1)
