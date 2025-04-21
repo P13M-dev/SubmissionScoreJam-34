@@ -1703,10 +1703,10 @@ function gameLoop() {
     player.move({ x: moveVector.x / fps, y: moveVector.y / fps });
     draw();
     
-    if(player.amplitude > layerThresholds[currentLayer-1]-layerThresholds[0]){
+    if(player.amplitude < layerThresholds[currentLayer-1]-layerThresholds[0]){
         animation_pos = {x: player.x,y:  player.y}
         endGameScreen.endGame("Pressure crushed your hull"); // piotrze dodaj jakiś fajny napis
-    }else if(player.y < camera.y - canvas.height/2){
+    }else if(player.y > camera.y + canvas.height/2){
         animation_pos = {x: player.x,y:  player.y}
         endGameScreen.endGame("Pressure crushed your hull"); // piotrze dodaj jakiś fajny napis
     }else if(player.hp <= 0){
@@ -1727,7 +1727,7 @@ window.addEventListener("keyup", function(event) {
         canPause = true;
     }
 });
- 
+
 window.addEventListener("click", function(event) {
     mult = canvas.getBoundingClientRect().width / 1280;
     mult2 = canvas.getBoundingClientRect().height / 720;
