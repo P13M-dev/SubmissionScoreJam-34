@@ -281,16 +281,20 @@ player = {
     emptyGasTank()
     {
         this.gasTankSpaceLeft = 1000;
+        let totalScore = 0,
+        totalMoney = 0;
         for(let i = 0; i < this.gasTankContents[0].length; i++){
-            this.score += gas.getValue(this.gasTankContents[0][i])*this.gasTankContents[1][i][0];
-            this.money += gas.getPrice(this.gasTankContents[0][i])*this.gasTankContents[1][i][0];
+            totalScore += gas.getValue(this.gasTankContents[0][i])*this.gasTankContents[1][i][0];
+            totalMoney += gas.getPrice(this.gasTankContents[0][i])*this.gasTankContents[1][i][0];
         }
         this.gasTankContents = [[],[]];
+        return [totalScore,totalMoney];
+
     },
 
-    draw(camera) 
+    draw(camera,playAnim) 
     {
-        if(moveVector.y < 0) {
+        if(moveVector.y < 0 || playAnim) {
             ctx.drawImage(shipOn, 0, 112 * player.flameFrame, 80, 112, this.x-camera.x, this.y-camera.y, 10 * pixelSize.width, 14 * pixelSize.height);
             if(frameCount % 10 == 0) {
                 player.flameFrame++
@@ -512,19 +516,22 @@ cutScene = {
         return 1 - Math.pow(1 - x, 5);
     },
     draw(){
+        
         ctx.beginPath();
         ctx.clearRect(0, 0, canvas.width, canvas.height);
-        player.draw(camera);
+        player.draw(camera,true);
         drawTankers();
         drawClouds();
         ctx.closePath();
+        frameCount++;
     },
     drawWithStation(){
         ctx.beginPath();
         ctx.clearRect(0, 0, canvas.width, canvas.height);
-        player.draw(camera);
+        player.draw(camera,true);
         ctx.drawImage(station,canvas.width/2-(station.width/4),canvas.height/2-station.height/2,station.height,station.height);
         ctx.closePath();
+        frameCount++;
     },
     flickMenu(time,display){
         cutScene.draw();
@@ -579,13 +586,19 @@ cutScene = {
 
 },
 shop = {
+    addTimer: fps,
+    fuelToAdd: 200,
+    scoreToAdd:0,
+    moneyToAdd:0,
+    priceColor: "white",
+    allowBuing: true,
+    selectedItem: -1,
     items:[
         {name:"Larger Intake",description:["A larger gas collector.","Allows you to collect","more gas."],price:500,upgrdId:0},
         {name:"Advanced filter",description:["Better filtration system.","Allows you to collect better gases"," from intermediate layers."],price:1000,upgrdId:1},
         {name:"Armored tank",description:["Upgraded storage system.","Allows you to store more","gases in your tank."],price:2000,upgrdId:2},
         {name:"Gas attractor",description:["Upgraded gas collection system.","Allows you to collect rare gases"," from higher layers."],price:3000,upgrdId:3}
     ],
-    selectedItem: -1,
     draw(){
         ctx.beginPath();
         ctx.drawImage(station,canvas.width/2-(station.width/4),canvas.height/2-station.height/2,station.height,station.height);
@@ -598,25 +611,32 @@ shop = {
         }
         ctx.font = "25px Arial";
         ctx.textAlign = "center";
-        ctx.fillText("Fuel: "+Math.ceil(player.fuel / 10)+"%", 0, 35 * pixelSize.height);
-        ctx.fillText("Score: "+player.score, 0, 35 * pixelSize.height);
-        ctx.fillText("Credits: "+player.money, 0, 35 * pixelSize.height);
-        ctx.closePath();
+        ctx.fillStyle = "white";
+        ctx.fillText("Fuel: "+Math.ceil(player.fuel)/10+"%",canvas.width/6*5, 25);
+        ctx.fillText("Score: "+Math.floor(player.score), canvas.width/6*5, 50);
+        ctx.fillText("Credits: "+Math.floor(player.money)+"C", canvas.width/6*5, 75);
+        
         if(shop.selectedItem != -1){
-            ctx.font = "25px Arial";
-            ctx.textAlign = "center";
-            ctx.fillStyle = "white";
+            
+
             ctx.fillText(shop.items[shop.selectedItem].name, canvas.width/6*5, 25+canvas.height/3);
+            ctx.fillStyle = shop.priceColor;
             ctx.fillText("Price: "+shop.items[shop.selectedItem].price, canvas.width/6*5, 65+canvas.height/3);
+            ctx.fillStyle = "white";
             for (let i = 0; i < shop.items[shop.selectedItem].description.length; i++) {
                 ctx.fillText(shop.items[shop.selectedItem].description[i], canvas.width/6*5, 65 + 45 * (i+1)+canvas.height/3);
             }
             let button = buttons.shop[buttons.shop.length-1][1];
             ctx.drawImage(button.img, button.x, button.y, button.width, button.height);
         }
+        ctx.closePath();
     },
     enter(){
-        
+        smth = player.emptyGasTank();
+        shop.scoreToAdd = smth[0];
+        shop.moneyToAdd = smth[1];
+        shop.fuelToAdd = Math.min(200,Math.floor(1000-player.fuel))
+        shop.addTime = fps;
         clearInterval(gameLoopInterval);
         gameLoopInterval = setInterval(shop.loop , 1000/fps);
         canPause = false;
@@ -624,9 +644,17 @@ shop = {
     loop(){
         shop.draw();
         shop.handleMouseInputs();
+        if(shop.addTime > 0){
+            player.money += shop.moneyToAdd/fps;
+            player.score += shop.scoreToAdd/fps;
+            player.fuel += shop.fuelToAdd/fps;
+            shop.addTime -= 1;
+        }
     },
     handleMouseInputs(){
+        
         if(mouseClick){
+            console.log(mouseClick.x,mouseClick.y);
             for (let i = 0; i < buttons.shop.length; i++) {
                 buttons.shop[i][1].checkForClicks(mouseClick.x, mouseClick.y);
             }
@@ -642,7 +670,24 @@ shop = {
     click(itemNumber){
         shop.selectedItem = itemNumber-1;
     },buy(){
-        
+        if(shop.selectedItem != -1 && player.money >= shop.items[shop.selectedItem].price && shop.allowBuing){
+            player.buyUpgrade(shop.items[shop.selectedItem].upgrdId);
+            player.money -= shop.items[shop.selectedItem].price;
+            shop.selectedItem = -1;
+        } else if(shop.allowBuing  && shop.selectedItem != -1){ 
+            shop.allowBuing = false;
+            shop.priceColor = "red";
+            setTimeout(()=>{
+                shop.priceColor = "white";
+                setTimeout(()=>{
+                    shop.priceColor = "red";
+                    setTimeout(()=>{
+                        shop.priceColor = "white";
+                        shop.allowBuing = true;
+                    },500)
+                },500)
+            }, 500);
+        }
     }
 }
 
@@ -1256,6 +1301,7 @@ function handleCollisions(){
             break;
     }
 }
+
 function drawTankers(){
     //dominek zmień to w wolnym czasie pls
     for (let i = 0; i < tankers.length; i++) {
@@ -1268,6 +1314,7 @@ function drawTankers(){
         ctx.restore();
     }
 }
+
 function gameLoop() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.fillStyle = "white"
@@ -1303,9 +1350,10 @@ window.addEventListener("keyup", function(event) {
 });
  
 window.addEventListener("click", function(event) {
-    mult = window.innerWidth *0.75 / 1200;
+    mult = canvas.getBoundingClientRect().width / 1280;
+    mult2 = canvas.getBoundingClientRect().height / 720;
     const rect = canvas.getBoundingClientRect();
-    mouseClick = {x: (event.clientX-rect.left)/mult, y: (event.clientY-rect.top)/mult};
+    mouseClick = {x: (event.clientX-rect.left)/mult, y: (event.clientY-rect.top)/mult2};
 });
 
 function drawUI() {
