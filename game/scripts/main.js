@@ -35,6 +35,7 @@ layer2_bg3 = document.getElementById("layer2_bg3"),
 layer3_bg = document.getElementById("layer3_bg"),
 layer3_bg1 = document.getElementById("layer3_bg1"),
 layer3_bg2 = document.getElementById("layer3_bg2"),
+ground = document.getElementById("ground");
 
 gas = {
     gases: {
@@ -547,8 +548,7 @@ cutScene = {
         drawBackground();
 
         ctx.fillStyle = "#ff0000";
-        ctx.fillRect(0,canvas.height/4*3,canvas.width,canvas.height/4);
-        //ctx.drawImage(ground,canvas.width/2-(ground.width/4),canvas.height/2-ground.height/2,ground.height,ground.height);
+        ctx.drawImage(ground,0,canvas.height/4*3,canvas.width,canvas.height/4);
         player.draw(camera,isEngineOn);
         ctx.closePath();
     },
@@ -574,9 +574,9 @@ cutScene = {
         gameLoopInterval = setInterval(cutScene.loopStartOfGame , 1000/fps);
         cutScene.timeLeft = fps*4;
 
-        camera.y= 720;
+        camera.y= 0;
         player.x = canvas.width/4
-        player.y = canvas.height/4*3-player.height+730;
+        player.y = canvas.height/4*3-player.height+70;
     },
     triggerEndOfGame(){
         
