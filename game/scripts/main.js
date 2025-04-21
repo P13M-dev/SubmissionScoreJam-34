@@ -358,9 +358,9 @@ player = {
                     player.flameFrame = 0
                 }
             }
-            audio.playLoop(engine);
+            audio.playLoop(audio.engine);
         } else {
-            audio.pauseLoop(engine);
+            audio.pauseLoop(audio.engine);
             ctx.drawImage(shipOff, this.x-camera.x, this.y-camera.y, 10 * pixelSize.width, 14 * pixelSize.height);
         }
     },
