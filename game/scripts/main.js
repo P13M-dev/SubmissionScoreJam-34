@@ -37,6 +37,42 @@ layer3_bg1 = document.getElementById("layer3_bg1"),
 layer3_bg2 = document.getElementById("layer3_bg2"),
 ground = document.getElementById("ground"),
 button_buy_off = document.getElementById("button_buy_off"),
+audio = {
+    engine: new Audio('./sfx/engine.mp3'),
+    purchase: new Audio('./sfx/purchase.mp3'),
+    vacuum_l: new Audio('./sfx/vacuum_loop.mp3'),
+    vacuum_e: new Audio('./sfx/vacuum_end.mp3'),
+    dock: new Audio('./sfx/dock.mp3'),
+    station_music: new Audio('./station_music.mp3.mp3'),
+   
+    toggleMusic() {
+        if (!audio) {
+          // Initialize audio
+          audio = new Audio('music.mp3');
+          audio.loop = true;
+          audio.play();
+          console.log("Music started.");
+        } else {
+         
+          audio.pause();
+          console.log("Music stopped.");
+        }
+      },
+    playOneOf(audio){
+        audio.loop = false;
+        audio.play();
+    },
+    playLoop(audio){
+        console.log("a")
+        audio.loop = true;
+        audio.play();
+    },
+    pauseLoop(audio){
+
+        audio.pause();
+    }
+
+},
 gas = {
     gases: {
         smoke: { name:"Sm", displayName: "Smoke", score: 0, price: 0, color:"black"},
@@ -317,7 +353,9 @@ player = {
                     player.flameFrame = 0
                 }
             }
+            audio.playLoop(engine);
         } else {
+            audio.pauseLoop(engine);
             ctx.drawImage(shipOff, this.x-camera.x, this.y-camera.y, 10 * pixelSize.width, 14 * pixelSize.height);
         }
     },
@@ -370,7 +408,7 @@ startScreen = {
         player.time = new Date().getTime();
         player.money = 0;
         currentLayer = 1;
-        player.altimeter = 0;
+        player.amplitude = 0;
         player.jumpCharges= 4;
         camera.x = 0;
         camera.y = 0;
@@ -639,12 +677,16 @@ cutScene = {
         }
     },
     loopStartOfGame(){
-        if(fps*2<=cutScene.timeLeft){
+        if(fps*2<cutScene.timeLeft){
             cutScene.drawWithGround(false);
-        } else if(cutScene.timeLeft>0){
+        } else if(cutScene.timeLeft==fps*2){
+            audio.playLoop(audio.engine);
+            audio.engine.volume = 0.1;
+        }else if(cutScene.timeLeft>0){
             cutScene.drawWithGround(true);
             player.x+=cutScene.easeInQuint(cutScene.timeLeft/(fps*2))*5400/fps;
             player.y-=cutScene.easeInQuint(cutScene.timeLeft/(fps*2))*1800/fps;
+
         } else {
             console.log("a");
             player.x = 50
@@ -756,12 +798,12 @@ shop = {
         shop.selectedItem = itemNumber-1;
     },
     buy(){
-        if(shop.selectedItem != -1 && player.money >= shop.items[shop.selectedItem].price && shop.allowBuing){
+        if(shop.selectedItem != -1   && player.money >= shop.items[shop.selectedItem].price && shop.allowBuing){
             player.buyUpgrade(shop.items[shop.selectedItem].upgrdId);
             player.money -= shop.items[shop.selectedItem].price;
             shop.items[shop.selectedItem].bought = true;
             shop.selectedItem = -1;
-        } else if(shop.allowBuing  && shop.selectedItem != -1){ 
+        } else if(shop.allowBuing  && shop.selectedItem != -1 && shop.items[shop.selectedItem].bought == false){ 
             shop.allowBuing = false;
             shop.priceColor = "red";
             setTimeout(()=>{
