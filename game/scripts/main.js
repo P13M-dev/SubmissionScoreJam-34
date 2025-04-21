@@ -1031,6 +1031,10 @@ function handleKeyInputs() {
         if (keysPressed["a"]){
             player.boost(2)
         }
+        if (keysPressed[" "] || keysPressed["w"] && player.jumpCharges > 0 && player.fuel > 0) {
+            player.fuel = Math.max(0,player.fuel - 3)
+            player.jump();
+        }
     }
 
 }
@@ -1665,6 +1669,7 @@ function drawspaceTrashs(){
         ctx.restore();
     }
 }
+
 function gameLoop() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.fillStyle = "white"
@@ -1693,10 +1698,6 @@ function gameLoop() {
 
 window.addEventListener("keydown", function(event) {
     keysPressed[event.key.toLowerCase()] = true;
-    if ((event.key === " " || event.key.toLowerCase() === "w") && player.jumpCharges > 0 && player.fuel > 0) {
-        player.fuel = Math.max(0,player.fuel - 3)
-        player.jump();
-    }
 });
 
 window.addEventListener("keyup", function(event) {
