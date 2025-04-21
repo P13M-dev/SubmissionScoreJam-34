@@ -1675,6 +1675,7 @@ function handlespaceTrashCollisions(){
             moveVector.y = Math.max(moveVector.y - 15, 0);
 
             player.hp = Math.max(player.hp - 1, 0)
+            console.log(player.hp)
 
             spaceTrash.x += 20; // do zmiany później
             spaceTrash.y += 20;
@@ -1692,16 +1693,17 @@ function handleCollisions(){
 }
 function drawspaceTrashs(){
     //dominek zmień to w wolnym czasie pls
-    for (let i = 0; i < spaceTrashs.length; i++) {
-        const spaceTrash = spaceTrashs[i];
-        ctx.save();
-        ctx.translate(spaceTrash.x - camera.x + spaceTrash.size / 2, spaceTrash.y - camera.y + spaceTrash.size / 2);
-        ctx.rotate((spaceTrash.rotation * Math.PI) / 180);
-        ctx.drawImage(spaceTrashImg, -spaceTrash.size / 2, -spaceTrash.size / 2, spaceTrash.size, spaceTrash.size);
-        ctx.restore();
+    if (currentLayer == 4){
+        for (let i = 0; i < spaceTrashs.length; i++) {
+            const spaceTrash = spaceTrashs[i];
+            ctx.save();
+            ctx.translate(spaceTrash.x - camera.x + spaceTrash.size / 2, spaceTrash.y - camera.y + spaceTrash.size / 2);
+            ctx.rotate((spaceTrash.rotation * Math.PI) / 180);
+            ctx.drawImage(spaceTrashImg, -spaceTrash.size / 2, -spaceTrash.size / 2, spaceTrash.size, spaceTrash.size);
+            ctx.restore();
+        }
     }
 }
-currentLayer = 4
 
 function gameLoop() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
