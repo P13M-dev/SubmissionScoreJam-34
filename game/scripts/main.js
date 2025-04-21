@@ -1190,6 +1190,22 @@ function drawBackground(){
             ctx.drawImage(layer5_bg2, (-camera.x / 3.5) % canvas.width + canvas.width*1.5, 0 - canvas.height, canvas.width, canvas.height);
             
             break
+        case 5:
+            ctx.drawImage(layer6_bg, 0, 0, canvas.width, canvas.height);
+
+            ctx.drawImage(layer6_bg1, (-camera.x / 5) % canvas.width, 0, canvas.width, canvas.height);
+            ctx.drawImage(layer6_bg1, (-camera.x / 5) % canvas.width + canvas.width, 0, canvas.width, canvas.height);
+            ctx.drawImage(layer6_bg1, (-camera.x / 5) % canvas.width, 0 - canvas.height, canvas.width, canvas.height);
+            ctx.drawImage(layer6_bg1, (-camera.x / 5) % canvas.width + canvas.width, 0 - canvas.height, canvas.width, canvas.height);
+
+            ctx.drawImage(layer6_bg2, (-camera.x / 3.5) % canvas.width, 0, canvas.width, canvas.height);
+            ctx.drawImage(layer6_bg2, (-camera.x / 3.5) % canvas.width + canvas.width, 0, canvas.width, canvas.height);
+            ctx.drawImage(layer6_bg2, (-camera.x / 3.5) % canvas.width+canvas.width/2, 0 - canvas.height, canvas.width, canvas.height);
+            ctx.drawImage(layer6_bg2, (-camera.x / 3.5) % canvas.width + canvas.width*1.5, 0 - canvas.height, canvas.width, canvas.height);
+            
+            ctx.drawImage(layer6_bg3, 0, 0, canvas.width, canvas.height);
+
+            break
         }
 }
 
