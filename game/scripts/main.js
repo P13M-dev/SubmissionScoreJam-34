@@ -1659,7 +1659,7 @@ function handleCloudCollisions(){
             clouds[i].height -=  Math.max(clouds[i].width,clouds[i].height) / Math.max(moveVector.x,Math.abs(moveVector.y)) *2*player.gasColletionSpeed
             clouds[i].y +=  Math.max(clouds[i].width,clouds[i].height) / Math.max(moveVector.x,Math.abs(moveVector.y)) *player.gasColletionSpeed
             for (let j = 0; j < clouds[i].composition.length; j++){
-                player.addGasToTank(gas.getName(clouds[i].composition[j][0]),Math.abs(clouds[i].composition[j][1]/25000*clouds[i].width*clouds[i].height))
+                player.addGasToTank(gas.getName(clouds[i].composition[j][0]),Math.abs(clouds[i].composition[j][1]/50000*clouds[i].width*clouds[i].height))
             }
             if (clouds[i].width <= 0 || clouds[i].height <= 0){
                 clouds.splice(i,1)
