@@ -57,15 +57,11 @@ audio = {
 
     toggleMusic() {
         if (!audio) {
-          // Initialize audio
           audio = new Audio('music.mp3');
           audio.loop = true;
           audio.play();
-          console.log("Music started.");
-        } else {
-         
+        } else { 
           audio.pause();
-          console.log("Music stopped.");
         }
     },
     playOneOf(audio){
@@ -73,7 +69,6 @@ audio = {
         audio.play();
     },
     playLoop(audio){
-        console.log("a")
         audio.loop = true;
         audio.play();
     },
@@ -547,7 +542,6 @@ pause = {
         clearInterval(gameLoopInterval);
         gameLoopInterval = setInterval(pause.loop , 1000/fps);
         canPause = false;
-        console.log("paused");
     },
 
     off()
@@ -556,7 +550,6 @@ pause = {
         clearInterval(gameLoopInterval);
         gameLoopInterval = setInterval(gameLoop , 1000/fps);
         canPause = false;
-        console.log("unpaused");
     },
 
     drawGui()
@@ -580,7 +573,6 @@ pause = {
             for (let i = 0; i < buttons.pause.length; i++) {
                 buttons.pause[i][1].checkForClicks(mouseClick.x, mouseClick.y);
             }
-            console.log("clicked"+mouseClick.x+" "+mouseClick.y)
             mouseClick = null
         }
     },
@@ -687,7 +679,6 @@ cutScene = {
         camera.x += (cutScene.easeInQuint(cutScene.timeLeft/(fps*2))*4000/fps);
         cutScene.timeLeft -= 1;
         if(cutScene.timeLeft <= 0){
-            console.log("timegotaway")
             clearInterval(gameLoopInterval);
             player.x = camera.x;
             cutScene.timeLeft = fps;
@@ -737,7 +728,6 @@ cutScene = {
             player.y-=cutScene.easeInQuint(cutScene.timeLeft/(fps*2))*1800/fps;
 
         } else {
-            console.log("a");
             player.x = 50
             player.y = canvas.height/2-player.height;
             moveVector.y -= 300;
@@ -832,7 +822,6 @@ shop = {
     },
     handleMouseInputs(){
         if(mouseClick){
-            console.log(mouseClick.x,mouseClick.y);
             for (let i = 0; i < buttons.shop.length; i++) {
                 buttons.shop[i][1].checkForClicks(mouseClick.x, mouseClick.y);
             }
