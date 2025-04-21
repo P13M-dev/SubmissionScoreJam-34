@@ -254,7 +254,7 @@ player = {
     addGasToTank(gasName,amount)
     {
         let gasId = gas.getId(gasName);
-        if(gasId == 4) { // ten zły gaz niszczy inne
+        if(gasId == 5) { // ten zły gaz niszczy inne
             this.gasBurning(amount);
         } else {
             if(this.gasTankSpaceLeft == 0) {
@@ -531,6 +531,7 @@ cutScene = {
     draw(){
         ctx.beginPath();
         ctx.clearRect(0, 0, canvas.width, canvas.height);
+        drawBackground();
         player.draw(camera);
         drawTankers();
         drawClouds();
@@ -539,6 +540,7 @@ cutScene = {
     drawWithStation(){
         ctx.beginPath();
         ctx.clearRect(0, 0, canvas.width, canvas.height);
+        drawBackground();
         player.draw(camera);
         ctx.drawImage(station,canvas.width/2-(station.width/4),canvas.height/2-station.height/2,station.height,station.height);
         ctx.closePath();
@@ -611,6 +613,8 @@ shop = {
     ],
     draw(){
         ctx.beginPath();
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        drawBackground();
         ctx.drawImage(station,canvas.width/2-(station.width/4),canvas.height/2-station.height/2,station.height,station.height);
         ctx.fillStyle = "rgba(0,0,0, 0.5)";
         ctx.fillRect(0, 0, canvas.width, canvas.height);
@@ -1254,7 +1258,7 @@ function handleCloudCollisions(){
             clouds[i].width -= 20*(Math.max(moveVector.x,Math.abs(moveVector.y))+15)/25
             clouds[i].height -= 20*(Math.max(moveVector.x,Math.abs(moveVector.y))+15)/25
             clouds[i].y += 10*(Math.max(moveVector.x,Math.abs(moveVector.y))+15)/25
-            player.addGasToTank(gas.getName(clouds[i].composition[0][0]),clouds[i].composition[0][1]/100000*clouds[i].width*clouds[i].height)
+            player.addGasToTank(gas.getName(clouds[i].composition[0][0]),clouds[i].composition[0][1]/1000*clouds[i].width*clouds[i].height)
             if (clouds[i].width <= 0 || clouds[i].height <= 0){
                 clouds.splice(i,1)
                 i--
