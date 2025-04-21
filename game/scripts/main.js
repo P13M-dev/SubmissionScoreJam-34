@@ -1688,8 +1688,12 @@ function gameLoop() {
     player.move({ x: moveVector.x / fps, y: moveVector.y / fps });
     draw();
     
-    if(player.fuel <= 0){
-        endGameScreen.endGame("You ran out of fuel");
+    if(player.amplitude > layerThresholds[currentLayer-1]-layerThresholds[0]){
+        animation_pos = {x: player.x,y:  player.y}
+        endGameScreen.endGame(); // piotrze dodaj jakiś fajny napis
+    }else if(player.y < camera.y - canvas.height/2){
+        animation_pos = {x: player.x,y:  player.y}
+        endGameScreen.endGame(); // piotrze dodaj jakiś fajny napis
     }
     
     frameCount++;
