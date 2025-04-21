@@ -346,6 +346,7 @@ startScreen = {
         player.score = 0;
         player.time = new Date().getTime();
         player.money = 0;
+        currentLayer = 1;
         camera.x = 0;
         camera.y = 0;
         moveVector = {x:0,y:0};
@@ -367,7 +368,7 @@ startScreen = {
         ctx.fillStyle = "Black";    
         ctx.fillRect(0,0,canvas.width,canvas.height)
         ctx.fillStyle = "white";  
-        ctx.font = "30px Arial";
+        ctx.font = "30px silkscreen";
         ctx.textAlign = "center";
         ctx.fillText("Ascent from Callisto", canvas.width / 2 ,canvas.height / 7,canvas.width/4,  canvas.height / 7);
         for (let i = 0; i < buttons.menu.length; i++) {
@@ -406,15 +407,15 @@ endGameScreen = {
         ctx.fillStyle = "rgba(0,0,0, 0.5)";    
         ctx.fillRect(0,0,canvas.width,canvas.height)
         ctx.fillStyle = "white";
-        ctx.font = "50px Arial";
+        ctx.font = "50px silkscreen";
         
         ctx.fillText("You Scored", canvas.width / 7 ,canvas.height / 7-50,canvas.width/4,  canvas.height / 7);
         ctx.fillText(player.score, canvas.width / 7 ,canvas.height / 7+10,canvas.width/4,  canvas.height / 7);
-        ctx.font = "40px Arial";
+        ctx.font = "40px silkscreen";
         ctx.fillText("You survived for "+getTimeMinSec(player.time), canvas.width / 7 ,canvas.height / 7+70,canvas.width/4,  canvas.height / 7);
         ctx.fillText("You got to "+player.level, canvas.width / 7 ,canvas.height / 7+115,canvas.width/4,  canvas.height / 7);
         ctx.fillText("You eliminated "+player.kills+" enemies", canvas.width / 7 ,canvas.height / 7+160,canvas.width/4,  canvas.height / 7);
-        ctx.font = "30px Arial";
+        ctx.font = "30px silkscreen";
         ctx.fillText("You lost ;-;", canvas.width / 2 ,canvas.height / 7-30,canvas.width/4,  canvas.height / 7);
         ctx.fillText("Score Board", canvas.width / 2 ,canvas.height / 7+50,canvas.width/4,  canvas.height / 7);
         
@@ -595,9 +596,9 @@ shop = {
     selectedItem: -1,
     items:[
         {name:"Larger Intake",description:["A larger gas collector.","Allows you to collect","more gas."],price:500,upgrdId:0},
-        {name:"Advanced filter",description:["Better filtration system.","Allows you to collect better gases"," from intermediate layers."],price:1000,upgrdId:1},
-        {name:"Armored tank",description:["Upgraded storage system.","Allows you to store more","gases in your tank."],price:2000,upgrdId:2},
-        {name:"Gas attractor",description:["Upgraded gas collection system.","Allows you to collect rare gases"," from higher layers."],price:3000,upgrdId:3}
+        {name:"Advanced filter",description:["Better filtration system.","Allows you to collect better"," gases from intermediate layers."],price:1000,upgrdId:1},
+        {name:"Armored tank",description:["Upgraded storage system.","Allows you to store more","gas in your tank."],price:2000,upgrdId:2},
+        {name:"Gas attractor",description:["Upgraded gas collection system.","Allows you to collect rare ","gases from higher layers."],price:3000,upgrdId:3}
     ],
     draw(){
         ctx.beginPath();
@@ -609,13 +610,13 @@ shop = {
             button = buttons.shop[button][1];
             ctx.drawImage(button.img, button.x, button.y, button.width, button.height);
         }
-        ctx.font = "25px Arial";
+        ctx.font = "25px silkscreen";
         ctx.textAlign = "center";
         ctx.fillStyle = "white";
         ctx.fillText("Fuel: "+Math.ceil(player.fuel)/10+"%",canvas.width/6*5, 25);
         ctx.fillText("Score: "+Math.floor(player.score), canvas.width/6*5, 50);
         ctx.fillText("Credits: "+Math.floor(player.money)+"C", canvas.width/6*5, 75);
-        
+        ctx.font = "20px silkscreen";
         if(shop.selectedItem != -1){
             
 

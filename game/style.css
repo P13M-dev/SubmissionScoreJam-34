@@ -14,3 +14,7 @@ html{
     background-image: url("textures/background.png");
     
 }
+@font-face {
+    font-family: 'silkscreen';
+    src: url('./Silkscreen/Silkscreen-Regular.ttf');
+}
