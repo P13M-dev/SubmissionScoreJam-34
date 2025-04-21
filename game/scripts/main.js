@@ -263,7 +263,7 @@ player = {
     y: 50,
     width: 50, // tylkko do hitboxow :)
     height: 50, // tylkko do hitboxow :)
-    speed: 1,
+    speed: 5,
     score: 0,
     money: 0,
     fuel: 1000,
@@ -1842,7 +1842,7 @@ function gameLoop() {
     physics();
     handleCollisions()
     handleKeyInputs();
-    player.move({ x: moveVector.x / fps, y: moveVector.y / fps });
+    player.move({ x: moveVector.x / fps , y: moveVector.y / fps });
     draw();
     if(totalFrame>=200){
 
