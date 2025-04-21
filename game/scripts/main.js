@@ -469,6 +469,7 @@ startScreen = {
 },
 endGameScreen = {
     scores:0,
+    deathReason:"",
     handleMouseInputs(){
         if(mouseClick){
             for (let i = 0; i < buttons.end.length; i++) {
@@ -493,7 +494,7 @@ endGameScreen = {
         ctx.fillText("You got to "+getLayerName(currentLayer), canvas.width / 7 ,canvas.height / 7+115,canvas.width/4,  canvas.height / 7);
         ctx.fillText("You eliminated "+player.kills+" enemies", canvas.width / 7 ,canvas.height / 7+160,canvas.width/4,  canvas.height / 7);
         ctx.font = "30px silkscreen";
-        ctx.fillText("Your fuel run out", canvas.width / 2 ,canvas.height / 7-30,canvas.width/4,  canvas.height / 7);
+        ctx.fillText(endGameScreen.deathReason, canvas.width / 2 ,canvas.height / 7-30,canvas.width/4,  canvas.height / 7);
         ctx.fillText("Score Board", canvas.width / 2 ,canvas.height / 7+50,canvas.width/4,  canvas.height / 7);
         
         
@@ -516,7 +517,7 @@ endGameScreen = {
         endGameScreen.handleMouseInputs();
         
     },
-    endGame(){
+    endGame(deathReason){
         let temp = player.emptyGasTank();
         player.score += temp;
         saveScoreToLocalStorage(player.score,prompt("Enter your nickname: "));
@@ -525,6 +526,7 @@ endGameScreen = {
         clearInterval(gameLoopInterval);
         gameLoopInterval = setInterval(endGameScreen.loop , 1000/fps);
         canPause = false;
+        endGameScreen.deathReason = deathReason;
         
     },
     goToStartScreen(){
@@ -868,7 +870,11 @@ shop = {
     }
 },
 credits = {
-    credits: ["Developers","","Piotr \"P13M\" Migas ","Bartek \"Baruta\" Senator","Dominik \"_ItsYumi\" Chmielowiec","","Sounds made by freesound_community from Pixabay","","Font by Jason Kottke from google Fonts"],
+    credits: ["Developers","","Piotr \"P13M\" Migas ",
+        "Bartek \"Baruta\" Senator","Dominik \"_ItsYumi\" Chmielowiec","",
+        "Sounds made by freesound_community from Pixabay","",
+        "Font by Jason Kottke from google Fonts",
+        "Asteroid and drone textures made by Uniwsim8"],
     loop(){
         credits.draw();
         credits.handleMouseInputs();
@@ -880,14 +886,12 @@ credits = {
         ctx.fillStyle = "white";
         ctx.font = "20px silkscreen";
         ctx.textAlign = "left";
-        ctx.fillText("Credits", canvas.width/2, 25);
+        ctx.fillText("Credits", canvas.width/2-getTextWidth("Credits", "20px silkscreen")/2, 25);
         for(let i = 0;i<credits.credits.length;i++){
-            ctx.fillText(credits.credits[i], canvas.width/2, 65 + 45 * (i+1));
+            
+            ctx.fillText(credits.credits[i], canvas.width/2-getTextWidth(credits.credits[i], "20px silkscreen")/2, 65 + 45 * (i+1));
         }
 
-        for (let i = 0; i < credits.credits.length; i++) {
-            ctx.fillText(credits.credits[i], canvas.width/2, 65 + 45 * (i+1));
-        }
         for(let i = 0; i < buttons.credits.length; i++){
             let button = buttons.credits[i];
             ctx.drawImage(button.img, button.x, button.y, button.width, button.height);
@@ -995,7 +999,7 @@ buttons = {
 },
 pixelSize = {width: canvas.width / 256, height: canvas.height / 144}
 
-buttons.credits.push(new Button(canvas.width/2-canvas.width/4, canvas.height/7*5, canvas.width/2, canvas.height/7*2,button_leave,()=>{credits.end()}));
+buttons.credits.push(new Button(canvas.width/2-canvas.width/8, canvas.height/7*6, canvas.width/4, canvas.height/7,button_leave,()=>{credits.end()}));
 
 buttons.start.push(new Button(canvas.width/6*5-canvas.width/8, canvas.height-canvas.width/12, canvas.width/4, canvas.width/12,button_leave,()=>{cutScene.triggerStartOfGame();console.log("start");}));
 
@@ -1505,6 +1509,12 @@ function generateClouds(){
     }
 }
 
+function getTextWidth(text, font) {
+    ctx.font = font;
+    const metrics = ctx.measureText(text);
+    return metrics.width;
+  }
+
 function handleCloudCollisions(){
     for (let i = 0; i < clouds.length; i++) {
         const cloud = clouds[i];
@@ -1662,7 +1672,7 @@ function gameLoop() {
     draw();
     
     if(player.fuel <= 0){
-        endGameScreen.endGame();
+        endGameScreen.endGame("You ran out of fuel");
     }
     
     frameCount++;
