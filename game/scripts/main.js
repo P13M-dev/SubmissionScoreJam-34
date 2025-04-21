@@ -295,16 +295,19 @@ player = {
     emptyGasTank()
     {
         this.gasTankSpaceLeft = 1000;
+        let totalScore = 0,
+        totalMoney = 0;
         for(let i = 0; i < this.gasTankContents[0].length; i++){
-            this.score += gas.getValue(this.gasTankContents[0][i])*this.gasTankContents[1][i][0];
-            this.money += gas.getPrice(this.gasTankContents[0][i])*this.gasTankContents[1][i][0];
+            totalScore += gas.getValue(this.gasTankContents[0][i])*this.gasTankContents[1][i][0];
+            totalMoney += gas.getPrice(this.gasTankContents[0][i])*this.gasTankContents[1][i][0];
         }
         this.gasTankContents = [[],[]];
+        return [totalScore,totalMoney];
     },
 
-    draw(camera) 
+    draw(camera,playAnim) 
     {
-        if(moveVector.y < 0) {
+        if(moveVector.y < 0 || playAnim) {
             ctx.drawImage(shipOn, 0, 112 * player.flameFrame, 80, 112, this.x-camera.x, this.y-camera.y, 10 * pixelSize.width, 14 * pixelSize.height);
             if(frameCount % 10 == 0) {
                 player.flameFrame++
@@ -356,6 +359,7 @@ startScreen = {
         player.score = 0;
         player.time = new Date().getTime();
         player.money = 0;
+        currentLayer = 1;
         camera.x = 0;
         camera.y = 0;
         moveVector = {x:0,y:0};
@@ -377,7 +381,7 @@ startScreen = {
         ctx.fillStyle = "Black";    
         ctx.fillRect(0,0,canvas.width,canvas.height)
         ctx.fillStyle = "white";  
-        ctx.font = "30px Arial";
+        ctx.font = "30px silkscreen";
         ctx.textAlign = "center";
         ctx.fillText("Ascent from Callisto", canvas.width / 2 ,canvas.height / 7,canvas.width/4,  canvas.height / 7);
         for (let i = 0; i < buttons.menu.length; i++) {
@@ -416,15 +420,15 @@ endGameScreen = {
         ctx.fillStyle = "rgba(0,0,0, 0.5)";    
         ctx.fillRect(0,0,canvas.width,canvas.height)
         ctx.fillStyle = "white";
-        ctx.font = "50px Arial";
+        ctx.font = "50px silkscreen";
         
         ctx.fillText("You Scored", canvas.width / 7 ,canvas.height / 7-50,canvas.width/4,  canvas.height / 7);
         ctx.fillText(player.score, canvas.width / 7 ,canvas.height / 7+10,canvas.width/4,  canvas.height / 7);
-        ctx.font = "40px Arial";
+        ctx.font = "40px silkscreen";
         ctx.fillText("You survived for "+getTimeMinSec(player.time), canvas.width / 7 ,canvas.height / 7+70,canvas.width/4,  canvas.height / 7);
         ctx.fillText("You got to "+player.level, canvas.width / 7 ,canvas.height / 7+115,canvas.width/4,  canvas.height / 7);
         ctx.fillText("You eliminated "+player.kills+" enemies", canvas.width / 7 ,canvas.height / 7+160,canvas.width/4,  canvas.height / 7);
-        ctx.font = "30px Arial";
+        ctx.font = "30px silkscreen";
         ctx.fillText("You lost ;-;", canvas.width / 2 ,canvas.height / 7-30,canvas.width/4,  canvas.height / 7);
         ctx.fillText("Score Board", canvas.width / 2 ,canvas.height / 7+50,canvas.width/4,  canvas.height / 7);
         
@@ -593,13 +597,19 @@ cutScene = {
 
 },
 shop = {
+    addTimer: fps,
+    fuelToAdd: 200,
+    scoreToAdd:0,
+    moneyToAdd:0,
+    priceColor: "white",
+    allowBuing: true,
+    selectedItem: -1,
     items:[
         {name:"Larger Intake",description:["A larger gas collector.","Allows you to collect","more gas."],price:500,upgrdId:0},
-        {name:"Advanced filter",description:["Better filtration system.","Allows you to collect better gases"," from intermediate layers."],price:1000,upgrdId:1},
-        {name:"Armored tank",description:["Upgraded storage system.","Allows you to store more","gases in your tank."],price:2000,upgrdId:2},
-        {name:"Gas attractor",description:["Upgraded gas collection system.","Allows you to collect rare gases"," from higher layers."],price:3000,upgrdId:3}
+        {name:"Advanced filter",description:["Better filtration system.","Allows you to collect better"," gases from intermediate layers."],price:1000,upgrdId:1},
+        {name:"Armored tank",description:["Upgraded storage system.","Allows you to store more","gas in your tank."],price:2000,upgrdId:2},
+        {name:"Gas attractor",description:["Upgraded gas collection system.","Allows you to collect rare ","gases from higher layers."],price:3000,upgrdId:3}
     ],
-    selectedItem: -1,
     draw(){
         ctx.beginPath();
         ctx.drawImage(station,canvas.width/2-(station.width/4),canvas.height/2-station.height/2,station.height,station.height);
@@ -610,12 +620,12 @@ shop = {
             button = buttons.shop[button][1];
             ctx.drawImage(button.img, button.x, button.y, button.width, button.height);
         }
-        ctx.font = "25px Arial";
+        ctx.font = "25px silkscreen";
         ctx.textAlign = "center";
         ctx.fillText("Fuel: "+Math.ceil(player.fuel / 10)+"%", 0, 35 * pixelSize.height);
         ctx.fillText("Score: "+player.score, 0, 35 * pixelSize.height);
         ctx.fillText("Credits: "+player.money, 0, 35 * pixelSize.height);
-        ctx.closePath();
+        ctx.font = "20px silkscreen";ctx.closePath();
         if(shop.selectedItem != -1){
             ctx.font = "25px Arial";
             ctx.textAlign = "center";
@@ -628,9 +638,14 @@ shop = {
             let button = buttons.shop[buttons.shop.length-1][1];
             ctx.drawImage(button.img, button.x, button.y, button.width, button.height);
         }
+        ctx.closePath();
     },
     enter(){
-        
+        smth = player.emptyGasTank();
+        shop.scoreToAdd = smth[0];
+        shop.moneyToAdd = smth[1];
+        shop.fuelToAdd = Math.min(200,Math.floor(1000-player.fuel))
+        shop.addTime = fps;
         clearInterval(gameLoopInterval);
         gameLoopInterval = setInterval(shop.loop , 1000/fps);
         canPause = false;
@@ -638,9 +653,16 @@ shop = {
     loop(){
         shop.draw();
         shop.handleMouseInputs();
+        if(shop.addTime > 0){
+            player.money += shop.moneyToAdd/fps;
+            player.score += shop.scoreToAdd/fps;
+            player.fuel += shop.fuelToAdd/fps;
+            shop.addTime -= 1;
+        }
     },
     handleMouseInputs(){
         if(mouseClick){
+            console.log(mouseClick.x,mouseClick.y);
             for (let i = 0; i < buttons.shop.length; i++) {
                 buttons.shop[i][1].checkForClicks(mouseClick.x, mouseClick.y);
             }
@@ -656,7 +678,24 @@ shop = {
     click(itemNumber){
         shop.selectedItem = itemNumber-1;
     },buy(){
-        
+        if(shop.selectedItem != -1 && player.money >= shop.items[shop.selectedItem].price && shop.allowBuing){
+            player.buyUpgrade(shop.items[shop.selectedItem].upgrdId);
+            player.money -= shop.items[shop.selectedItem].price;
+            shop.selectedItem = -1;
+        } else if(shop.allowBuing  && shop.selectedItem != -1){ 
+            shop.allowBuing = false;
+            shop.priceColor = "red";
+            setTimeout(()=>{
+                shop.priceColor = "white";
+                setTimeout(()=>{
+                    shop.priceColor = "red";
+                    setTimeout(()=>{
+                        shop.priceColor = "white";
+                        shop.allowBuing = true;
+                    },500)
+                },500)
+            }, 500);
+        }
     }
 }
 
@@ -1364,9 +1403,10 @@ window.addEventListener("keyup", function(event) {
 });
  
 window.addEventListener("click", function(event) {
-    mult = window.innerWidth *0.75 / 1200;
+    mult = canvas.getBoundingClientRect().width / 1280;
+    mult2 = canvas.getBoundingClientRect().height / 720;
     const rect = canvas.getBoundingClientRect();
-    mouseClick = {x: (event.clientX-rect.left)/mult, y: (event.clientY-rect.top)/mult};
+    mouseClick = {x: (event.clientX-rect.left)/mult, y: (event.clientY-rect.top)/mult2};
 });
 
 function drawUI() {
