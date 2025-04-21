@@ -359,6 +359,8 @@ startScreen = {
         player.time = new Date().getTime();
         player.money = 0;
         currentLayer = 1;
+        player.altimeter = 0;
+        player.jumpCharges= 4;
         camera.x = 0;
         camera.y = 0;
         moveVector = {x:0,y:0};
@@ -588,11 +590,13 @@ cutScene = {
         cutScene.timeLeft -= 1;
         if(cutScene.timeLeft <= 0){
             clearInterval(gameLoopInterval);
+            currentLayer++
             player.x = 50
             moveVector.y -= 500
             moveVector.x += 200
             gameLoopInterval = setInterval( gameLoop , 1000/fps);
             canPause = true;
+
         }
     }
 
@@ -676,7 +680,6 @@ shop = {
         cutScene.timeLeft = fps*2;
         clearInterval(gameLoopInterval);
         gameLoopInterval = setInterval(cutScene.loopFlyFromShop , 1000/fps);
-        currentLayer++
         
     },
     click(itemNumber){
@@ -920,6 +923,7 @@ function generateRandomPosition(last_chunk){
     }
     return chunk, {x: x,y: y};
 }
+
 let last_chunk = -1
 function generateClouds(){
     let last_chunk, cloud_position = generateRandomPosition(last_chunk)
@@ -1258,7 +1262,7 @@ function handleCloudCollisions(){
             clouds[i].width -= 20*(Math.max(moveVector.x,Math.abs(moveVector.y))+15)/25
             clouds[i].height -= 20*(Math.max(moveVector.x,Math.abs(moveVector.y))+15)/25
             clouds[i].y += 10*(Math.max(moveVector.x,Math.abs(moveVector.y))+15)/25
-            player.addGasToTank(gas.getName(clouds[i].composition[0][0]),clouds[i].composition[0][1]/1000*clouds[i].width*clouds[i].height)
+            player.addGasToTank(gas.getName(clouds[i].composition[0][0]),Math.abs(clouds[i].composition[0][1]/5000*clouds[i].width*clouds[i].height))
             if (clouds[i].width <= 0 || clouds[i].height <= 0){
                 clouds.splice(i,1)
                 i--
@@ -1287,7 +1291,6 @@ function miniMap(){
     ctx.drawImage(minimap, 14 * pixelSize.width, 95 * pixelSize.height, 49 * pixelSize.width, 49 * pixelSize.height)
     ctx.closePath();
 }
-
 
 let tankers = [] //w Formacie {x,y,size,rotation}
 
