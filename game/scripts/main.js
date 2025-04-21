@@ -38,6 +38,9 @@ layer3_bg2 = document.getElementById("layer3_bg2"),
 layer4_bg = document.getElementById("layer4_bg"),
 layer4_bg1 = document.getElementById("layer4_bg1"),
 layer4_bg2 = document.getElementById("layer4_bg2"),
+layer5_bg = document.getElementById("layer5_bg"),
+layer5_bg1 = document.getElementById("layer5_bg1"),
+layer5_bg2 = document.getElementById("layer5_bg2"),
 ground = document.getElementById("ground"),
 button_buy_off = document.getElementById("button_buy_off"),
 audio = {
@@ -1097,9 +1100,24 @@ function drawBackground(){
 
             
             break
+        
+        case 5:
+            ctx.drawImage(layer5_bg, 0, 0, canvas.width, canvas.height);
+
+            ctx.drawImage(layer5_bg1, (-camera.x / 5) % canvas.width, 0, canvas.width, canvas.height);
+            ctx.drawImage(layer5_bg1, (-camera.x / 5) % canvas.width + canvas.width, 0, canvas.width, canvas.height);
+            ctx.drawImage(layer5_bg1, (-camera.x / 5) % canvas.width, 0 - canvas.height, canvas.width, canvas.height);
+            ctx.drawImage(layer5_bg1, (-camera.x / 5) % canvas.width + canvas.width, 0 - canvas.height, canvas.width, canvas.height);
+
+            ctx.drawImage(layer5_bg2, (-camera.x / 3.5) % canvas.width, 0, canvas.width, canvas.height);
+            ctx.drawImage(layer5_bg2, (-camera.x / 3.5) % canvas.width + canvas.width, 0, canvas.width, canvas.height);
+            ctx.drawImage(layer5_bg2, (-camera.x / 3.5) % canvas.width+canvas.width/2, 0 - canvas.height, canvas.width, canvas.height);
+            ctx.drawImage(layer5_bg2, (-camera.x / 3.5) % canvas.width + canvas.width*1.5, 0 - canvas.height, canvas.width, canvas.height);
+            
+            break
         }
 }
-currentLayer = 1
+currentLayer = 5
 
 function draw(){
     drawBackground()
