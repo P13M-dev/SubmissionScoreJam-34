@@ -48,6 +48,7 @@ layer6_bg3 = document.getElementById("layer6_bg3"),
 ground = document.getElementById("ground"),
 button_buy_off = document.getElementById("button_buy_off"),
 tutorialGraphics = document.getElementById("tutorialGraphics"),
+explosion = document.getElementById("explosion"),
 audio = {
     engine: new Audio('./sfx/engine.mp3'),
     purchase: new Audio('./sfx/purchase.mp3'),
@@ -472,6 +473,7 @@ startScreen = {
 endGameScreen = {
     scores:0,
     deathReason:"",
+    timeLeft:fps*2,
     handleMouseInputs(){
         if(mouseClick){
             for (let i = 0; i < buttons.end.length; i++) {
@@ -481,7 +483,7 @@ endGameScreen = {
             mouseClick = null
         }
     },
-    draw(){
+    drawUI(){
         ctx.beginPath();
         
         ctx.fillStyle = "rgba(0,0,0, 0.5)";    
@@ -514,10 +516,24 @@ endGameScreen = {
     loop(){
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         draw();
-        endGameScreen.draw();
+        endGameScreen.drawUI();
         endGameScreen.handleMouseInputs();
         
     },
+    cinematic(){
+        draw();
+        if(this.timeLeft%fps/3==0){
+            endGameScreen.frame++;
+        }
+        ctx.drawImage(explosion, 0, 314*endGameScreen.frame, 220,314,canvas.width/2-explosion.width/2,canvas.height-314/2, 220,314);
+        if(endGameScreen.timeLeft < 0){
+            endGameScreen.timeLeft = fps*2;
+            clearInterval(gameLoopInterval);
+            gameLoopInterval = setInterval(endGameScreen.loop , 1000/fps);
+        }
+        endGameScreen.timeLeft--;
+    },
+
     endGame(deathReason){
         let temp = player.emptyGasTank();
         player.score += temp[0];
@@ -525,7 +541,7 @@ endGameScreen = {
         endGameScreen.scores = JSON.parse(localStorage.getItem("highscores"));
         player.time = (new Date().getTime() - player.time)/1000;
         clearInterval(gameLoopInterval);
-        gameLoopInterval = setInterval(endGameScreen.loop , 1000/fps);
+        gameLoopInterval = setInterval(endGameScreen.cinematic , 1000/fps);
         canPause = false;
         endGameScreen.deathReason = deathReason;
         
