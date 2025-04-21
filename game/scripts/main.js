@@ -1,3 +1,5 @@
+const { start } = require("prompt");
+
 const canvas = document.getElementById("canvas"),
 ctx = canvas.getContext("2d"),
 fps = 60,
@@ -35,8 +37,8 @@ layer2_bg3 = document.getElementById("layer2_bg3"),
 layer3_bg = document.getElementById("layer3_bg"),
 layer3_bg1 = document.getElementById("layer3_bg1"),
 layer3_bg2 = document.getElementById("layer3_bg2"),
-ground = document.getElementById("ground");
-
+ground = document.getElementById("ground"),
+button_buy_off = document.getElementById("button_buy_off"),
 gas = {
     gases: {
         smoke: { name:"Sm", displayName: "Smoke", score: 0, price: 0, color:"black"},
@@ -401,6 +403,7 @@ startScreen = {
     }
 },
 endGameScreen = {
+    scores:0,
     handleMouseInputs(){
         if(mouseClick){
             for (let i = 0; i < buttons.end.length; i++) {
@@ -422,16 +425,17 @@ endGameScreen = {
         ctx.fillText(player.score, canvas.width / 7 ,canvas.height / 7+10,canvas.width/4,  canvas.height / 7);
         ctx.font = "40px silkscreen";
         ctx.fillText("You survived for "+getTimeMinSec(player.time), canvas.width / 7 ,canvas.height / 7+70,canvas.width/4,  canvas.height / 7);
-        ctx.fillText("You got to "+player.level, canvas.width / 7 ,canvas.height / 7+115,canvas.width/4,  canvas.height / 7);
+        ctx.fillText("You got to "+getLayerName(currentLayer), canvas.width / 7 ,canvas.height / 7+115,canvas.width/4,  canvas.height / 7);
         ctx.fillText("You eliminated "+player.kills+" enemies", canvas.width / 7 ,canvas.height / 7+160,canvas.width/4,  canvas.height / 7);
         ctx.font = "30px silkscreen";
-        ctx.fillText("You lost ;-;", canvas.width / 2 ,canvas.height / 7-30,canvas.width/4,  canvas.height / 7);
+        ctx.fillText("Your fuel run out", canvas.width / 2 ,canvas.height / 7-30,canvas.width/4,  canvas.height / 7);
         ctx.fillText("Score Board", canvas.width / 2 ,canvas.height / 7+50,canvas.width/4,  canvas.height / 7);
         
         
         ctx.textAlign = "center";
-        for(let i = 1;i<6;i++){
-            ctx.fillText(i+". "+"playerName"+" "+"playerScore", canvas.width / 2 ,canvas.height / 7+70+(35*i),canvas.width/4,  canvas.height / 7);
+        console.log(endGameScreen.scores.length+1)
+        for(let i = 1;i<Math.min(6,endGameScreen.scores.length+1);i++){
+            ctx.fillText(i+". "+endGameScreen.scores[i-1].name+" "+endGameScreen.scores[i-1].score, canvas.width / 2 ,canvas.height / 7+70+(35*i),canvas.width/4,  canvas.height / 7);
         }
 
         for (let i = 0; i < buttons.end.length; i++) {
@@ -448,6 +452,8 @@ endGameScreen = {
         
     },
     endGame(){
+        saveScoreToLocalStorage(player.score,prompt("Enter your nickname: "));
+        endGameScreen.scores = JSON.parse(localStorage.getItem("highscores"));
         player.time = (new Date().getTime() - player.time)/1000;
         clearInterval(gameLoopInterval);
         gameLoopInterval = setInterval(endGameScreen.loop , 1000/fps);
@@ -650,10 +656,10 @@ shop = {
     allowBuing: true,
     selectedItem: -1,
     items:[
-        {name:"Larger Intake",description:["A larger gas collector.","Allows you to collect","more gas."],price:500,upgrdId:0},
-        {name:"Advanced filter",description:["Better filtration system.","Allows you to collect better"," gases from intermediate layers."],price:1000,upgrdId:1},
-        {name:"Armored tank",description:["Upgraded storage system.","Allows you to store more","gas in your tank."],price:2000,upgrdId:2},
-        {name:"Gas attractor",description:["Upgraded gas collection system.","Allows you to collect rare ","gases from higher layers."],price:3000,upgrdId:3}
+        {name:"Larger Intake",description:["A larger gas collector.","Allows you to collect","more gas."],price:500,upgrdId:0,bought:false},
+        {name:"Advanced filter",description:["Better filtration system.","Allows you to collect better"," gases from intermediate layers."],price:1000,upgrdId:1,bought:false},
+        {name:"Armored tank",description:["Upgraded storage system.","Allows you to store more","gas in your tank."],price:2000,upgrdId:2,bought:false},
+        {name:"Gas attractor",description:["Upgraded gas collection system.","Allows you to collect rare ","gases from higher layers."],price:3000,upgrdId:3,bought:false}
     ],
     draw(){
         ctx.beginPath();
@@ -674,7 +680,17 @@ shop = {
         ctx.fillText("Score: "+Math.floor(player.score), canvas.width/6*5, 50);
         ctx.fillText("Credits: "+Math.floor(player.money)+"C", canvas.width/6*5, 75);
         ctx.font = "20px silkscreen";
-        if(shop.selectedItem != -1){
+        if(shop.selectedItem != -1 && shop.items[shop.selectedItem].bought == false){
+            ctx.fillText(shop.items[shop.selectedItem].name, canvas.width/6*5, 25+canvas.height/3);
+            ctx.fillStyle = shop.priceColor;
+            ctx.fillText("Price: "+shop.items[shop.selectedItem].price, canvas.width/6*5, 65+canvas.height/3);
+            ctx.fillStyle = "white";
+            for (let i = 0; i < shop.items[shop.selectedItem].description.length; i++) {
+                ctx.fillText(shop.items[shop.selectedItem].description[i], canvas.width/6*5, 65 + 45 * (i+1)+canvas.height/3);
+            }
+            let button = buttons.shop[buttons.shop.length-2][1];
+            ctx.drawImage(button.img, button.x, button.y, button.width, button.height);
+        } else if(shop.selectedItem != -1){
             ctx.fillText(shop.items[shop.selectedItem].name, canvas.width/6*5, 25+canvas.height/3);
             ctx.fillStyle = shop.priceColor;
             ctx.fillText("Price: "+shop.items[shop.selectedItem].price, canvas.width/6*5, 65+canvas.height/3);
@@ -771,6 +787,39 @@ function getTimeMinSec(seconds) {
     return `${minutes}:${remainingSeconds < 10 ? '0' : ''}${remainingSeconds}`;
 }
 
+function getLayerName(layer) {
+    switch (layer) {
+        case 1:
+            return "the City";
+        case 2:
+            return "the Acidic cloudscape";
+        case 3:
+            return "the Crash site";
+        case 4:
+            return "the Icy bramble";
+        case 5:
+            return "the Neon battlezone";
+        case 6:
+            return "the High orbit";
+    }
+}
+function saveScoreToLocalStorage(score,name) {
+    if(localStorage.getItem('highscores') == null) localStorage.setItem('highscores', JSON.stringify([]));
+    highscores = JSON.parse(localStorage.getItem('highscores'));
+    last = true
+    for(i = 0;i < highscores.length;i++){
+        if(highscores[i].score <= score){
+            highscores.splice(i,0,{score:score,name:name});
+            last = false;
+            break;
+        }
+    }
+    if(last){
+        highscores.push({score:score,name:name});
+    }
+    localStorage.setItem('highscores', JSON.stringify(highscores));
+}
+
 let camera = {x: 0, y: 0},
 keysPressed = {}, // Track keys pressed
 frameCount = 0,
@@ -788,12 +837,15 @@ inStartScreen = true,
 canPause = true,
 mouseClick = {x: 0, y: 0},
 buttons = {
+    start: [],
     pause: [],
     end: [],
     menu: [],
     shop:[]
 },
 pixelSize = {width: canvas.width / 256, height: canvas.height / 144}
+
+buttons.start.push(new Button(canvas.width/6*5-canvas.width/8, canvas.height-canvas.width/12, canvas.width/4, canvas.width/12,button_leave,()=>{cutScene.triggerStartOfGame();}));
 
 buttons.menu.push(new Button(canvas.width/2-canvas.width/4, canvas.height/7, canvas.width/2, canvas.height/7*2,button_start,()=>{cutScene.triggerStartOfGame();}));
 buttons.menu.push(new Button(canvas.width/2-canvas.width/4, canvas.height/7*4, canvas.width/2, canvas.height/7*2,button_authors,()=>{}));
@@ -809,7 +861,7 @@ buttons.shop.push([buttons.shop.length,new Button(canvas.width/13*5-canvas.width
 buttons.shop.push([buttons.shop.length,new Button(canvas.width/13*2-canvas.width/13, canvas.width/13*4, canvas.width/13*2, canvas.width/13*2,button_upgrd3,()=>{shop.click(3);})]);
 buttons.shop.push([buttons.shop.length,new Button(canvas.width/13*5-canvas.width/13, canvas.width/13*4, canvas.width/13*2, canvas.width/13*2,button_upgrd4,()=>{shop.click(4);})]);
 buttons.shop.push([buttons.shop.length,new Button(canvas.width/6*5-canvas.width/8, canvas.height-canvas.width/6, canvas.width/4, canvas.width/12,button_buy,()=>{shop.buy();})]);
-
+buttons.shop.push([buttons.shop.length,new Button(canvas.width/6*5-canvas.width/8, canvas.height-canvas.width/6, canvas.width/4, canvas.width/12,button_buy_off,()=>{})]);
 for (let i =0; i<3;i++){
     generateClouds()
 }
