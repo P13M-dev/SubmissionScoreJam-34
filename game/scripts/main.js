@@ -617,16 +617,16 @@ shop = {
         }
         ctx.font = "25px silkscreen";
         ctx.textAlign = "center";
-        ctx.fillText("Fuel: "+Math.ceil(player.fuel / 10)+"%", 0, 35 * pixelSize.height);
-        ctx.fillText("Score: "+player.score, 0, 35 * pixelSize.height);
-        ctx.fillText("Credits: "+player.money, 0, 35 * pixelSize.height);
-        ctx.font = "20px silkscreen";ctx.closePath();
+        ctx.fillStyle = "white";
+        ctx.fillText("Fuel: "+Math.ceil(player.fuel)/10+"%",canvas.width/6*5, 25);
+        ctx.fillText("Score: "+Math.floor(player.score), canvas.width/6*5, 50);
+        ctx.fillText("Credits: "+Math.floor(player.money)+"C", canvas.width/6*5, 75);
+        ctx.font = "20px silkscreen";
         if(shop.selectedItem != -1){
-            ctx.font = "25px Arial";
-            ctx.textAlign = "center";
-            ctx.fillStyle = "white";
             ctx.fillText(shop.items[shop.selectedItem].name, canvas.width/6*5, 25+canvas.height/3);
+            ctx.fillStyle = shop.priceColor;
             ctx.fillText("Price: "+shop.items[shop.selectedItem].price, canvas.width/6*5, 65+canvas.height/3);
+            ctx.fillStyle = "white";
             for (let i = 0; i < shop.items[shop.selectedItem].description.length; i++) {
                 ctx.fillText(shop.items[shop.selectedItem].description[i], canvas.width/6*5, 65 + 45 * (i+1)+canvas.height/3);
             }
@@ -1437,8 +1437,8 @@ function drawUI() {
     ctx.beginPath();
     ctx.strokeStyle = "red";
     ctx.lineWidth = 6;
-    ctx.moveTo(9 * pixelSize.width, 140 * pixelSize.height -pixelSize.height*41*(player.amplitude/(layerThresholds[0]*6)));
-    ctx.lineTo(13 * pixelSize.width, 140 * pixelSize.height-pixelSize.height*41*(player.amplitude/(layerThresholds[0]*6)));
+    ctx.moveTo(9 * pixelSize.width, 140 * pixelSize.height -pixelSize.height*41*(player.amplitude/(layerThresholds[0]*6))+6);
+    ctx.lineTo(13 * pixelSize.width, 140 * pixelSize.height-pixelSize.height*41*(player.amplitude/(layerThresholds[0]*6))+6);
     ctx.stroke();
     ctx.closePath();
 
