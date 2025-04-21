@@ -476,6 +476,7 @@ endGameScreen = {
     scores:0,
     deathReason:"",
     timeLeft:fps*2,
+    frame:0,
     handleMouseInputs(){
         if(mouseClick){
             for (let i = 0; i < buttons.end.length; i++) {
@@ -524,10 +525,10 @@ endGameScreen = {
     },
     cinematic(){
         draw();
-        if(this.timeLeft%fps/3==0){
+        if(endGameScreen.timeLeft%10==0){
             endGameScreen.frame++;
         }
-        ctx.drawImage(explosion, 0, 314*endGameScreen.frame, 220,314,canvas.width/2-explosion.width/2,canvas.height-314/2, 220,314);
+        ctx.drawImage(explosion, 0, (314*endGameScreen.frame)%1884, 220,314,canvas.width/2-explosion.width/2,canvas.height-314/2, 220,314);
         if(endGameScreen.timeLeft < 0){
             endGameScreen.timeLeft = fps*2;
             clearInterval(gameLoopInterval);
