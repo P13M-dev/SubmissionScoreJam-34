@@ -24,6 +24,11 @@ button_upgrd3 = document.getElementById("button_upgrd3"),
 button_upgrd4 = document.getElementById("button_upgrd4"),
 boostBar = document.getElementById("boostBar"),
 button_leave = document.getElementById("button_leave"),
+layer1_bg = document.getElementById("layer1_bg"),
+layer1_bg1 = document.getElementById("layer1_bg1"),
+layer1_bg2 = document.getElementById("layer1_bg2"),
+layer1_bg3 = document.getElementById("layer1_bg3"),
+
 gas = {
     gases: {
         smoke: { name:"Sm", displayName: "Smoke", score: 0, price: 0, color:"black"},
@@ -222,7 +227,11 @@ player = {
         this.y += vector.y * this.speed;
         this.x += vector.x * this.speed;
         camera.x = this.x - canvas.width/ 10
-        camera.y = this.y - canvas.height / 2 + this.height / 2; 
+        if (this.y  + this.height / 2 > 0){
+            camera.y = -canvas.height/2 
+        }else{
+            camera.y = this.y - canvas.height / 2 + this.height / 2; 
+        }
         
         if (moveVector.x*fps > 60){
             moveVector.x = Math.max(moveVector.x - 0.25, 60);
@@ -799,7 +808,38 @@ function drawClouds(){
     }
 }
 
+function drawBackground(){
+    switch (currentLayer){
+        case 1:
+            // Draw the furthest background layer (layer1_bg)
+            ctx.drawImage(layer1_bg, 0, 0, canvas.width, canvas.height);
+
+            // Draw the second furthest background layer (layer1_bg1)
+            ctx.drawImage(layer1_bg1, (-camera.x / 5) % canvas.width, -camera.y/10, canvas.width, canvas.height);
+            ctx.drawImage(layer1_bg1, (-camera.x / 5) % canvas.width + canvas.width, -camera.y/10, canvas.width, canvas.height);
+            if ((-camera.x / 5) % canvas.width + canvas.width < canvas.width) {
+                ctx.drawImage(layer1_bg1, (-camera.x / 5) % canvas.width + 2 * canvas.width, -camera.y/10, canvas.width, canvas.height);
+            }
+
+            // Draw the second closest background layer (layer1_bg2)
+            ctx.drawImage(layer1_bg2, (-camera.x / 3.5) % canvas.width, -camera.y/7, canvas.width, canvas.height);
+            ctx.drawImage(layer1_bg2, (-camera.x / 3.5) % canvas.width + canvas.width, -camera.y/7, canvas.width, canvas.height);
+            if ((-camera.x / 3.5) % canvas.width + canvas.width < canvas.width) {
+                ctx.drawImage(layer1_bg2, (-camera.x / 3.5) % canvas.width + 2 * canvas.width, -camera.y/7, canvas.width, canvas.height);
+            }
+
+            // Draw the closest background layer (layer1_bg3)
+            ctx.drawImage(layer1_bg3, (-camera.x / 2) % canvas.width, -camera.y/4, canvas.width, canvas.height);
+            ctx.drawImage(layer1_bg3, (-camera.x / 2) % canvas.width + canvas.width, -camera.y/4, canvas.width, canvas.height);
+            if ((-camera.x / 2) % canvas.width + canvas.width < canvas.width) {
+                ctx.drawImage(layer1_bg3, (-camera.x / 2) % canvas.width + 2 * canvas.width, -camera.y/4, canvas.width, canvas.height);
+            }
+
+    }
+}
+
 function draw(){
+    drawBackground()
     player.draw(camera);
     drawTankers();
     drawClouds();
@@ -1297,7 +1337,8 @@ window.addEventListener("keyup", function(event) {
     keysPressed[event.key.toLowerCase()] = false;
     if (event.key == "Escape"){
         canPause = true;
-    }if ((event.key === " " || event.key.toLowerCase() === "w") && player.jumpCharges > 0) {
+    }if ((event.key === " " || event.key.toLowerCase() === "w") && player.jumpCharges > 0 && player.fuel > 0) {
+        player.fuel = Math.max(0,player.fuel - 5)
         player.jump();
     }
 });
