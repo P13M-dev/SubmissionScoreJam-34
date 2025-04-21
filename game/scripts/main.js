@@ -40,6 +40,7 @@ layer4_bg1 = document.getElementById("layer4_bg1"),
 layer4_bg2 = document.getElementById("layer4_bg2"),
 ground = document.getElementById("ground"),
 button_buy_off = document.getElementById("button_buy_off"),
+tutorialGraphics = document.getElementById("tutorialGraphics"),
 audio = {
     engine: new Audio('./sfx/engine.mp3'),
     purchase: new Audio('./sfx/purchase.mp3'),
@@ -594,6 +595,20 @@ cutScene = {
     easeInQuint(x) {
         return x * x * x * x * x;
     },
+    drawTutorialGraphic(){
+        ctx.beginPath();
+        ctx.drawImage(tutorialGraphic,canvas.width/2-tutorialGraphic.width/2,canvas.height/2-tutorialGraphic.height/2,tutorialGraphic.width,tutorialGraphic.height);
+        ctx.closePath();
+    },
+
+    handleMouseInputs(){
+        if(mouseClick){
+            for (let i = 0; i < buttons.start.length; i++) {
+                buttons.start[i].checkForClicks(mouseClick.x, mouseClick.y);
+            }
+            mouseClick = null
+        }
+    },
     easeOutQuint(x) {
         return 1 - Math.pow(1 - x, 5);
     },
@@ -650,6 +665,14 @@ cutScene = {
         player.x = canvas.width/4
         player.y = canvas.height/4*3-player.height+70;
     },
+    triggerStartOfGameBeforeButton(){
+        clearInterval(gameLoopInterval);
+        gameLoopInterval = setInterval(cutScene.loopStartOfGameBeforebutton , 1000/fps);
+        cutScene.timeLeft = fps*4;
+        camera.y= 0;
+        player.x = canvas.width/4
+        player.y = canvas.height/4*3-player.height+70;
+    },
     triggerEndOfGame(){
         
     },
@@ -689,6 +712,13 @@ cutScene = {
             cutScene.timeLeft = fps*2;
 
         }
+    },
+    loopStartOfGameBeforebutton(){
+        
+        cutScene.drawWithGround(false);
+        let button = buttons.start[0];
+        ctx.drawImage(button.img, button.x, button.y, button.width, button.height);
+        cutScene.handleMouseInputs();
     },
     loopStartOfGame(){
         if(fps*2<cutScene.timeLeft){
@@ -836,6 +866,50 @@ shop = {
             }, 500);
         }
     }
+},
+credits = {
+    credits: ["Developers","","Piotr \"P13M\" Migas ","Bartek \"Baruta\" Senator","Dominik \"_ItsYumi\" Chmielowiec","","Sounds made by freesound_community from Pixabay","","Font by Jason Kottke from google Fonts"],
+    loop(){
+        credits.draw();
+        credits.handleMouseInputs();
+    },
+    draw(){
+        ctx.beginPath();
+        ctx.fillStyle = "black";
+        ctx.fillRect(0,0,canvas.width,canvas.height);
+        ctx.fillStyle = "white";
+        ctx.font = "20px silkscreen";
+        ctx.textAlign = "left";
+        ctx.fillText("Credits", canvas.width/2, 25);
+        for(let i = 0;i<credits.credits.length;i++){
+            ctx.fillText(credits.credits[i], canvas.width/2, 65 + 45 * (i+1));
+        }
+
+        for (let i = 0; i < credits.credits.length; i++) {
+            ctx.fillText(credits.credits[i], canvas.width/2, 65 + 45 * (i+1));
+        }
+        for(let i = 0; i < buttons.credits.length; i++){
+            let button = buttons.credits[i];
+            ctx.drawImage(button.img, button.x, button.y, button.width, button.height);
+        }
+        ctx.closePath();
+    },
+    handleMouseInputs(){
+        if(mouseClick){
+            for (let i = 0; i < buttons.credits.length; i++) {
+                buttons.credits[i].checkForClicks(mouseClick.x, mouseClick.y);
+            }
+            mouseClick = null
+        }
+    },
+    end(){
+        clearInterval(gameLoopInterval);
+        gameLoopInterval = setInterval(startScreen.loop , 1000/fps);
+    },
+    begin(){
+        clearInterval(gameLoopInterval);
+        gameLoopInterval = setInterval(credits.loop , 1000/fps);
+    }
 }
 
 class Button {
@@ -916,14 +990,17 @@ buttons = {
     pause: [],
     end: [],
     menu: [],
-    shop:[]
+    shop:[],
+    credits:[]
 },
 pixelSize = {width: canvas.width / 256, height: canvas.height / 144}
 
-buttons.start.push(new Button(canvas.width/6*5-canvas.width/8, canvas.height-canvas.width/12, canvas.width/4, canvas.width/12,button_leave,()=>{cutScene.triggerStartOfGame();}));
+buttons.credits.push(new Button(canvas.width/2-canvas.width/4, canvas.height/7*5, canvas.width/2, canvas.height/7*2,button_leave,()=>{credits.end()}));
 
-buttons.menu.push(new Button(canvas.width/2-canvas.width/4, canvas.height/7, canvas.width/2, canvas.height/7*2,button_start,()=>{cutScene.triggerStartOfGame();}));
-buttons.menu.push(new Button(canvas.width/2-canvas.width/4, canvas.height/7*4, canvas.width/2, canvas.height/7*2,button_authors,()=>{}));
+buttons.start.push(new Button(canvas.width/6*5-canvas.width/8, canvas.height-canvas.width/12, canvas.width/4, canvas.width/12,button_leave,()=>{cutScene.triggerStartOfGame();console.log("start");}));
+
+buttons.menu.push(new Button(canvas.width/2-canvas.width/4, canvas.height/7, canvas.width/2, canvas.height/7*2,button_start,()=>{cutScene.triggerStartOfGameBeforeButton();}));
+buttons.menu.push(new Button(canvas.width/2-canvas.width/4, canvas.height/7*4, canvas.width/2, canvas.height/7*2,button_authors,()=>{credits.begin();}));
 
 buttons.pause.push([buttons.pause.length,new Button(canvas.width/2-canvas.width/8, canvas.height/7*2.25, canvas.width/4, canvas.height/7,button_resume,() => {pause.off();canPause = true;})]);
 buttons.pause.push([buttons.pause.length,new Button(canvas.width/2-canvas.width/8, canvas.height/7*3.75, canvas.width/4, canvas.height/7,button_exit,()=>{startScreen.restart();})]);
