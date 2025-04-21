@@ -41,6 +41,10 @@ layer4_bg2 = document.getElementById("layer4_bg2"),
 layer5_bg = document.getElementById("layer5_bg"),
 layer5_bg1 = document.getElementById("layer5_bg1"),
 layer5_bg2 = document.getElementById("layer5_bg2"),
+layer6_bg = document.getElementById("layer6_bg"),
+layer6_bg1 = document.getElementById("layer6_bg1"),
+layer6_bg2 = document.getElementById("layer6_bg2"),
+layer6_bg3 = document.getElementById("layer6_bg3"),
 ground = document.getElementById("ground"),
 button_buy_off = document.getElementById("button_buy_off"),
 tutorialGraphics = document.getElementById("tutorialGraphics"),
@@ -257,6 +261,7 @@ player = {
     jumpCharges: 4,
     gasTankCapacity: 1000,
     gasColletionSpeed: 10,
+    canDie: false,
     unavailableGases: [6,7,8,9,10,11,12], // tablica z id gazów które są niedostępne do zebrania
     // tu są 2 tablice , w jednej będą same id gasów , w drugiej szczegóły (ilość,kolor,nazwa) 
     // później będziemy mogli pozbyć się nazw ale na teraz żeby nie było za bardzo skomplikowane to są.
