@@ -1679,10 +1679,10 @@ function gameLoop() {
     
     if(player.amplitude > layerThresholds[currentLayer-1]-layerThresholds[0]){
         animation_pos = {x: player.x,y:  player.y}
-        endGameScreen.endGame(); // piotrze dodaj jakiś fajny napis
+        endGameScreen.endGame("Pressure crushed your hull"); // piotrze dodaj jakiś fajny napis
     }else if(player.y < camera.y - canvas.height/2){
         animation_pos = {x: player.x,y:  player.y}
-        endGameScreen.endGame(); // piotrze dodaj jakiś fajny napis
+        endGameScreen.endGame("Pressure crushed your hull"); // piotrze dodaj jakiś fajny napis
     }
     
     frameCount++;
